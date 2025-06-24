@@ -290,14 +290,23 @@
                 const data = await response.json();
                 
                 if (data.sucesso && data.cliente) {
-                    // Save user data to localStorage
-                    localStorage.setItem('loginUserData', JSON.stringify({
+                    // Save user data to localStorage (multiple keys for compatibility)
+                    const loginData = {
                         nome: data.cliente.nome,
                         cpf: data.cliente.cpf,
                         telefone: data.cliente.telefone,
                         email: data.cliente.email,
                         source: 'login'
-                    }));
+                    };
+                    
+                    // Save in loginUserData
+                    localStorage.setItem('loginUserData', JSON.stringify(loginData));
+                    
+                    // Also save in standard keys for /finalizar compatibility
+                    localStorage.setItem('candidateName', data.cliente.nome);
+                    localStorage.setItem('candidateCPF', data.cliente.cpf);
+                    localStorage.setItem('candidatePhone', data.cliente.telefone);
+                    localStorage.setItem('candidateEmail', data.cliente.email);
                     
                     console.log('User data saved from login:', data.cliente);
                     

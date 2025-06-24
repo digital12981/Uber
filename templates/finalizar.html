@@ -191,6 +191,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         // Try multiple localStorage keys for user data (prioritize login data)
         const userName = (
+            loginUserData.nome ||
             paymentData.name || 
             userData.full_name || 
             userData.name || 
@@ -200,6 +201,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         );
         
         const userCPF = (
+            loginUserData.cpf ||
             paymentData.cpf || 
             userData.cpf || 
             localStorage.getItem('candidateCPF') || 
@@ -208,6 +210,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         );
         
         const userPhone = (
+            loginUserData.telefone ||
             paymentData.phone || 
             userData.phone || 
             localStorage.getItem('candidatePhone') || 
@@ -216,6 +219,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         );
         
         const userEmail = (
+            loginUserData.email ||
             paymentData.email || 
             userData.email || 
             localStorage.getItem('candidateEmail') || 

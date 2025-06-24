@@ -100,14 +100,13 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
-- June 24, 2025: Login CPF API Integration + /finalizar Dual Source Support ✅ WORKING
-  - **CPF API INTEGRATION**: Connected /login to webhook-manager.replit.app/api/v1/cliente/cpf/{cpf} endpoint
-  - **DATA HANDLING**: Saves nome, cpf, telefone, email from API response to loginUserData localStorage
-  - **AUTO REDIRECT**: Successful CPF lookup redirects user directly to /finalizar page
-  - **DUAL SOURCE SUPPORT**: /finalizar now handles both login flow data and payment flow data
-  - **DATA PRIORITY**: Login data takes precedence over payment data when both sources exist
-  - **ERROR HANDLING**: Proper validation for API responses and network errors
-  - **COMPLETE FLOW**: Login → API lookup → Data save → /finalizar → PIX generation with correct user data
+- June 24, 2025: Fixed /finalizar Data Recognition + Dual localStorage Support ✅ WORKING
+  - **DATA EXTRACTION FIX**: Fixed /finalizar to properly extract loginUserData for PIX generation
+  - **DUAL STORAGE**: Login saves data to both loginUserData and standard candidate* keys for compatibility
+  - **PRIORITY SYSTEM**: /finalizar prioritizes login data over payment flow data correctly
+  - **ERROR ELIMINATION**: Resolved "Dados do usuário não encontrados" error from login flow
+  - **COMPLETE INTEGRATION**: Both login and payment flows now work seamlessly with /finalizar
+  - **TESTED FLOW**: CPF lookup → data save → redirect → successful PIX generation
 
 - June 24, 2025: Fixed Payment Status Verification System - Automatic Redirection to /finalizar ✅ WORKING
   - **PAYMENT VERIFICATION FIX**: Updated payment status checking from 500ms to 1000ms (1 second) intervals as requested
