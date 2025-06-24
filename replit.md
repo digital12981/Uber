@@ -100,6 +100,14 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 24, 2025: Header Design Update - Fixed Navigation & Larger Logo ✅ UPDATED
+  - **HEADER FIXES**: Fixed header position across all pages (layout.html and vagas.html)
+  - **LOGO SIZE INCREASE**: Changed logo from h-8 to h-12 for better visibility
+  - **FIXED POSITIONING**: Added fixed positioning (top-0 left-0 right-0 z-50) to keep header always visible
+  - **CONTENT SPACING**: Added pt-16 to main content to accommodate fixed header
+  - **CONSISTENT DESIGN**: Applied changes to both layout.html (most pages) and vagas.html (landing page)
+  - Enhanced user experience with persistent navigation and improved logo prominence
+
 - June 24, 2025: Heroku Production Fix - Navigation & Protection Issues Resolved ✅ FIXED
   - **NAVIGATION FIX**: Fixed /recebedor page double loading and incorrect redirect to index
   - **MOBILE PROTECTION FIX**: Disabled mobile protection for Heroku environment using DYNO env var
