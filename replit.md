@@ -100,6 +100,15 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 24, 2025: Fixed Payment Status Verification System - Automatic Redirection to /finalizar ✅ WORKING
+  - **PAYMENT VERIFICATION FIX**: Updated payment status checking from 500ms to 1000ms (1 second) intervals as requested
+  - **REDIRECT CORRECTION**: Fixed all redirect URLs from /aviso to /finalizar when payment status is APPROVED
+  - **ERROR HANDLING**: Improved JavaScript error handling in payment verification with proper HTTP status checks
+  - **MEMORY OPTIMIZATION**: Added interval cleanup to prevent memory leaks when page is closed
+  - **API INTEGRATION**: Fixed all payment verification endpoints to use correct For4Payments API status mapping
+  - **INSTANT REDIRECTION**: System now automatically redirects to /finalizar when API returns APPROVED status
+  - **PRODUCTION READY**: Verified working with real transaction IDs and authentic payment flow
+
 - June 24, 2025: Fixed Animated Loading Elements - /finalizar & /pagamento Pages ✅ UPDATED
   - **ALERT ICON ADDED**: Added warning icon (https://cdn-icons-png.flaticon.com/512/5610/5610989.png) above title
   - **CENTERED LAYOUT**: All header elements now center-aligned for better visual impact
