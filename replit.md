@@ -105,12 +105,13 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **INSTALLATION WARNINGS**: Clear messaging about authorized Uber employee installation requirement
   - **PROGRAM CONSEQUENCES**: Explicit warning about R$ 500.00 monthly payments dependency on installation
   - **INTERACTIVE CALENDAR**: Current month calendar with past days + next 3 days disabled, clickable future dates
-  - **TIME SELECTOR**: 2-hour intervals from 07:00 to 17:00 for appointment scheduling
+  - **TIME SELECTOR**: 2-hour intervals from 07:00 to 17:00 for appointment scheduling (07:00-09:00, 09:00-11:00, etc.)
   - **APPOINTMENT DISPLAY**: Selected date/time confirmation with localStorage storage
   - **PIX INTEGRATION**: Maintained working R$ 82.10 payment system with QR code and copy-paste
   - **PAYMENT INSTRUCTIONS**: Updated flow including appointment selection as first step
+  - **3D BUTTON DESIGN**: White buttons with 3D shadow effects, black selection state, #EEEEEE background boxes
   - JavaScript calendar generation with proper month/year display and Brazilian month names
-  - Visual feedback for date/time selection with blue highlighting for selected options
+  - Visual feedback with elevation animation on hover and click selection
   - Responsive design maintaining Uber branding and professional appearance
 
 - June 24, 2025: Address Page Navigation Fix - Heroku Production Ready ✅ FIXED
