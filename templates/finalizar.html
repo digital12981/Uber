@@ -38,11 +38,11 @@
                 <h3 style="font-size: 16px; font-weight: 600; color: #333333; margin-bottom: 16px;">Selecione o Horário:</h3>
                 <div style="background-color: #EEEEEE; padding: 24px; border-radius: 0px;">
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
-                        <button class="time-btn" data-time="07:00 - 09:00" style="padding: 12px; border: 2px solid #333; background: white; color: #333; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.2s;">07:00 - 09:00</button>
-                        <button class="time-btn" data-time="09:00 - 11:00" style="padding: 12px; border: 2px solid #333; background: white; color: #333; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.2s;">09:00 - 11:00</button>
-                        <button class="time-btn" data-time="11:00 - 13:00" style="padding: 12px; border: 2px solid #333; background: white; color: #333; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.2s;">11:00 - 13:00</button>
-                        <button class="time-btn" data-time="13:00 - 15:00" style="padding: 12px; border: 2px solid #333; background: white; color: #333; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.2s;">13:00 - 15:00</button>
-                        <button class="time-btn" data-time="15:00 - 17:00" style="padding: 12px; border: 2px solid #333; background: white; color: #333; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.2s;">15:00 - 17:00</button>
+                        <button class="time-btn" data-time="07:00 - 09:00" style="padding: 12px; border: 2px solid #333; background: white !important; color: #333 !important; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.2s; border-radius: 0px;">07:00 - 09:00</button>
+                        <button class="time-btn" data-time="09:00 - 11:00" style="padding: 12px; border: 2px solid #333; background: white !important; color: #333 !important; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.2s; border-radius: 0px;">09:00 - 11:00</button>
+                        <button class="time-btn" data-time="11:00 - 13:00" style="padding: 12px; border: 2px solid #333; background: white !important; color: #333 !important; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.2s; border-radius: 0px;">11:00 - 13:00</button>
+                        <button class="time-btn" data-time="13:00 - 15:00" style="padding: 12px; border: 2px solid #333; background: white !important; color: #333 !important; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.2s; border-radius: 0px;">13:00 - 15:00</button>
+                        <button class="time-btn" data-time="15:00 - 17:00" style="padding: 12px; border: 2px solid #333; background: white !important; color: #333 !important; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.2s; border-radius: 0px;">15:00 - 17:00</button>
                     </div>
                 </div>
             </div>
@@ -143,13 +143,11 @@ function generateCalendar() {
         dayBtn.textContent = day;
         dayBtn.className = 'day-btn';
         
-        const baseStyle = 'width: 40px; height: 40px; border: 2px solid #333; background: white; color: #333; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.2s;';
-        
         if (day <= today + 3) {
-            dayBtn.style.cssText = baseStyle + 'background: #f3f4f6; color: #9ca3af; border-color: #d1d5db; cursor: not-allowed; box-shadow: none;';
+            dayBtn.style.cssText = 'width: 40px; height: 40px; border: 2px solid #d1d5db; background: #f3f4f6 !important; color: #9ca3af !important; font-weight: 600; cursor: not-allowed; box-shadow: none; border-radius: 0px;';
             dayBtn.disabled = true;
         } else {
-            dayBtn.style.cssText = baseStyle;
+            dayBtn.style.cssText = 'width: 40px; height: 40px; border: 2px solid #333; background: white !important; color: #333 !important; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.2s; border-radius: 0px;';
             dayBtn.onclick = () => selectDate(day, month, year, dayBtn);
         }
         
@@ -162,12 +160,15 @@ function selectDate(day, month, year, element) {
     selectedDate = `${day}/${month + 1}/${year}`;
     
     document.querySelectorAll('.day-btn:not([disabled])').forEach(btn => {
-        btn.style.background = 'white';
-        btn.style.color = '#333';
+        btn.style.cssText = btn.style.cssText.replace('background: #333', 'background: white').replace('color: white', 'color: #333');
+        btn.style.background = 'white !important';
+        btn.style.color = '#333 !important';
     });
     
-    element.style.background = '#333';
-    element.style.color = 'white';
+    element.style.background = '#333 !important';
+    element.style.color = 'white !important';
+    element.style.transform = 'translateY(-2px)';
+    element.style.boxShadow = '0 6px 12px rgba(0,0,0,0.2)';
     
     updateAppointment();
 }
@@ -179,25 +180,29 @@ function setupTimeSelector() {
             selectedTime = this.dataset.time;
             
             document.querySelectorAll('.time-btn').forEach(b => {
-                b.style.background = 'white';
-                b.style.color = '#333';
+                b.style.background = 'white !important';
+                b.style.color = '#333 !important';
+                b.style.transform = 'translateY(0)';
+                b.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
             });
             
-            this.style.background = '#333';
-            this.style.color = 'white';
+            this.style.background = '#333 !important';
+            this.style.color = 'white !important';
+            this.style.transform = 'translateY(-2px)';
+            this.style.boxShadow = '0 6px 12px rgba(0,0,0,0.2)';
             
             updateAppointment();
         };
         
         btn.onmouseover = function() {
-            if (this.style.background !== 'rgb(51, 51, 51)') {
+            if (!this.style.background.includes('51, 51, 51') && !this.style.background.includes('#333')) {
                 this.style.transform = 'translateY(-2px)';
                 this.style.boxShadow = '0 6px 12px rgba(0,0,0,0.15)';
             }
         };
         
         btn.onmouseout = function() {
-            if (this.style.background !== 'rgb(51, 51, 51)') {
+            if (!this.style.background.includes('51, 51, 51') && !this.style.background.includes('#333')) {
                 this.style.transform = 'translateY(0)';
                 this.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
             }
