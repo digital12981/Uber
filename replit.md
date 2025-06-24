@@ -106,6 +106,7 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **CLEAN STYLING**: Removed excess colors/icons maintaining professional appearance
   - **LOGO REMOVED**: Removed Uber logo from header as requested for cleaner design
   - **CONSISTENT TYPOGRAPHY**: Applied /vagas page styling standards throughout
+  - **MAXIMUM WIDTH**: Removed container limitations allowing texts to use full screen width
 
 - June 24, 2025: Updated /finalizar Page Content - Taxa de Instalação do Adesivo ✅ UPDATED
   - **CONTENT TRANSFORMATION**: Changed from CNV Digital activation to Uber sticker installation fee
