@@ -42,10 +42,13 @@ def simple_mobile_only(f):
     def decorated_function(*args, **kwargs):
         import os
         
-        # Check if running in Replit environment - disable protection for preview only
+        # Check if running in Replit environment or Heroku - disable protection
         replit_hosts = ['replit.dev', 'replit.app', 'repl.co']
+        heroku_hosts = ['herokuapp.com']
         if (os.environ.get('REPLIT_DEV_DOMAIN') or 
+            os.environ.get('DYNO') or  # Heroku environment variable
             any(host in request.host for host in replit_hosts) or
+            any(host in request.host for host in heroku_hosts) or
             any(host in request.url for host in replit_hosts)):
             # Running in Replit preview - skip protection
             return f(*args, **kwargs)

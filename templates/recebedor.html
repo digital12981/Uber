@@ -314,6 +314,13 @@ function continueToAddress() {
         return;
     }
     
+    // Prevent multiple clicks
+    const btn = document.getElementById('continue-btn');
+    if (btn.disabled) return;
+    btn.disabled = true;
+    btn.style.background = '#ccc !important';
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>Processando...';
+    
     // Save payment method to localStorage
     const paymentData = {
         method: selectedPayment,
@@ -328,8 +335,8 @@ function continueToAddress() {
     localStorage.setItem('paymentMethod', JSON.stringify(paymentData));
     console.log('Payment method saved:', paymentData);
     
-    // Redirect to address page with loading
-    window.location.href = '/loading_transition?redirect=/address';
+    // Redirect directly to address to avoid double loading
+    window.location.href = '/address';
 }
 </script>
 {% endblock %}

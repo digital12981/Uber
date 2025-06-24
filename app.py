@@ -102,7 +102,13 @@ def veiculo():
 @simple_mobile_only
 @performance_monitor  
 def recebedor():
-    return render_template("recebedor.html")
+    try:
+        # Log the request for debugging
+        app.logger.info(f"Recebedor page accessed from {request.remote_addr}")
+        return render_template("recebedor.html")
+    except Exception as e:
+        app.logger.error(f"Error in recebedor route: {str(e)}")
+        return redirect(url_for('index'))
 
 @app.teardown_appcontext
 def close_db(error):
