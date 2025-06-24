@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block title %}Pagamento Adesivo Uber{% endblock %}
+{% block title %}Pagamento do Adesivo Uber{% endblock %}
 
 {% block content %}
 <div class="container mx-auto px-4 py-6 max-w-4xl">
@@ -14,104 +14,36 @@
             </div>
         </div>
         
-        <div class="bg-black text-white border-l-4 border-black p-4" style="border-radius: 0px !important;">
-            <div class="flex">
-                <div class="flex-shrink-0">
-                    <i class="fa fa-info-circle text-white"></i>
-                </div>
-                <div class="ml-3">
-                    <p class="text-sm text-white">
-                        <strong>Adesivo Obrigatório:</strong> Para receber os R$ 500,00 mensais é necessário instalar o adesivo Uber no veículo.
-                    </p>
-                </div>
-            </div>
+        <div class="bg-black text-white p-4" style="border-radius: 0px !important;">
+            <p class="text-sm text-white">
+                <strong>Adesivo Obrigatório:</strong> Para receber os R$ 500,00 mensais é necessário pagar pelo adesivo Uber personalizado.
+            </p>
         </div>
     </div>
 
     <!-- Adesivo Information -->
     <div class="bg-white shadow-lg p-6 mb-6" style="border-radius: 0px !important;">
-        <h2 class="text-xl font-bold mb-4 text-gray-800">
-            <i class="fa fa-car text-black mr-2"></i>
-            Informações do Adesivo Uber
-        </h2>
+        <h2 class="text-xl font-bold mb-4 text-gray-800">Informações do Adesivo</h2>
         
-        <div class="grid md:grid-cols-2 gap-4">
-            <div class="space-y-3">
-                <div class="border-b pb-2">
-                    <span class="text-sm text-gray-600">Programa:</span>
-                    <p class="font-medium">Uber Partner</p>
-                </div>
-                <div class="border-b pb-2">
-                    <span class="text-sm text-gray-600">Benefício Mensal:</span>
-                    <p class="font-medium">R$ 500,00</p>
-                </div>
-                <div class="border-b pb-2">
-                    <span class="text-sm text-gray-600">Modalidade:</span>
-                    <p class="font-medium">Adesivo Personalizado</p>
-                </div>
-            </div>
-            <div class="space-y-3">
-                <div class="border-b pb-2">
-                    <span class="text-sm text-gray-600">Entrega:</span>
-                    <p class="font-medium">Sedex - 3 dias úteis</p>
-                </div>
-                <div class="border-b pb-2">
-                    <span class="text-sm text-gray-600">Instalação:</span>
-                    <p class="font-medium">Obrigatória no veículo</p>
-                </div>
-                <div class="border-b pb-2">
-                    <span class="text-sm text-gray-600">Valor do Frete:</span>
-                    <p class="font-medium">R$ 82,10</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Requirements -->
-    <div class="bg-white shadow-lg p-6 mb-6" style="border-radius: 0px !important;">
-        <h2 class="text-xl font-bold mb-4 text-gray-800">
-            <i class="fa fa-clipboard-check text-black mr-2"></i>
-            Requisitos do Programa
-        </h2>
-        
-        <div class="grid md:grid-cols-2 gap-4">
-            <div>
-                <h3 class="font-semibold mb-2 text-gray-700">Documentação do Veículo:</h3>
-                <ul class="space-y-1 text-sm text-gray-600">
-                    <li class="flex items-center"><i class="fa fa-check text-green-500 mr-2"></i>CRLV em dia</li>
-                    <li class="flex items-center"><i class="fa fa-check text-green-500 mr-2"></i>Seguro obrigatório</li>
-                    <li class="flex items-center"><i class="fa fa-check text-green-500 mr-2"></i>Veículo até 10 anos</li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="font-semibold mb-2 text-gray-700">Obrigações do Motorista:</h3>
-                <ul class="space-y-1 text-sm text-gray-600">
-                    <li class="flex items-center"><i class="fa fa-check text-green-500 mr-2"></i>CNH categoria B válida</li>
-                    <li class="flex items-center"><i class="fa fa-check text-green-500 mr-2"></i>Instalar adesivo no veículo</li>
-                    <li class="flex items-center"><i class="fa fa-check text-green-500 mr-2"></i>Manter adesivo visível</li>
-                </ul>
-            </div>
+        <div class="space-y-3">
+            <p>Programa: <strong>Uber Partner</strong></p>
+            <p>Benefício Mensal: <strong>R$ 500,00</strong></p>
+            <p>Adesivo Personalizado com entrega via Sedex</p>
+            <p>Instalação obrigatória no veículo</p>
         </div>
     </div>
 
     <!-- Payment Summary -->
     <div class="bg-white shadow-lg p-6 mb-6" style="border-radius: 0px !important;">
-        <h2 class="text-xl font-bold mb-4 text-gray-800">
-            <i class="fa fa-calculator text-black mr-2"></i>
-            Resumo do Pagamento
-        </h2>
+        <h2 class="text-xl font-bold mb-4 text-gray-800">Resumo do Pagamento</h2>
         
         <div class="space-y-3">
             <div class="flex justify-between items-center border-b pb-2">
-                <span class="text-gray-600">Frete Adesivo Uber:</span>
+                <span class="text-gray-600">Adesivo Uber:</span>
                 <span class="font-medium">R$ 82,10</span>
             </div>
             <div class="flex justify-between items-center border-b pb-2">
                 <span class="text-gray-600">Entrega Sedex:</span>
-                <span class="font-medium">Incluído</span>
-            </div>
-            <div class="flex justify-between items-center border-b pb-2">
-                <span class="text-gray-600">Adesivo Personalizado:</span>
                 <span class="font-medium">Incluído</span>
             </div>
             <div class="flex justify-between items-center text-lg font-bold text-black bg-gray-100 p-3" style="border-radius: 0px !important;">
@@ -122,145 +54,119 @@
     </div>
 
     <!-- Warning -->
-    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6" style="border-radius: 0px !important;">
-        <div class="flex">
-            <div class="flex-shrink-0">
-                <i class="fa fa-exclamation-triangle text-yellow-400"></i>
-            </div>
-            <div class="ml-3">
-                <p class="text-sm text-yellow-700">
-                    <strong>Importante:</strong> O adesivo será enviado apenas após confirmação do pagamento via PIX. 
-                    O envio será feito em até 24 horas úteis via Sedex para o endereço cadastrado.
-                </p>
-            </div>
-        </div>
+    <div class="bg-yellow-50 p-4 mb-6" style="border-radius: 0px !important;">
+        <p class="text-sm text-yellow-700">
+            <strong>Importante:</strong> O adesivo será enviado apenas após confirmação do pagamento via PIX. 
+            O envio será feito em até 24 horas úteis via Sedex para o endereço cadastrado.
+        </p>
     </div>
 
     <!-- Payment Section -->
     <div class="bg-white shadow-lg p-6 mb-6" style="border-radius: 0px !important;">
-        <h2 class="text-xl font-bold mb-4 text-gray-800">
-            <i class="fa fa-credit-card text-black mr-2"></i>
-            Pagamento PIX
-        </h2>
+        <h2 class="text-xl font-bold mb-4 text-gray-800">Pagamento do Adesivo</h2>
         
         <div class="text-center">
-            <button id="generateCnvPayment" class="uber-btn w-full mb-4">
-                <i class="fa fa-credit-card mr-2"></i>
-                Gerar PIX para Envio do Adesivo
-            </button>
-            
-            <p class="text-sm text-gray-600 mb-4">
-                <i class="fa fa-shield text-green-600 mr-2"></i>
-                Pagamento seguro processado via For4Payments
-            </p>
-            
-            <!-- PIX Information Display (hidden initially) -->
-            <div id="pixInfo" style="display: none;">
-                <div class="bg-gray-50 p-4 mb-4" style="border-radius: 0px !important;">
-                    <h3 class="text-lg font-bold mb-3">PIX Gerado com Sucesso</h3>
-                    
-                    <!-- QR Code -->
-                    <div class="mb-4">
-                        <img id="pixQrCode" src="" alt="QR Code PIX" class="mx-auto w-64 h-64 border-2 border-gray-300" style="border-radius: 0px !important;">
-                    </div>
-                    
-                    <!-- PIX Code -->
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Código PIX (Copiar e Colar):</label>
-                        <div class="flex">
-                            <input type="text" id="pixCode" readonly class="flex-1 px-3 py-2 border border-gray-300 text-sm" style="border-radius: 0px !important;">
-                            <button onclick="copyPixCode()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 text-sm" style="border-radius: 0px !important;">
-                                <i class="fa fa-copy mr-1"></i>Copiar
-                            </button>
-                        </div>
+            <!-- PIX Information Display -->
+            <div id="pixInfo">
+                <!-- QR Code -->
+                <div class="mb-4">
+                    <img id="pixQrCode" src="" alt="QR Code PIX" class="mx-auto w-64 h-64 border-2 border-gray-300" style="border-radius: 0px !important; display: none;">
+                </div>
+                
+                <!-- PIX Code -->
+                <div class="mb-4" id="pixCodeSection" style="display: none;">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Código PIX:</label>
+                    <div class="flex">
+                        <input type="text" id="pixCode" readonly class="flex-1 px-3 py-2 border border-gray-300 text-sm" style="border-radius: 0px !important;">
+                        <button onclick="copyPixCode()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 text-sm" style="border-radius: 0px !important;">
+                            Copiar
+                        </button>
                     </div>
                 </div>
                 
-                <h3 class="text-lg font-bold mb-3">Próximos Passos:</h3>
-                <div class="space-y-2">
-                    <div class="flex items-center">
-                        <span class="bg-black text-white text-xs font-medium px-2 py-1 mr-3" style="border-radius: 0px !important;">1</span>
-                        <span class="text-sm">Realize o pagamento via PIX</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="bg-black text-white text-xs font-medium px-2 py-1 mr-3" style="border-radius: 0px !important;">2</span>
-                        <span class="text-sm">Aguarde confirmação automática</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="bg-black text-white text-xs font-medium px-2 py-1 mr-3" style="border-radius: 0px !important;">3</span>
-                        <span class="text-sm">Receba o adesivo em casa via Sedex</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="bg-black text-white text-xs font-medium px-2 py-1 mr-3" style="border-radius: 0px !important;">4</span>
-                        <span class="text-sm">Instale no veículo e ganhe R$ 500/mês</span>
-                    </div>
+                <div id="loadingMessage" class="text-gray-600 mb-4">
+                    Carregando dados de pagamento...
                 </div>
             </div>
+            
+            <p class="text-sm text-gray-600">
+                Pagamento seguro processado via For4Payments
+            </p>
         </div>
     </div>
 </div>
 
 <script>
-// Generate PIX payment
-document.getElementById('generateCnvPayment').addEventListener('click', async function() {
+// Auto-generate PIX payment on page load
+document.addEventListener('DOMContentLoaded', async function() {
     try {
-        // Get user data from localStorage
+        // Get user data from localStorage (same format as original)
         const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-        const candidateName = localStorage.getItem('candidateName') || userData.full_name || userData.name || '';
-        const candidateCPF = localStorage.getItem('candidateCPF') || userData.cpf || '';
-        const candidateEmail = localStorage.getItem('candidateEmail') || userData.email || '';
-        const candidatePhone = localStorage.getItem('candidatePhone') || userData.phone || '';
+        const paymentData = JSON.parse(localStorage.getItem('cnvPaymentData') || '{}');
         
-        if (!candidateName || !candidateCPF) {
-            alert('Dados do usuário não encontrados. Retorne à página inicial.');
-            return;
-        }
+        const userName = paymentData.name || userData.full_name || userData.name || localStorage.getItem('candidateName') || '';
+        const userCPF = paymentData.cpf || userData.cpf || localStorage.getItem('candidateCPF') || '';
+        const userPhone = paymentData.phone || userData.phone || localStorage.getItem('candidatePhone') || '';
+        const userEmail = paymentData.email || userData.email || localStorage.getItem('candidateEmail') || '';
         
-        // Create payment
-        const response = await fetch('/create_cnv_payment', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: candidateName,
-                cpf: candidateCPF,
-                email: candidateEmail,
-                phone: candidatePhone
-            })
-        });
+        console.log('Extracted user data:', { name: userName, cpf: userCPF, phone: userPhone });
         
-        const result = await response.json();
-        
-        if (result.success) {
-            const pixData = result.payment_data;
+        if (userName && userCPF) {
+            // Create payment using existing endpoint
+            const response = await fetch('/create_cnv_payment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: userName,
+                    cpf: userCPF,
+                    email: userEmail,
+                    phone: userPhone
+                })
+            });
             
-            // Display QR Code
-            if (pixData.pixQrCode) {
-                document.getElementById('pixQrCode').src = pixData.pixQrCode;
+            const result = await response.json();
+            console.log('API Response:', result);
+            
+            if (result.success && result.payment_data) {
+                const pixData = result.payment_data;
+                console.log('PIX Data:', pixData);
+                
+                // Display real PIX code
+                if (pixData.pixCopyPaste) {
+                    document.getElementById('pixCode').value = pixData.pixCopyPaste;
+                    document.getElementById('pixCodeSection').style.display = 'block';
+                    console.log('PIX code set successfully');
+                }
+                
+                // Display real QR Code
+                if (pixData.pixQrCode) {
+                    const qrCodeElement = document.getElementById('pixQrCode');
+                    qrCodeElement.src = pixData.pixQrCode;
+                    qrCodeElement.style.display = 'block';
+                    console.log('QR Code displayed successfully');
+                }
+                
+                // Store payment ID for status checking
+                if (pixData.paymentId) {
+                    localStorage.setItem('cnvPaymentId', pixData.paymentId);
+                    console.log('Payment ID stored:', pixData.paymentId);
+                }
+                
+                // Hide loading message
+                document.getElementById('loadingMessage').style.display = 'none';
+                
+            } else {
+                throw new Error(result.error || 'Erro ao criar pagamento PIX');
             }
-            
-            // Display PIX Code
-            if (pixData.pixCopyPaste) {
-                document.getElementById('pixCode').value = pixData.pixCopyPaste;
-            }
-            
-            // Store payment ID for tracking
-            if (pixData.paymentId) {
-                localStorage.setItem('cnvPaymentId', pixData.paymentId);
-            }
-            
-            // Show PIX information
-            document.getElementById('pixInfo').style.display = 'block';
-            document.getElementById('generateCnvPayment').style.display = 'none';
-            
         } else {
-            alert('Erro ao gerar PIX: ' + (result.error || 'Erro desconhecido'));
+            console.error('Dados do usuário incompletos:', { name: userName, cpf: userCPF, phone: userPhone });
+            document.getElementById('loadingMessage').textContent = 'Erro: Dados do usuário não encontrados.';
         }
-        
     } catch (error) {
-        console.error('Erro:', error);
-        alert('Erro ao processar pagamento. Tente novamente.');
+        console.error('Erro ao criar pagamento:', error);
+        document.getElementById('loadingMessage').textContent = 'Erro ao carregar dados de pagamento.';
     }
 });
 
@@ -274,12 +180,12 @@ function copyPixCode() {
         document.execCommand('copy');
         
         const button = event.target.closest('button');
-        const originalText = button.innerHTML;
-        button.innerHTML = '<i class="fa fa-check mr-1"></i>Copiado!';
+        const originalText = button.textContent;
+        button.textContent = 'Copiado!';
         button.classList.add('bg-green-600');
         
         setTimeout(() => {
-            button.innerHTML = originalText;
+            button.textContent = originalText;
             button.classList.remove('bg-green-600');
         }, 2000);
         
