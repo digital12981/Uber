@@ -1211,12 +1211,6 @@ def finalizar():
     """CNV Payment page with real PIX transaction"""
     return render_template('finalizar.html')
 
-@app.route('/test')
-def test_page():
-    """Test page for calendar"""
-    with open('test_page.html', 'r') as f:
-        return f.read()
-
 @app.route('/create_cnv_payment', methods=['POST'])
 def create_cnv_payment():
     """Create PIX payment for CNV activation"""
@@ -1250,7 +1244,7 @@ def create_cnv_payment():
             'email': user_data.get('email', ''),
             'phone': user_data.get('phone', ''),
             'amount': 82.10,
-            'description': 'Taxa de Instalação do Adesivo Uber - Programa R$ 500,00 mensais'
+            'description': 'Pagamento Adesivo Uber - Programa R$ 500,00 mensais'
         }
         
         app.logger.info(f"Prepared payment data: {payment_data}")
