@@ -100,6 +100,14 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 24, 2025: Added 10-Minute PIX Expiration Timer to /finalizar ✅ WORKING
+  - **COUNTDOWN TIMER**: Added visual 10-minute countdown timer below payment warning box
+  - **EXPIRATION WARNING**: Clear message about losing Uber Partners program access after expiration
+  - **COLOR CODING**: Timer changes to orange (5 min) and red (2 min) as expiration approaches
+  - **AUTO EXPIRATION**: Page automatically shows expiration screen when timer reaches zero
+  - **USER EXPERIENCE**: Urgent visual cues to encourage immediate payment completion
+  - **COMPLETE INTEGRATION**: Timer works with both login and payment flow data sources
+
 - June 24, 2025: Fixed /finalizar Data Recognition + Dual localStorage Support ✅ WORKING
   - **DATA EXTRACTION FIX**: Fixed /finalizar to properly extract loginUserData for PIX generation
   - **DUAL STORAGE**: Login saves data to both loginUserData and standard candidate* keys for compatibility

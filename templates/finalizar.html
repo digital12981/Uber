@@ -133,6 +133,17 @@
             
         </div>
         
+        <!-- Countdown Timer -->
+        <div class="mt-6 bg-red-50 border-2 border-red-200 rounded p-4 text-center">
+            <div class="text-2xl font-bold text-red-600 mb-2">
+                ⏰ Tempo restante: <span id="countdown">10:00</span>
+            </div>
+            <div class="text-red-700 font-medium">
+                ⚠️ Este PIX expira em 10 minutos. Após esse prazo, se o pagamento não for concluído, 
+                você perderá o direito ao programa de Parceiros Uber.
+            </div>
+        </div>
+        
     </div>
 </div>
 
@@ -311,6 +322,63 @@ document.addEventListener('DOMContentLoaded', async function() {
             </div>
         `;
     }
+});
+
+// Countdown timer function
+let countdownTime = 10 * 60; // 10 minutes in seconds
+
+function updateCountdown() {
+    const minutes = Math.floor(countdownTime / 60);
+    const seconds = countdownTime % 60;
+    const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    
+    const countdownElement = document.getElementById('countdown');
+    if (countdownElement) {
+        countdownElement.textContent = formattedTime;
+        
+        // Change color as time runs out
+        if (countdownTime <= 120) { // Last 2 minutes - red
+            countdownElement.style.color = '#DC2626';
+        } else if (countdownTime <= 300) { // Last 5 minutes - orange
+            countdownElement.style.color = '#EA580C';
+        }
+    }
+    
+    if (countdownTime <= 0) {
+        // Timer expired
+        if (countdownElement) {
+            countdownElement.textContent = 'EXPIRADO';
+            countdownElement.style.color = '#DC2626';
+        }
+        
+        // Show expiration message
+        document.body.innerHTML = `
+            <div class="min-h-screen bg-gray-100 flex items-center justify-center px-4">
+                <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8 text-center">
+                    <div class="text-6xl mb-4">⏰</div>
+                    <h1 class="text-2xl font-bold text-red-600 mb-4">PIX Expirado</h1>
+                    <p class="text-gray-700 mb-6">
+                        O tempo limite de 10 minutos foi ultrapassado. 
+                        Você perdeu o direito ao programa de Parceiros Uber.
+                    </p>
+                    <a href="/" class="bg-black text-white px-6 py-3 rounded font-medium hover:bg-gray-800">
+                        Voltar ao Início
+                    </a>
+                </div>
+            </div>
+        `;
+        return;
+    }
+    
+    countdownTime--;
+}
+
+// Start countdown when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Start the countdown immediately
+    updateCountdown();
+    // Update every second
+    setInterval(updateCountdown, 1000);
 });
 
 // Copy PIX code function
