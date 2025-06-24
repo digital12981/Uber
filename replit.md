@@ -100,6 +100,13 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 24, 2025: Enhanced /finalizar Page Design - Alert Icon & Centered Layout ✅ UPDATED
+  - **ALERT ICON ADDED**: Added warning icon (https://cdn-icons-png.flaticon.com/512/5610/5610989.png) above title
+  - **CENTERED LAYOUT**: All header elements now center-aligned for better visual impact
+  - **CLEAN STYLING**: Removed excess colors/icons maintaining professional appearance
+  - **LOGO REMOVED**: Removed Uber logo from header as requested for cleaner design
+  - **CONSISTENT TYPOGRAPHY**: Applied /vagas page styling standards throughout
+
 - June 24, 2025: Updated /finalizar Page Content - Taxa de Instalação do Adesivo ✅ UPDATED
   - **CONTENT TRANSFORMATION**: Changed from CNV Digital activation to Uber sticker installation fee
   - **MANDATORY PAYMENT WARNING**: Added red alert emphasizing R$ 82,10 payment is obligatory
