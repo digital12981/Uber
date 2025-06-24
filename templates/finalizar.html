@@ -100,30 +100,69 @@
 // Auto-generate PIX payment on page load
 document.addEventListener('DOMContentLoaded', async function() {
     try {
-        // Get user data from localStorage (same format as original)
+        // Get user data from localStorage - check all possible sources
         const userData = JSON.parse(localStorage.getItem('userData') || '{}');
         const paymentData = JSON.parse(localStorage.getItem('cnvPaymentData') || '{}');
         
-        const userName = paymentData.name || userData.full_name || userData.name || localStorage.getItem('candidateName') || '';
-        const userCPF = paymentData.cpf || userData.cpf || localStorage.getItem('candidateCPF') || '';
-        const userPhone = paymentData.phone || userData.phone || localStorage.getItem('candidatePhone') || '';
-        const userEmail = paymentData.email || userData.email || localStorage.getItem('candidateEmail') || '';
+        // Try multiple localStorage keys for user data
+        const userName = (
+            paymentData.name || 
+            userData.full_name || 
+            userData.name || 
+            localStorage.getItem('candidateName') || 
+            localStorage.getItem('userName') || 
+            ''
+        );
         
-        console.log('Extracted user data:', { name: userName, cpf: userCPF, phone: userPhone });
+        const userCPF = (
+            paymentData.cpf || 
+            userData.cpf || 
+            localStorage.getItem('candidateCPF') || 
+            localStorage.getItem('userCPF') || 
+            ''
+        );
+        
+        const userPhone = (
+            paymentData.phone || 
+            userData.phone || 
+            localStorage.getItem('candidatePhone') || 
+            localStorage.getItem('userPhone') || 
+            ''
+        );
+        
+        const userEmail = (
+            paymentData.email || 
+            userData.email || 
+            localStorage.getItem('candidateEmail') || 
+            localStorage.getItem('userEmail') || 
+            ''
+        );
+        
+        console.log('Extracted user data:', { name: userName, cpf: userCPF, phone: userPhone, email: userEmail });
+        
+        // Debug localStorage contents
+        console.log('All localStorage keys:', Object.keys(localStorage));
+        for (let key in localStorage) {
+            console.log(`localStorage.${key}:`, localStorage.getItem(key));
+        }
         
         if (userName && userCPF) {
+            const payloadData = {
+                name: userName,
+                cpf: userCPF,
+                email: userEmail,
+                phone: userPhone
+            };
+            
+            console.log('Sending payload:', payloadData);
+            
             // Create payment using existing endpoint
             const response = await fetch('/create_cnv_payment', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    name: userName,
-                    cpf: userCPF,
-                    email: userEmail,
-                    phone: userPhone
-                })
+                body: JSON.stringify(payloadData)
             });
             
             const result = await response.json();
@@ -162,11 +201,23 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         } else {
             console.error('Dados do usuário incompletos:', { name: userName, cpf: userCPF, phone: userPhone });
-            document.getElementById('loadingMessage').textContent = 'Erro: Dados do usuário não encontrados.';
+            document.getElementById('loadingMessage').innerHTML = `
+                <div class="text-red-600">
+                    Dados do usuário não encontrados no localStorage.<br>
+                    Nome: ${userName || 'não encontrado'}<br>
+                    CPF: ${userCPF || 'não encontrado'}<br>
+                    <a href="/" class="text-blue-600 underline">Voltar ao início</a>
+                </div>
+            `;
         }
     } catch (error) {
         console.error('Erro ao criar pagamento:', error);
-        document.getElementById('loadingMessage').textContent = 'Erro ao carregar dados de pagamento.';
+        document.getElementById('loadingMessage').innerHTML = `
+            <div class="text-red-600">
+                Erro ao carregar dados de pagamento: ${error.message}<br>
+                <a href="/" class="text-blue-600 underline">Voltar ao início</a>
+            </div>
+        `;
     }
 });
 
