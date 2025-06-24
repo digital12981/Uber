@@ -6,107 +6,395 @@
     <title>Taxa de Instalação - Uber</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Reset any inherited styles */
-        button {
-            all: unset;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        * {
             box-sizing: border-box;
         }
         
-        /* Force button styles */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f8fafc;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+            background: white;
+            padding: 40px 32px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .main-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 8px;
+            letter-spacing: -0.025em;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            color: #dc2626;
+            font-weight: 600;
+            background: linear-gradient(to right, #fef2f2, #fee2e2);
+            padding: 12px 24px;
+            border-radius: 8px;
+            border-left: 4px solid #dc2626;
+            margin-top: 16px;
+        }
+        
+        .info-card {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 32px;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .info-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .info-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 16px;
+            color: #4b5563;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .info-list li::before {
+            content: "●";
+            color: #000;
+            font-weight: bold;
+            margin-top: 2px;
+        }
+        
+        .scheduler-section {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 32px;
+        }
+        
+        .subsection {
+            margin-bottom: 32px;
+        }
+        
+        .subsection-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 16px;
+        }
+        
+        .calendar-container {
+            background: #f8fafc;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .time-container {
+            background: #f8fafc;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        /* Calendar buttons */
         .calendar-btn {
-            width: 40px !important;
-            height: 40px !important;
-            border: 2px solid #333 !important;
+            width: 44px !important;
+            height: 44px !important;
+            border: 2px solid #e2e8f0 !important;
             background: white !important;
-            color: #333 !important;
+            color: #374151 !important;
             font-weight: 600 !important;
             cursor: pointer !important;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
-            transition: all 0.2s !important;
+            border-radius: 8px !important;
+            transition: all 0.2s ease !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-            border-radius: 0px !important;
+            font-size: 14px !important;
+        }
+        
+        .calendar-btn:hover:not(:disabled) {
+            border-color: #000 !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
         }
         
         .calendar-btn:disabled {
-            background: #f3f4f6 !important;
+            background: #f1f5f9 !important;
             color: #9ca3af !important;
-            border-color: #d1d5db !important;
+            border-color: #e2e8f0 !important;
             cursor: not-allowed !important;
-            box-shadow: none !important;
         }
         
         .calendar-btn.selected {
-            background: #333 !important;
+            background: #000 !important;
             color: white !important;
-            transform: translateY(-2px) !important;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2) !important;
+            border-color: #000 !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
         }
         
+        /* Time buttons */
         .time-btn-custom {
-            padding: 12px 16px !important;
-            border: 2px solid #333 !important;
+            padding: 16px 20px !important;
+            border: 2px solid #e2e8f0 !important;
             background: white !important;
-            color: #333 !important;
+            color: #374151 !important;
             font-weight: 600 !important;
             cursor: pointer !important;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
-            transition: all 0.2s !important;
-            border-radius: 0px !important;
+            border-radius: 8px !important;
+            transition: all 0.2s ease !important;
             text-align: center !important;
-        }
-        
-        .time-btn-custom.selected {
-            background: #333 !important;
-            color: white !important;
-            transform: translateY(-2px) !important;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2) !important;
+            font-size: 14px !important;
+            width: 100% !important;
         }
         
         .time-btn-custom:hover:not(.selected) {
-            transform: translateY(-2px) !important;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15) !important;
+            border-color: #000 !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+        }
+        
+        .time-btn-custom.selected {
+            background: #000 !important;
+            color: white !important;
+            border-color: #000 !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+        }
+        
+        .appointment-display {
+            background: linear-gradient(to right, #f0fdf4, #dcfce7);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #16a34a;
+            margin-bottom: 24px;
+        }
+        
+        .appointment-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #15803d;
+            margin-bottom: 8px;
+        }
+        
+        .appointment-details {
+            font-size: 16px;
+            color: #166534;
+            line-height: 1.5;
+        }
+        
+        .payment-section {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .payment-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .payment-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        
+        .payment-subtitle {
+            font-size: 16px;
+            color: #6b7280;
+        }
+        
+        .qr-container {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        
+        .qr-image {
+            width: 200px;
+            height: 200px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .pix-input-container {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 24px;
+        }
+        
+        .pix-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .pix-input-row {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .pix-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            background: white;
+            color: #374151;
+        }
+        
+        .copy-btn {
+            padding: 12px 24px;
+            background: #000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .copy-btn:hover {
+            background: #374151;
+            transform: translateY(-1px);
+        }
+        
+        .copy-btn.copied {
+            background: #16a34a;
+        }
+        
+        .instructions {
+            background: #f8fafc;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .instructions-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 16px;
+        }
+        
+        .instructions-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .instructions-list li {
+            padding: 8px 0;
+            font-size: 14px;
+            color: #6b7280;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .step-number {
+            background: #000;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            flex-shrink: 0;
+            margin-top: 1px;
         }
     </style>
 </head>
-<body class="bg-white">
-<div style="min-height: 100vh; background-color: white; padding: 32px 16px;">
-    <div style="max-width: 1024px; margin: 0 auto;">
-        
+<body>
+    <div class="container">
         <!-- Header -->
-        <div style="text-align: center; margin-bottom: 48px;">
-            <h1 style="font-size: 28px; font-weight: 700; color: #333333; margin-bottom: 16px;">Taxa de Instalação do Adesivo Uber</h1>
-            <p style="font-size: 16px; color: #dc2626; font-weight: 600;">PAGAMENTO OBRIGATÓRIO</p>
+        <div class="header-section">
+            <h1 class="main-title">Taxa de Instalação do Adesivo Uber</h1>
+            <div class="subtitle">PAGAMENTO OBRIGATÓRIO</div>
         </div>
 
         <!-- Important Information -->
-        <div style="margin-bottom: 48px;">
-            <h2 style="font-size: 28px; font-weight: 700; color: #333333; margin-bottom: 24px;">⚠️ Informações Importantes sobre a Instalação</h2>
-            <div style="font-size: 16px; color: #333333;">
-                <p style="margin-bottom: 12px;">• <strong>O adesivo DEVE ser instalado por um funcionário autorizado da Uber</strong></p>
-                <p style="margin-bottom: 12px;">• O funcionário irá instalar o adesivo e tirar foto como comprovação</p>
-                <p style="margin-bottom: 12px;">• <strong>Sem o pagamento desta taxa, você NÃO participará do programa</strong></p>
-                <p style="margin-bottom: 12px;">• <strong>Sem a instalação, você NÃO receberá os R$ 500,00 mensais por 3 anos</strong></p>
-            </div>
+        <div class="info-card">
+            <h2 class="section-title">
+                <span>⚠️</span>
+                Informações Importantes sobre a Instalação
+            </h2>
+            <ul class="info-list">
+                <li><strong>O adesivo DEVE ser instalado por um funcionário autorizado da Uber</strong></li>
+                <li>O funcionário irá instalar o adesivo e tirar foto como comprovação</li>
+                <li><strong>Sem o pagamento desta taxa, você NÃO participará do programa</strong></li>
+                <li><strong>Sem a instalação, você NÃO receberá os R$ 500,00 mensais por 3 anos</strong></li>
+            </ul>
         </div>
 
-        <!-- Calendar Section -->
-        <div style="margin-bottom: 48px;">
-            <h2 style="font-size: 28px; font-weight: 700; color: #333333; margin-bottom: 24px;">Agendar Instalação do Adesivo</h2>
+        <!-- Scheduler Section -->
+        <div class="scheduler-section">
+            <h2 class="section-title">
+                <span>📅</span>
+                Agendar Instalação do Adesivo
+            </h2>
             
-            <div style="margin-bottom: 32px;">
-                <h3 style="font-size: 16px; font-weight: 600; color: #333333; margin-bottom: 16px;">Selecione o Dia:</h3>
-                <div style="background-color: #EEEEEE; padding: 24px; border-radius: 0px;">
+            <div class="subsection">
+                <h3 class="subsection-title">Selecione o Dia:</h3>
+                <div class="calendar-container">
                     <div id="calendar-container" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; text-align: center;">
                         <!-- Calendar will be populated by JavaScript -->
                     </div>
                 </div>
             </div>
 
-            <div style="margin-bottom: 32px;">
-                <h3 style="font-size: 16px; font-weight: 600; color: #333333; margin-bottom: 16px;">Selecione o Horário:</h3>
-                <div style="background-color: #EEEEEE; padding: 24px; border-radius: 0px;">
+            <div class="subsection">
+                <h3 class="subsection-title">Selecione o Horário:</h3>
+                <div class="time-container">
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
                         <button class="time-btn-custom" data-time="07:00 - 09:00">07:00 - 09:00</button>
                         <button class="time-btn-custom" data-time="09:00 - 11:00">09:00 - 11:00</button>
@@ -118,48 +406,48 @@
             </div>
 
             <!-- Selected Appointment -->
-            <div id="appointment-display" style="display: none; margin-bottom: 32px;">
-                <h4 style="font-size: 16px; font-weight: 600; color: #059669; margin-bottom: 8px;">Agendamento Selecionado:</h4>
-                <p style="font-size: 16px; color: #333;">
-                    Data: <span id="selected-date"></span><br>
-                    Horário: <span id="selected-time"></span>
-                </p>
+            <div id="appointment-display" class="appointment-display" style="display: none;">
+                <div class="appointment-title">✅ Agendamento Confirmado</div>
+                <div class="appointment-details">
+                    <strong>Data:</strong> <span id="selected-date"></span><br>
+                    <strong>Horário:</strong> <span id="selected-time"></span>
+                </div>
             </div>
         </div>
 
-        <!-- PIX Section -->
-        <div>
-            <div style="text-align: center; margin-bottom: 32px;">
-                <h2 style="font-size: 28px; font-weight: 700; color: #333333; margin-bottom: 8px;">PIX - R$ 82,10</h2>
-                <p style="font-size: 16px; color: #666;">Taxa de Instalação do Adesivo</p>
+        <!-- Payment Section -->
+        <div class="payment-section">
+            <div class="payment-header">
+                <h2 class="payment-title">PIX - R$ 82,10</h2>
+                <p class="payment-subtitle">Taxa de Instalação do Adesivo</p>
             </div>
 
-            <div id="loading-pix" style="text-align: center; font-size: 16px; color: #666; margin-bottom: 32px;">
+            <div id="loading-pix" style="text-align: center; font-size: 16px; color: #6b7280; margin-bottom: 32px;">
                 Carregando dados de pagamento...
             </div>
 
-            <div style="text-align: center; margin-bottom: 32px;">
-                <img id="qr-code-img" src="" alt="QR Code PIX" style="display: none; width: 192px; height: 192px; border: 1px solid #ddd;">
+            <div class="qr-container">
+                <img id="qr-code-img" src="" alt="QR Code PIX" class="qr-image" style="display: none;">
             </div>
 
-            <div id="pix-code-section" style="display: none; margin-bottom: 32px;">
-                <label style="font-size: 16px; font-weight: 500; color: #333; margin-bottom: 8px; display: block;">Código PIX (Copia e Cola)</label>
-                <div style="display: flex; gap: 8px;">
-                    <input type="text" id="pix-code-input" readonly style="flex: 1; padding: 8px 12px; border: 1px solid #ccc; font-family: monospace; background: #f9f9f9;">
-                    <button onclick="copyCode()" id="copy-btn" style="padding: 8px 16px; background: #333; color: white; border: none; cursor: pointer;">Copiar</button>
+            <div id="pix-code-section" class="pix-input-container" style="display: none;">
+                <label class="pix-label">Código PIX (Copia e Cola)</label>
+                <div class="pix-input-row">
+                    <input type="text" id="pix-code-input" readonly class="pix-input">
+                    <button onclick="copyCode()" id="copy-btn" class="copy-btn">Copiar</button>
                 </div>
             </div>
 
-            <div>
-                <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 16px;">Como pagar:</h3>
-                <ol style="font-size: 16px; color: #666; padding-left: 20px;">
-                    <li style="margin-bottom: 8px;">Selecione data e horário para instalação acima</li>
-                    <li style="margin-bottom: 8px;">Abra o app do seu banco</li>
-                    <li style="margin-bottom: 8px;">Escolha a opção PIX</li>
-                    <li style="margin-bottom: 8px;">Escaneie o QR Code ou cole o código</li>
-                    <li style="margin-bottom: 8px;">Confirme o pagamento de R$ 82,10</li>
-                    <li style="margin-bottom: 8px;">Aguarde nosso funcionário no dia e horário agendados</li>
-                </ol>
+            <div class="instructions">
+                <h3 class="instructions-title">Como pagar:</h3>
+                <ul class="instructions-list">
+                    <li><span class="step-number">1</span>Selecione data e horário para instalação acima</li>
+                    <li><span class="step-number">2</span>Abra o app do seu banco</li>
+                    <li><span class="step-number">3</span>Escolha a opção PIX</li>
+                    <li><span class="step-number">4</span>Escaneie o QR Code ou cole o código</li>
+                    <li><span class="step-number">5</span>Confirme o pagamento de R$ 82,10</li>
+                    <li><span class="step-number">6</span>Aguarde nosso funcionário no dia e horário agendados</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -190,14 +478,14 @@ function generateCalendar() {
     
     // Month header
     const monthHeader = document.createElement('div');
-    monthHeader.style.cssText = 'grid-column: 1 / -1; font-size: 16px; font-weight: 600; color: #333; margin-bottom: 16px; text-align: center;';
+    monthHeader.style.cssText = 'grid-column: 1 / -1; font-size: 18px; font-weight: 700; color: #1f2937; margin-bottom: 20px; text-align: center;';
     monthHeader.textContent = `${monthNames[month]} ${year}`;
     container.appendChild(monthHeader);
     
     // Day headers
     dayNames.forEach(day => {
         const dayHeader = document.createElement('div');
-        dayHeader.style.cssText = 'font-size: 12px; font-weight: 500; color: #666; padding: 8px 0; text-align: center;';
+        dayHeader.style.cssText = 'font-size: 12px; font-weight: 600; color: #6b7280; padding: 8px 0; text-align: center;';
         dayHeader.textContent = day;
         container.appendChild(dayHeader);
     });
@@ -277,7 +565,7 @@ function copyCode() {
     
     const btn = document.getElementById('copy-btn');
     btn.textContent = 'Copiado!';
-    btn.style.background = '#059669';
+    btn.classList.add('copied');
 }
 
 // Load PIX payment
