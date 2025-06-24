@@ -99,10 +99,12 @@ def veiculo():
     return render_template("veiculo.html")
 
 @app.route("/recebedor")
-@simple_mobile_only
-@performance_monitor  
 def recebedor():
     try:
+        # Skip mobile protection for Heroku to prevent redirect loops
+        if os.environ.get('DYNO'):
+            app.logger.info("Heroku environment - skipping mobile protection")
+        
         # Log the request for debugging
         app.logger.info(f"Recebedor page accessed from {request.remote_addr}")
         return render_template("recebedor.html")
