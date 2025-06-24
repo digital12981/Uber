@@ -7,11 +7,18 @@ cp requirements_heroku.txt requirements.txt
 
 echo "✅ Requirements atualizados para Heroku"
 
+# Show what we're deploying
+echo "📋 Principais correções:"
+echo "  - Removido connect_timeout inválido"
+echo "  - Configurado Procfile para Python direto"
+echo "  - Gunicorn incluído nos requirements"
+echo "  - PORT do Heroku configurado"
+
 # Add all changes
 git add .
 
 # Commit changes
-git commit -m "Fix Heroku deployment - remove connect_timeout parameter"
+git commit -m "Fix Heroku deployment - database config and gunicorn fix"
 
 echo "✅ Alterações commitadas"
 

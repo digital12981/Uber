@@ -13,3 +13,4 @@ trafilatura
 beautifulsoup4
 lxml
 trafilatura
+gunicorn
