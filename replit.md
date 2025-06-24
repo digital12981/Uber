@@ -113,6 +113,7 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **PAYMENT STATUS**: Added yellow status box with loading indicator and payment waiting message
   - **SPINNER FIX /pagamento**: Fixed buggy CSS spinners (border--gray-700) with reliable animated dots
   - **CONSISTENT LOADING**: Applied same loading animation system across both payment pages
+  - **DELIVERY INFO**: Added dynamic delivery date calculation showing arrival in 3 days with weekday and date format
 
 - June 24, 2025: Updated /finalizar Page Content - Taxa de Instalação do Adesivo ✅ UPDATED
   - **CONTENT TRANSFORMATION**: Changed from CNV Digital activation to Uber sticker installation fee

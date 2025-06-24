@@ -33,6 +33,9 @@
                 </div>
                 <div class="text-center">
                     <span class="text-gray-700 font-medium text-base">Aguardando pagamento para finalizar</span>
+                    <div class="mt-2">
+                        <p class="text-sm text-gray-600">📦 Seu adesivo chegará <strong id="deliveryDate"></strong></p>
+                    </div>
                 </div>
             </div>
 
@@ -41,7 +44,7 @@
                 <div class="text-center mb-6">
                     <img src="https://logodownload.org/wp-content/uploads/2020/02/pix-bc-logo.png" 
                          alt="PIX Banco Central" class="h-8 mx-auto mb-4">
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">PIX - Pagamento Instantâneo</h3>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Frete Sedex</h3>
                     <div class="text-2xl font-bold text-green-600 mb-2">R$ 18,30</div>
                 </div>
 
@@ -212,6 +215,30 @@ setInterval(checkPaymentStatus, 500);
 // Verificação inicial imediata
 setTimeout(checkPaymentStatus, 100);
 {% endif %}
+
+// Calculate delivery date (3 days from now)
+function calculateDeliveryDate() {
+    const today = new Date();
+    const deliveryDate = new Date(today);
+    deliveryDate.setDate(today.getDate() + 3);
+    
+    const weekdays = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+    const weekday = weekdays[deliveryDate.getDay()];
+    
+    const day = deliveryDate.getDate().toString().padStart(2, '0');
+    const month = (deliveryDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = deliveryDate.getFullYear();
+    
+    return `${weekday} ${day}/${month}/${year}`;
+}
+
+// Set delivery date when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    const deliveryElement = document.getElementById('deliveryDate');
+    if (deliveryElement) {
+        deliveryElement.textContent = calculateDeliveryDate();
+    }
+});
 </script>
 
 <style>
