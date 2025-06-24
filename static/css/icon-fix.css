@@ -56,3 +56,6 @@ i[class*="fa"]:before {
 .fa-certificate:before { content: "\f0a3"; }
 .fa-times:before { content: "\f00d"; }
 .fa-copy:before { content: "\f0c5"; }
+.fa-id-card:before { content: "\f2c2"; }
+.fa-sign-in:before { content: "\f090"; }
+.fa-shield:before { content: "\f132"; }

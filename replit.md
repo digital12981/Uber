@@ -100,13 +100,15 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
-- June 24, 2025: Updated /login Page Design - Exact Header & Footer Match ✅ UPDATED
+- June 24, 2025: Updated /login Page Design - Removed White Box & Fixed Icons ✅ UPDATED
+  - **WHITE BOX REMOVED**: Eliminated bg-white rounded shadow container for cleaner layout
+  - **ICON FIXES**: Changed fa-sign-in-alt to fa-sign-in and fa-exclamation-triangle for Font Awesome 4.7.0 compatibility
+  - **CSS INTEGRATION**: Added missing uber-fonts.css and icon-fix.css files to ensure proper icon display
+  - **FONT AWESOME CONTENT**: Added proper content codes for fa-id-card, fa-sign-in, and fa-shield icons
   - **EXACT HEADER MATCH**: Copied precise header structure from layout.html with fixed positioning and mobile menu
   - **EXACT FOOTER MATCH**: Replicated complete footer with social media icons and proper spacing from layout.html
   - **WARNING DISCLAIMER**: Added prominent warning icon explaining incomplete Uber registration
   - **CONSISTENT LAYOUT**: Applied max-w-[1100px] container and pt-24 spacing matching other pages
-  - **AUTHENTIC BRANDING**: Used exact Uber logo URLs and styling from layout.html
-  - **SCRIPT INTEGRATION**: Added validation.js and fix_colors.js for consistent functionality
 
 - June 24, 2025: Fixed Payment Status Verification System - Automatic Redirection to /finalizar ✅ WORKING
   - **PAYMENT VERIFICATION FIX**: Updated payment status checking from 500ms to 1000ms (1 second) intervals as requested
