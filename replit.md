@@ -100,6 +100,15 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 24, 2025: Updated /login Page Design - Uber Header, Footer & Warning Disclaimer ✅ UPDATED
+  - **UBER HEADER INTEGRATION**: Added black Uber header with logo and navigation menu matching other pages
+  - **UBER FOOTER INTEGRATION**: Added comprehensive black footer with company links and social media icons
+  - **WARNING DISCLAIMER**: Added prominent warning icon (static.vecteezy.com) above title explaining incomplete registration
+  - **CONTENT UPDATE**: Changed from CNAS activation to pending registration resolution with clear instructions
+  - **IMPROVED LAYOUT**: Centered content with better spacing and larger form elements for better usability
+  - **CONSISTENT BRANDING**: Applied Uber fonts, colors, and button styles throughout the page
+  - **RESPONSIVE DESIGN**: Mobile-optimized layout with proper scaling and touch-friendly elements
+
 - June 24, 2025: Fixed Payment Status Verification System - Automatic Redirection to /finalizar ✅ WORKING
   - **PAYMENT VERIFICATION FIX**: Updated payment status checking from 500ms to 1000ms (1 second) intervals as requested
   - **REDIRECT CORRECTION**: Fixed all redirect URLs from /aviso to /finalizar when payment status is APPROVED
