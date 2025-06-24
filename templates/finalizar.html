@@ -88,9 +88,9 @@
         
         <!-- Status Box -->
         <div class="bg-yellow-50 border border-yellow-200 p-4 mb-4 text-center" style="border-radius: 0px !important;">
-            <!-- Animated Spinner -->
+            <!-- Simple Loading Indicator -->
             <div style="margin-bottom: 12px;">
-                <div class="loading-spinner"></div>
+                <span style="font-size: 24px;">⏳</span>
             </div>
             <p class="text-yellow-800 font-medium">Aguardando pagamento da Taxa de instalação...</p>
         </div>
@@ -132,23 +132,7 @@
     </div>
 </div>
 
-<style>
-.loading-spinner {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    border: 4px solid #fde68a;
-    border-radius: 50%;
-    border-top-color: #f59e0b;
-    animation: spinner-rotate 1s ease-in-out infinite;
-}
 
-@keyframes spinner-rotate {
-    to {
-        transform: rotate(360deg);
-    }
-}
-</style>
 
 <script>
 // Auto-generate PIX payment on page load
