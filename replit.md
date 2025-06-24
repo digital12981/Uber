@@ -100,6 +100,17 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 24, 2025: Heroku Deployment Fix - PostgreSQL Connection Issue Resolved ✅ FIXED
+  - **CRITICAL DATABASE FIX**: Removed invalid `connect_timeout` parameter causing Heroku crash
+  - PostgreSQL connection error: `TypeError: 'connect_timeout' is an invalid keyword argument`
+  - Updated `app.config["SQLALCHEMY_ENGINE_OPTIONS"]` to remove unsupported parameter
+  - Changed `sslmode` from "prefer" to "require" for Heroku PostgreSQL compatibility
+  - Updated Procfile to use gunicorn with PORT environment variable: `gunicorn --bind 0.0.0.0:$PORT`
+  - Modified main.py to use `PORT` environment variable for Heroku deployment
+  - Set debug=False for production environment
+  - Created requirements_heroku.txt with psycopg2-binary (no version lock) for better Heroku compatibility
+  - **DEPLOYMENT READY**: Fixed database connection issue preventing Heroku dyno startup
+
 - June 24, 2025: QR Code Real PIX Implementation + Complete Payment System - PRODUCTION VERSION ✅ WORKING
   - **QR CODE REAL FUNCIONANDO**: Implementado sistema completo de QR code autêntico para transações PIX
   - QR code gerado automaticamente a partir do código PIX real retornado pela API For4Payments

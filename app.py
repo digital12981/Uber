@@ -55,9 +55,8 @@ app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
     "pool_timeout": 10,
     "echo": False,
     "connect_args": {
-        "connect_timeout": 5,
         "application_name": "prosegur_enterprise",
-        "sslmode": "prefer"
+        "sslmode": "require"
     }
 }
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
