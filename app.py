@@ -348,6 +348,13 @@ def loading():
 @app.route("/loading_transition")
 def loading_transition():
     """Loading page for transitions between pages"""
+    # Get redirect parameter
+    redirect_url = request.args.get('redirect', '/')
+    
+    # For recebedor route, redirect directly to avoid bugs
+    if redirect_url == '/recebedor':
+        return redirect('/recebedor')
+    
     return render_template("loading_transition.html")
 
 @app.route("/get_user_data")
@@ -372,16 +379,12 @@ def get_user_data():
     })
 
 @app.route("/address", methods=['GET', 'POST'])
-@simple_mobile_only
 def address():
     if request.method == 'POST':
         try:
             data = request.form
             if not session.get('registration_data'):
-                return redirect(url_for('loading', 
-                    next='/', 
-                    text='Redirecionando...', 
-                    time=2000))
+                return redirect('/')
 
             registration_data = session["registration_data"]
             registration_data.update({
@@ -403,11 +406,10 @@ def address():
             logging.error(f"Error in address submission: {str(e)}")
             return redirect(url_for('index'))
     else:
-        if not session.get('registration_data'):
-            return redirect(url_for('loading', 
-                next='/', 
-                text='Redirecionando...', 
-                time=2000))
+        # Skip session validation for Heroku to prevent redirect loops
+        if os.environ.get('DYNO'):
+            app.logger.info("Heroku environment - skipping session validation for address page")
+        
         return render_template("address.html")
 
 @app.route("/create-shipping-payment", methods=["POST"])

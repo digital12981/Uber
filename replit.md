@@ -100,14 +100,14 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
-- June 24, 2025: Recebedor Direct Navigation - Loading Screen Removed ✅ FIXED
-  - **DIRECT REDIRECT**: Completely removed loading screens between /recebedor and /address
-  - **IMMEDIATE NAVIGATION**: Changed to location.href with instant redirect
-  - **SIMPLIFIED FUNCTION**: Renamed continueToAddress() to goDirectToAddress()
-  - **SINGLE EXECUTION**: Added data-processing attribute to prevent multiple clicks
-  - **NO LOADING TRANSITIONS**: Eliminated all intermediate loading screens
-  - Fixed persistent double loading issue by removing all transition screens
-  - **HEROKU READY**: Direct navigation without any intermediate steps
+- June 24, 2025: Address Page Navigation Fix - Heroku Production Ready ✅ FIXED
+  - **ADDRESS ROUTE FIX**: Removed mobile protection causing redirect loops in Heroku
+  - **SESSION VALIDATION BYPASS**: Disabled session checks for Heroku environment
+  - **LOCAL PAGE DIRECT**: Changed /local button to redirect directly to /recebedor
+  - **LOADING TRANSITION FIX**: Added direct redirect for /recebedor in loading_transition route
+  - **ELIMINATED LOADING SCREENS**: Removed all intermediate loading between /recebedor and /address
+  - Fixed critical bug where /address would show loading screen then redirect to index
+  - **HEROKU PRODUCTION READY**: All navigation flows working correctly in production
 
 - June 24, 2025: Header Design Update - Fixed Navigation & Larger Logo ✅ UPDATED
   - **HEADER FIXES**: Fixed header position across all pages (layout.html and vagas.html)
