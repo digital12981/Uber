@@ -314,12 +314,12 @@ function continueToAddress() {
         return;
     }
     
-    // Prevent multiple clicks and double loading
+    // Strong prevention against multiple executions
     const btn = document.getElementById('continue-btn');
-    if (btn.disabled || btn.classList.contains('processing')) return;
+    if (btn.dataset.clicked === 'true') return;
+    btn.dataset.clicked = 'true';
     
     btn.disabled = true;
-    btn.classList.add('processing');
     btn.style.background = '#ccc !important';
     btn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>Processando...';
     
@@ -337,10 +337,8 @@ function continueToAddress() {
     localStorage.setItem('paymentMethod', JSON.stringify(paymentData));
     console.log('Payment method saved:', paymentData);
     
-    // Use timeout to prevent race conditions
-    setTimeout(() => {
-        window.location.href = '/address';
-    }, 100);
+    // Direct navigation without timeout to prevent double loading
+    window.location.replace('/address');
 }
 </script>
 {% endblock %}

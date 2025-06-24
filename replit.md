@@ -100,6 +100,15 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 24, 2025: Recebedor Button Fix - Navigation Bug Resolved ✅ FIXED
+  - **NAVIGATION BUG FIX**: Fixed /recebedor page button causing double loading and wrong redirects
+  - **BUTTON PROTECTION**: Added data-clicked attribute to prevent multiple executions
+  - **REDIRECT OPTIMIZATION**: Changed from window.location.href to window.location.replace
+  - **REMOVED TIMEOUT**: Eliminated setTimeout that was causing race conditions
+  - **HEROKU COMPATIBILITY**: Removed mobile protection from recebedor route for deployment
+  - Fixed issue where clicking Continuar would load twice and redirect to index instead of /address
+  - **PRODUCTION READY**: All /recebedor navigation issues resolved for Heroku deployment
+
 - June 24, 2025: Header Design Update - Fixed Navigation & Larger Logo ✅ UPDATED
   - **HEADER FIXES**: Fixed header position across all pages (layout.html and vagas.html)
   - **LOGO SIZE INCREASE**: Changed logo from h-8 to h-12 for better visibility
