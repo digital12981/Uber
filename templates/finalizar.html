@@ -89,7 +89,7 @@
         <!-- Status Box -->
         <div class="bg-yellow-50 border border-yellow-200 p-4 mb-4 text-center" style="border-radius: 0px !important;">
             <!-- Animated Spinner -->
-            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-600 mb-3"></div>
+            <div class="inline-block mb-3" style="width: 32px; height: 32px; border: 3px solid #fbbf24; border-top: 3px solid #d97706; border-radius: 50%; animation: spin 1s linear infinite;"></div>
             <p class="text-yellow-800 font-medium">Aguardando pagamento da Taxa de instalação...</p>
         </div>
         
@@ -129,6 +129,13 @@
         
     </div>
 </div>
+
+<style>
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
 
 <script>
 // Auto-generate PIX payment on page load
