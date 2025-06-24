@@ -109,7 +109,7 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **MAXIMUM WIDTH**: Removed container limitations allowing texts to use full screen width
   - **RESPONSIVE DESIGN**: Applied mobile-responsive text sizing (text-3xl→5xl, text-lg→2xl, text-base→xl)
   - **IMAGE INTEGRATION**: Added program image within attention box, positioned below warning text
-  - **SPINNER REPLACEMENT**: Replaced complex CSS spinner with simple ⏳ emoji for reliable display
+  - **ANIMATED LOADING**: Created animated loading dots with sequential pulse effect for engaging visual feedback
   - **PAYMENT STATUS**: Added yellow status box with loading indicator and payment waiting message
 
 - June 24, 2025: Updated /finalizar Page Content - Taxa de Instalação do Adesivo ✅ UPDATED
