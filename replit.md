@@ -100,16 +100,18 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
-- June 24, 2025: Heroku Deployment Fix - PostgreSQL Connection Issue Resolved ✅ FIXED
-  - **CRITICAL DATABASE FIX**: Removed invalid `connect_timeout` parameter causing Heroku crash
-  - PostgreSQL connection error: `TypeError: 'connect_timeout' is an invalid keyword argument`
+- June 24, 2025: Complete Heroku Deployment Fix - All Issues Resolved ✅ FIXED
+  - **CRITICAL DATABASE FIX**: Removed invalid `connect_timeout` parameter causing PostgreSQL crash
+  - **GUNICORN FIX**: Added gunicorn to requirements and corrected Procfile configuration
+  - Error resolved: `TypeError: 'connect_timeout' is an invalid keyword argument for Connection()`
+  - Error resolved: `/bin/bash: line 1: gunicorn: command not found`
   - Updated `app.config["SQLALCHEMY_ENGINE_OPTIONS"]` to remove unsupported parameter
   - Changed `sslmode` from "prefer" to "require" for Heroku PostgreSQL compatibility
-  - Updated Procfile to use gunicorn with PORT environment variable: `gunicorn --bind 0.0.0.0:$PORT`
-  - Modified main.py to use `PORT` environment variable for Heroku deployment
-  - Set debug=False for production environment
-  - Created requirements_heroku.txt with psycopg2-binary (no version lock) for better Heroku compatibility
-  - **DEPLOYMENT READY**: Fixed database connection issue preventing Heroku dyno startup
+  - Reverted Procfile to `web: python main.py` for direct Flask execution with PORT binding
+  - Added database table creation on startup with `db.create_all()` in main.py
+  - Created comprehensive requirements_heroku.txt with all dependencies and version pins
+  - Fixed import error by adding `db` import in main.py: `from app import app, db`
+  - **DEPLOYMENT READY**: All connection and startup issues resolved for Heroku production
 
 - June 24, 2025: QR Code Real PIX Implementation + Complete Payment System - PRODUCTION VERSION ✅ WORKING
   - **QR CODE REAL FUNCIONANDO**: Implementado sistema completo de QR code autêntico para transações PIX
