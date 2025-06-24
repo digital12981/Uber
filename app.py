@@ -1209,7 +1209,7 @@ def aviso():
 @simple_mobile_only
 def finalizar():
     """CNV Payment page with real PIX transaction"""
-    return render_template('finalizar_simple.html')
+    return render_template('finalizar.html')
 
 @app.route('/create_cnv_payment', methods=['POST'])
 def create_cnv_payment():
