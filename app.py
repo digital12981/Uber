@@ -740,7 +740,7 @@ def check_payment_status(transaction_id):
                     return jsonify({
                         "success": True,
                         "redirect": True,
-                        "redirect_url": "/aviso",
+                        "redirect_url": "/finalizar",
                         "status": "APPROVED"
                     })
                 else:
@@ -767,7 +767,7 @@ def check_payment_status(transaction_id):
                     return jsonify({
                         "success": True,
                         "redirect": True,
-                        "redirect_url": "/aviso",
+                        "redirect_url": "/finalizar",
                         "status": "APPROVED"
                     })
         
@@ -793,7 +793,7 @@ def check_payment_status(transaction_id):
             payment_status in ['PAID', 'APPROVED', 'COMPLETED'] or
             original_status in ['PAID', 'APPROVED', 'COMPLETED']):
             
-            app.logger.info(f"Pagamento confirmado com status: {payment_status} (original: {original_status}) - redirecionando para /aviso")
+            app.logger.info(f"Pagamento confirmado com status: {payment_status} (original: {original_status}) - redirecionando para /finalizar")
             
             # Preparar dados para Meta Pixels
             try:
@@ -824,12 +824,12 @@ def check_payment_status(transaction_id):
             except Exception as e:
                 app.logger.error(f"Erro ao preparar dados para Meta Pixels: {str(e)}")
                 
-            # Sempre redirecionar para /aviso quando o pagamento for confirmado
+            # Sempre redirecionar para /finalizar quando o pagamento for confirmado
             return jsonify({
                 "success": True,
                 "redirect": True,
-                "redirect_url": "/aviso",
-                "status": "PAID"
+                "redirect_url": "/finalizar",
+                "status": "APPROVED"
             })
 
         app.logger.info(f"Pagamento ainda pendente com status: {status_response.get('status')}")
