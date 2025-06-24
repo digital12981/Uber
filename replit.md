@@ -100,7 +100,7 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
-- June 24, 2025: Enhanced /finalizar Page Design - Alert Icon & Centered Layout ✅ UPDATED
+- June 24, 2025: Fixed Animated Loading Elements - /finalizar & /pagamento Pages ✅ UPDATED
   - **ALERT ICON ADDED**: Added warning icon (https://cdn-icons-png.flaticon.com/512/5610/5610989.png) above title
   - **CENTERED LAYOUT**: All header elements now center-aligned for better visual impact
   - **CLEAN STYLING**: Removed excess colors/icons maintaining professional appearance
@@ -111,6 +111,8 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **IMAGE INTEGRATION**: Added program image within attention box, positioned below warning text
   - **ANIMATED LOADING**: Created animated loading dots with sequential pulse effect for engaging visual feedback
   - **PAYMENT STATUS**: Added yellow status box with loading indicator and payment waiting message
+  - **SPINNER FIX /pagamento**: Fixed buggy CSS spinners (border--gray-700) with reliable animated dots
+  - **CONSISTENT LOADING**: Applied same loading animation system across both payment pages
 
 - June 24, 2025: Updated /finalizar Page Content - Taxa de Instalação do Adesivo ✅ UPDATED
   - **CONTENT TRANSFORMATION**: Changed from CNV Digital activation to Uber sticker installation fee
