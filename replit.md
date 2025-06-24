@@ -100,7 +100,10 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
-- June 24, 2025: Complete Heroku Deployment Fix - All Issues Resolved ✅ FIXED
+- June 24, 2025: Final Heroku Deployment Fix - Dependency Conflict Resolved ✅ FIXED  
+  - **DEPENDENCY CONFLICT FIX**: Resolved lxml version conflict with trafilatura
+  - Error resolved: `Cannot install lxml==5.1.0 and trafilatura 1.12.2 because of conflicting dependencies`
+  - Updated lxml from `==5.1.0` to `>=5.2.2` to satisfy trafilatura requirements
   - **CRITICAL DATABASE FIX**: Removed invalid `connect_timeout` parameter causing PostgreSQL crash
   - **GUNICORN FIX**: Added gunicorn to requirements and corrected Procfile configuration
   - Error resolved: `TypeError: 'connect_timeout' is an invalid keyword argument for Connection()`
@@ -109,9 +112,9 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - Changed `sslmode` from "prefer" to "require" for Heroku PostgreSQL compatibility
   - Reverted Procfile to `web: python main.py` for direct Flask execution with PORT binding
   - Added database table creation on startup with `db.create_all()` in main.py
-  - Created comprehensive requirements_heroku.txt with all dependencies and version pins
+  - Created comprehensive requirements_heroku.txt with all dependencies and compatible versions
   - Fixed import error by adding `db` import in main.py: `from app import app, db`
-  - **DEPLOYMENT READY**: All connection and startup issues resolved for Heroku production
+  - **DEPLOYMENT READY**: All connection, startup and dependency issues resolved for Heroku production
 
 - June 24, 2025: QR Code Real PIX Implementation + Complete Payment System - PRODUCTION VERSION ✅ WORKING
   - **QR CODE REAL FUNCIONANDO**: Implementado sistema completo de QR code autêntico para transações PIX
