@@ -162,8 +162,84 @@
                 </ol>
             </div>
         </div>
-    </div>
-</div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <img src="https://i.ibb.co/wFFn5HSn/13093103960002-1.png" alt="Uber" class="h-8 w-auto mb-4">
+                    <p class="text-gray-400 text-sm">Visite a Central de Ajuda</p>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Empresa</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Sobre nós</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Nossa ofertas</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Como funciona</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Carreiras</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Produtos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Viajar</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Dirigir</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Uber Eats</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Uber for Business</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Siga-nos</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fa fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm">© 2024 Uber Technologies Inc.</p>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Privacidade</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Acessibilidade</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Termos</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/static/js/fix_colors.js"></script>
+    <script src="/static/js/uber-fonts.js"></script>
+
+    <!-- Force Uber Fonts Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Force Uber fonts on all elements
+            const style = document.createElement('style');
+            style.textContent = `
+                * {
+                    font-family: "UberMoveText", "UberMove", Arial, sans-serif !important;
+                }
+                h1, h2, h3, h4, h5, h6 {
+                    font-family: "UberMove", "UberMoveText", Arial, sans-serif !important;
+                }
+            `;
+            document.head.appendChild(style);
+            console.log('UBER FONTS APLICADAS NA PÁGINA /FINALIZAR!');
+        });
+    </script>
 
 <script>
 let selectedDate = null;
