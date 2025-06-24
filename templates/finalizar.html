@@ -187,8 +187,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Get user data from localStorage - check all possible sources
         const userData = JSON.parse(localStorage.getItem('userData') || '{}');
         const paymentData = JSON.parse(localStorage.getItem('cnvPaymentData') || '{}');
+        const loginUserData = JSON.parse(localStorage.getItem('loginUserData') || '{}');
         
-        // Try multiple localStorage keys for user data
+        // Try multiple localStorage keys for user data (prioritize login data)
         const userName = (
             paymentData.name || 
             userData.full_name || 
@@ -226,6 +227,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         // Debug localStorage contents
         console.log('All localStorage keys:', Object.keys(localStorage));
+        console.log('Login user data:', loginUserData);
+        console.log('Payment data:', paymentData);
+        console.log('User data:', userData);
         for (let key in localStorage) {
             console.log(`localStorage.${key}:`, localStorage.getItem(key));
         }

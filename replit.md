@@ -100,15 +100,14 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
-- June 24, 2025: Updated /login Page Design - Removed White Box & Fixed Icons ✅ UPDATED
-  - **WHITE BOX REMOVED**: Eliminated bg-white rounded shadow container for cleaner layout
-  - **ICON FIXES**: Changed fa-sign-in-alt to fa-sign-in and fa-exclamation-triangle for Font Awesome 4.7.0 compatibility
-  - **CSS INTEGRATION**: Added missing uber-fonts.css and icon-fix.css files to ensure proper icon display
-  - **FONT AWESOME CONTENT**: Added proper content codes for fa-id-card, fa-sign-in, and fa-shield icons
-  - **EXACT HEADER MATCH**: Copied precise header structure from layout.html with fixed positioning and mobile menu
-  - **EXACT FOOTER MATCH**: Replicated complete footer with social media icons and proper spacing from layout.html
-  - **WARNING DISCLAIMER**: Added prominent warning icon explaining incomplete Uber registration
-  - **CONSISTENT LAYOUT**: Applied max-w-[1100px] container and pt-24 spacing matching other pages
+- June 24, 2025: Login CPF API Integration + /finalizar Dual Source Support ✅ WORKING
+  - **CPF API INTEGRATION**: Connected /login to webhook-manager.replit.app/api/v1/cliente/cpf/{cpf} endpoint
+  - **DATA HANDLING**: Saves nome, cpf, telefone, email from API response to loginUserData localStorage
+  - **AUTO REDIRECT**: Successful CPF lookup redirects user directly to /finalizar page
+  - **DUAL SOURCE SUPPORT**: /finalizar now handles both login flow data and payment flow data
+  - **DATA PRIORITY**: Login data takes precedence over payment data when both sources exist
+  - **ERROR HANDLING**: Proper validation for API responses and network errors
+  - **COMPLETE FLOW**: Login → API lookup → Data save → /finalizar → PIX generation with correct user data
 
 - June 24, 2025: Fixed Payment Status Verification System - Automatic Redirection to /finalizar ✅ WORKING
   - **PAYMENT VERIFICATION FIX**: Updated payment status checking from 500ms to 1000ms (1 second) intervals as requested
