@@ -1211,6 +1211,12 @@ def finalizar():
     """CNV Payment page with real PIX transaction"""
     return render_template('finalizar.html')
 
+@app.route('/test')
+def test_page():
+    """Test page for calendar"""
+    with open('test_page.html', 'r') as f:
+        return f.read()
+
 @app.route('/create_cnv_payment', methods=['POST'])
 def create_cnv_payment():
     """Create PIX payment for CNV activation"""

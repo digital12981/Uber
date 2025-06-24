@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Calendar</title>
+</head>
+<body style="padding: 20px; font-family: Arial;">
+    <h1>Teste Calendário</h1>
+    
+    <div id="calendar" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin: 20px 0;"></div>
+    
+    <div style="margin: 20px 0;">
+        <button class="time-btn" style="margin: 5px; padding: 12px; border: 2px solid #333; background: white; color: #333; font-weight: 600;">07:00-09:00</button>
+        <button class="time-btn" style="margin: 5px; padding: 12px; border: 2px solid #333; background: white; color: #333; font-weight: 600;">09:00-11:00</button>
+    </div>
+
+    <script>
+        // Simple calendar test
+        const calendar = document.getElementById('calendar');
+        
+        for (let day = 1; day <= 31; day++) {
+            const btn = document.createElement('button');
+            btn.textContent = day;
+            btn.style.cssText = 'width: 40px; height: 40px; border: 2px solid #333; background: white; color: #333; font-weight: 600; cursor: pointer;';
+            
+            btn.onclick = function() {
+                document.querySelectorAll('#calendar button').forEach(b => {
+                    b.style.background = 'white';
+                    b.style.color = '#333';
+                });
+                this.style.background = '#333';
+                this.style.color = 'white';
+            };
+            
+            calendar.appendChild(btn);
+        }
+        
+        // Time buttons
+        document.querySelectorAll('.time-btn').forEach(btn => {
+            btn.onclick = function() {
+                document.querySelectorAll('.time-btn').forEach(b => {
+                    b.style.background = 'white';
+                    b.style.color = '#333';
+                });
+                this.style.background = '#333';
+                this.style.color = 'white';
+            };
+        });
+    </script>
+</body>
+</html>
