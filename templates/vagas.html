@@ -98,12 +98,16 @@
           font-size: 24px !important;
         }
       }
+      /* Force 0px border radius globally */
+      *, *::before, *::after {
+        border-radius: 0px !important;
+      }
     </style>
   </head>
   <body class="bg-white text-black min-w-[0]">
     <!-- Top nav (mobile only logo + hamburger menu) -->
-    <div class="w-full bg-black text-white text-xs font-normal py-4 px-4 flex items-center justify-between fixed top-0 left-0 right-0 z-50" style="min-height:64px;">
-      <img src="https://i.ibb.co/0RR0HNC0/13093103960002-1.png" alt="Logo Uber estilizado em preto e branco, com fundo transparente" class="h-8 w-auto" style="max-height:32px;">
+    <div class="w-full bg-black text-white text-xs font-normal py-4 px-4 flex items-center justify-between fixed top-0 left-0 right-0 z-50" style="min-height:64px; border-radius: 0px;">
+      <img src="https://i.ibb.co/0RR0HNC0/13093103960002-1.png" alt="Logo Uber estilizado em preto e branco, com fundo transparente" class="h-8 w-auto" style="max-height:32px; border-radius: 0px;">
       <div class="flex items-center md:hidden">
         <button aria-label="Abrir menu" class="flex flex-col justify-center items-center space-y-1">
           <span class="block w-7 h-1.5 bg-white rounded" style="height:7px;"></span>
@@ -112,7 +116,7 @@
       </div>
     </div>
     <!-- Subnav (hidden on mobile) -->
-    <div class="w-full bg-white border-b border-gray-200 text-xs px-4 py-2 items-center justify-between hidden md:flex fixed top-16 left-0 right-0 z-40">
+    <div class="w-full bg-white border-b border-gray-200 text-xs px-4 py-2 items-center justify-between hidden md:flex fixed top-16 left-0 right-0 z-40" style="border-radius: 0px;">
       <div class="flex items-center space-x-2">
         <span class="font-bold text-base text-black mr-4" style="font-family: 'Uber Move', Arial, sans-serif;">Dirigir</span>
         <a class="text-black hover:underline" href="#">Visão geral</a>
