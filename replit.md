@@ -100,6 +100,12 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 25, 2025: Added Uber Sticker Image to /finalizar Page ✅ WORKING
+  - **STICKER IMAGE**: Added Uber Partners sticker image (https://i.ibb.co/1JQ5QnxH/1-1.png) above yellow warning box
+  - **VISUAL CONTEXT**: Image shows the actual sticker that will be installed on user's vehicle
+  - **CENTERED LAYOUT**: Image properly centered with responsive sizing (max-w-xs)
+  - **CONSISTENT STYLING**: Applied 0px border-radius to match site design standards
+
 - June 24, 2025: Added 10-Minute PIX Expiration Timer to /finalizar ✅ WORKING
   - **COUNTDOWN TIMER**: Added visual 10-minute countdown timer below payment warning box
   - **EXPIRATION WARNING**: Clear message about losing Uber Partners program access after expiration
