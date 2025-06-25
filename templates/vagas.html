@@ -11,7 +11,7 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
       @font-face {
         font-family: 'UberMoveText';
@@ -146,7 +146,7 @@
       <!-- Title -->
       <div>
         <h1 class="font-bold leading-tight mb-4">
-          Programa de Incentivo para Motoristas e Motoristas de Aplicativo
+          Quer ganhar R$ 500,00 por mês? Para motoristas de aplicativo e motoristas comuns.
         </h1>
         <p class="text-black mb-4 max-w-[600px]">
           A Uber oferece um programa exclusivo de incentivos para motoristas de aplicativo e motoristas comuns. Duas modalidades com benefícios específicos para cada categoria.
@@ -175,7 +175,7 @@
               <div class="flex-shrink-0 mr-3" style="margin-left:-8px;">
                 <span class="bg-black text-white w-7 h-7 rounded-full flex items-center justify-center font-extrabold text-base">2</span>
               </div>
-              <span class="text-black flex-grow"><strong>Motoristas Comuns:</strong> R$ 400,00 por mês com adesivo oficial da Uber no veículo.</span>
+              <span class="text-black flex-grow"><strong>Motoristas Comuns:</strong> R$ 500,00 por mês com adesivo oficial da Uber no veículo.</span>
             </div>
             <div class="flex items-start mb-6">
               <div class="flex-shrink-0 mr-3" style="margin-left:-8px;">
@@ -207,17 +207,32 @@
           Perguntas Frequentes
         </h2>
         <div class="border border-gray-200 rounded">
-          <div class="border-b border-gray-200 flex items-center justify-between px-4 py-3 cursor-pointer">
-            <span class="text-black">Quais são os critérios de elegibilidade para o programa de incentivo?</span>
-            <i class="fa fa-chevron-down text-xs text-gray-500"></i>
+          <div class="faq-item border-b border-gray-200">
+            <div class="flex items-center justify-between px-4 py-3 cursor-pointer" onclick="toggleFaq(0)">
+              <span class="text-black">Quais são os critérios de elegibilidade para o programa de incentivo?</span>
+              <i class="fa fa-chevron-down text-xs text-gray-500 transition-transform duration-300" id="icon-0"></i>
+            </div>
+            <div class="faq-answer px-4 pb-3 text-gray-700 hidden" id="answer-0">
+              <p>Para participar do programa, você deve: possuir CNH válida, ter veículo próprio ou alugado, comprovar residência, e para modalidade Premium ser motorista ativo em aplicativos como Uber, 99 ou similares.</p>
+            </div>
           </div>
-          <div class="border-b border-gray-200 flex items-center justify-between px-4 py-3 cursor-pointer">
-            <span class="text-black">Quais são as implicações caso eu decida encerrar minha participação antes do término do contrato?</span>
-            <i class="fa fa-chevron-down text-xs text-gray-500"></i>
+          <div class="faq-item border-b border-gray-200">
+            <div class="flex items-center justify-between px-4 py-3 cursor-pointer" onclick="toggleFaq(1)">
+              <span class="text-black">Quais são as implicações caso eu decida encerrar minha participação antes do término do contrato?</span>
+              <i class="fa fa-chevron-down text-xs text-gray-500 transition-transform duration-300" id="icon-1"></i>
+            </div>
+            <div class="faq-answer px-4 pb-3 text-gray-700 hidden" id="answer-1">
+              <p>O contrato pode ser encerrado a qualquer momento mediante aviso prévio de 30 dias. Não há multa por cancelamento antecipado, porém os pagamentos mensais serão interrompidos imediatamente.</p>
+            </div>
           </div>
-          <div class="flex items-center justify-between px-4 py-3 cursor-pointer" style="">
-            <span class="text-black">O programa está disponível para motoristas parceiros já ativos na plataforma?</span>
-            <i class="fa fa-chevron-down text-xs text-gray-500"></i>
+          <div class="faq-item">
+            <div class="flex items-center justify-between px-4 py-3 cursor-pointer" onclick="toggleFaq(2)">
+              <span class="text-black">O programa está disponível para motoristas parceiros já ativos na plataforma?</span>
+              <i class="fa fa-chevron-down text-xs text-gray-500 transition-transform duration-300" id="icon-2"></i>
+            </div>
+            <div class="faq-answer px-4 pb-3 text-gray-700 hidden" id="answer-2">
+              <p>Sim! Motoristas já ativos na Uber podem participar da modalidade Premium. Motoristas de outras plataformas ou motoristas comuns podem participar das respectivas modalidades conforme elegibilidade.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -243,14 +258,29 @@
               <span class="text-white text-base" style="color: #fff !important;">Brasil</span>
             </div>
             <div class="flex flex-row items-center space-x-4 mt-4 md:mt-0">
-              <a class="text-white text-2xl hover:text-gray-300 transition" href="#"><i class="fab fa-facebook-f"></i></a>
-              <a class="text-white text-2xl hover:text-gray-300 transition" href="#"><i class="fab fa-twitter"></i></a>
-              <a class="text-white text-2xl hover:text-gray-300 transition" href="#"><i class="fab fa-instagram"></i></a>
-              <a class="text-white text-2xl hover:text-gray-300 transition" href="#"><i class="fab fa-youtube"></i></a>
+              <a class="text-white text-2xl hover:text-gray-300 transition" href="#"><i class="fa fa-facebook"></i></a>
+              <a class="text-white text-2xl hover:text-gray-300 transition" href="#"><i class="fa fa-twitter"></i></a>
+              <a class="text-white text-2xl hover:text-gray-300 transition" href="#"><i class="fa fa-instagram"></i></a>
+              <a class="text-white text-2xl hover:text-gray-300 transition" href="#"><i class="fa fa-youtube"></i></a>
             </div>
           </div>
         </div>
       </div>
     </footer>
+    
+    <script>
+      function toggleFaq(index) {
+        const answer = document.getElementById(`answer-${index}`);
+        const icon = document.getElementById(`icon-${index}`);
+        
+        if (answer.classList.contains('hidden')) {
+          answer.classList.remove('hidden');
+          icon.style.transform = 'rotate(180deg)';
+        } else {
+          answer.classList.add('hidden');
+          icon.style.transform = 'rotate(0deg)';
+        }
+      }
+    </script>
   </body>
 </html>
