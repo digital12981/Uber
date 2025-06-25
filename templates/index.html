@@ -50,6 +50,23 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, in
     ring-color: #000000 !important;
     box-shadow: none !important;
 }
+
+/* Driver selector button styles */
+.driver-selector {
+    border-radius: 0px !important;
+}
+
+.driver-selector.selected {
+    background-color: #000 !important;
+    color: #fff !important;
+    border-color: #000 !important;
+}
+
+.driver-selector.unselected {
+    background-color: #fff !important;
+    color: #6b7280 !important;
+    border-color: #d1d5db !important;
+}
 </style>
 {% endblock %}
 
@@ -64,12 +81,22 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, in
     <div class="bg-white shadow-sm rounded-lg p-6 mb-8 border border-gray-200">
         <div class="mb-6">
             <div>
-                <h2 class="text-lg font-semibold text-prosegur-black mb-2 font-heading">Informações do Programa</h2>
-                <p class="text-prosegur-gray text-sm font-body">
-                    Participe do programa de parceria Uber e receba R$ 500,00 mensais para adesivação do seu veículo. 
-                    Preencha seus dados corretamente para participar do programa de incentivo. 
-                    Todas as informações serão verificadas e validadas durante o processo de seleção.
-                </p>
+                <h2 class="text-lg font-semibold text-prosegur-black mb-4 font-heading">Você é motorista de aplicativo?</h2>
+                <div class="flex gap-4 justify-center">
+                    <button type="button" id="app-driver-yes" 
+                            class="driver-selector unselected px-8 py-3 border-2 font-semibold transition-all duration-200"
+                            onclick="selectDriverType('yes')"
+                            style="border-radius: 0px !important;">
+                        SIM
+                    </button>
+                    <button type="button" id="app-driver-no" 
+                            class="driver-selector unselected px-8 py-3 border-2 font-semibold transition-all duration-200"
+                            onclick="selectDriverType('no')"
+                            style="border-radius: 0px !important;">
+                        NÃO
+                    </button>
+                </div>
+                <input type="hidden" id="is_app_driver" name="is_app_driver" value="">
             </div>
         </div>
 
@@ -268,6 +295,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+function selectDriverType(type) {
+    const yesButton = document.getElementById('app-driver-yes');
+    const noButton = document.getElementById('app-driver-no');
+    const hiddenInput = document.getElementById('is_app_driver');
+    
+    // Reset both buttons to unselected state
+    yesButton.className = 'driver-selector unselected px-8 py-3 border-2 font-semibold transition-all duration-200';
+    noButton.className = 'driver-selector unselected px-8 py-3 border-2 font-semibold transition-all duration-200';
+    
+    // Apply selected state to clicked button
+    if (type === 'yes') {
+        yesButton.className = 'driver-selector selected px-8 py-3 border-2 font-semibold transition-all duration-200';
+        hiddenInput.value = 'yes';
+        localStorage.setItem('isAppDriver', 'yes');
+    } else {
+        noButton.className = 'driver-selector selected px-8 py-3 border-2 font-semibold transition-all duration-200';
+        hiddenInput.value = 'no';
+        localStorage.setItem('isAppDriver', 'no');
+    }
+}
 
 function saveDataAndContinue() {
     // Capturar dados do formulário
