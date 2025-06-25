@@ -245,7 +245,7 @@
 <br>
 <br>
 <script>
-// WhatsApp sharing function - direct app opening
+// WhatsApp sharing function - force app opening on mobile
 function shareOnWhatsApp() {
     const message = `🚗 *Programa de Adesivação Uber* 🚗
 
@@ -263,11 +263,48 @@ ${window.location.origin}
 
 Aproveite essa oportunidade única! 🎯`;
 
-    // Simple and direct approach that works on all mobile devices
+    // Force WhatsApp app opening with multiple methods
     const whatsappUrl = `whatsapp://send?text=${encodeURIComponent(message)}`;
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isAndroid = /Android/.test(navigator.userAgent);
+    const isMobile = isIOS || isAndroid || /webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
-    // Direct assignment - most reliable method for mobile apps
-    window.location = whatsappUrl;
+    if (isMobile) {
+        // Try multiple methods to ensure app opens
+        const methods = [
+            () => { window.location = whatsappUrl; },
+            () => { window.location.href = whatsappUrl; },
+            () => { window.location.assign(whatsappUrl); },
+            () => { 
+                const a = document.createElement('a');
+                a.href = whatsappUrl;
+                a.target = '_self';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            },
+            () => {
+                const iframe = document.createElement('iframe');
+                iframe.src = whatsappUrl;
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+                setTimeout(() => document.body.removeChild(iframe), 100);
+            }
+        ];
+        
+        // Try each method
+        for (let method of methods) {
+            try {
+                method();
+                break; // If successful, stop trying
+            } catch (e) {
+                console.log('Method failed, trying next');
+            }
+        }
+    } else {
+        // Desktop fallback
+        window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+    }
 }
 
 // Force green button color
