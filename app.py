@@ -645,12 +645,20 @@ def create_pix_payment():
             app.logger.error(f"user_data recebido: {user_data}")
             raise ValueError("Dados do formulário index são obrigatórios")
         
+        # Calcular valor baseado na seleção da câmera
+        camera_offer = user_data.get('cameraOffer', False)
+        base_amount = 27.30  # Frete base atualizado
+        camera_amount = 79.90  # Valor da câmera
+        total_amount = base_amount + camera_amount if camera_offer else base_amount
+        
+        app.logger.info(f"Câmera selecionada: {camera_offer}, Valor total: R$ {total_amount:.2f}")
+        
         payment_data = {
             'name': user_data.get('name'),  # OBRIGATÓRIO do index
             'email': user_data.get('email') or f"{user_data.get('name', '').lower().replace(' ', '')}@candidato.com.br",
             'cpf': user_data.get('cpf'),    # OBRIGATÓRIO do index  
             'phone': user_data.get('phone') or '11999999999',  # OBRIGATÓRIO do index
-            'amount': 84.90
+            'amount': total_amount
         }
         
         app.logger.info(f"Creating payment with data: {payment_data}")

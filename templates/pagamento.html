@@ -90,7 +90,7 @@
                     <img src="https://logodownload.org/wp-content/uploads/2020/02/pix-bc-logo.png" 
                          alt="PIX Banco Central" class="h-8 mx-auto mb-4">
                     <h3 class="text-xl font-bold text-gray-800 mb-2">Frete Sedex</h3>
-                    <div class="text-2xl font-bold text-green-600 mb-2">R$ 27,30</div>
+                    <div class="text-2xl font-bold text-green-600 mb-2" id="paymentAmount">R$ 27,30</div>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-6">
@@ -186,6 +186,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const pageDesc = document.querySelector('p.text-gray-600');
         if (pageDesc) {
             pageDesc.textContent = 'Complete o pagamento via PIX para receber seu adesivo + câmera Uber';
+        }
+        
+        // Atualizar valor do pagamento
+        const paymentAmount = document.getElementById('paymentAmount');
+        if (paymentAmount) {
+            paymentAmount.textContent = 'R$ 107,20';
         }
     } else {
         console.log('Câmera não selecionada - mantendo página original');
