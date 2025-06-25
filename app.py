@@ -15,6 +15,7 @@ from cache_manager import page_cache, api_cache
 from performance_optimizer import performance_optimizer, performance_monitor
 from heroku_optimizer import heroku_optimizer
 from simple_mobile_protection import simple_mobile_only
+from mobile_protection import mobile_only
 from meta_pixels import MetaPixelTracker
 
 # Initialize Meta Pixel tracker
@@ -75,13 +76,13 @@ def serve_font(filename):
     return send_from_directory('static/fonts', filename)
 
 @app.route("/")
-@simple_mobile_only
+@mobile_only
 @performance_monitor
 def index():
     return render_template("index.html")
 
 @app.route("/vagas")
-@simple_mobile_only
+@mobile_only
 @performance_monitor
 def vagas():
     """Vagas page with domain redirection from ads domain to main domain"""
@@ -384,6 +385,7 @@ def get_user_data():
     })
 
 @app.route("/address", methods=['GET', 'POST'])
+@mobile_only
 def address():
     if request.method == 'POST':
         try:
@@ -722,6 +724,7 @@ def redirect_payment():
     return render_template("payment_redirect.html")
 
 @app.route("/pagamento")
+@mobile_only
 def pagamento():
     # Get payment data from session (created by create-shipping-payment route)
     payment_data = session.get('payment_data')
