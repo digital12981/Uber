@@ -502,8 +502,12 @@ def create_shipping_payment():
         result = payment_api.create_pix_payment(payment_request_data)
         app.logger.info(f"Payment API result: {result}")
         
-        # Check if API returned an error
-        if not result.get('success', True):
+        # Check if API returned an error - but don't fail if we have valid transaction data
+        if 'error' in result and not result.get('id') and not result.get('pixCode'):
+            error_msg = result.get('error', 'Erro desconhecido na API')
+            app.logger.error(f"API For4Payments returned error: {error_msg}")
+            raise ValueError(error_msg)
+        elif result.get('success') is False and not result.get('id'):
             error_msg = result.get('error', 'Erro desconhecido na API')
             app.logger.error(f"API For4Payments returned error: {error_msg}")
             raise ValueError(error_msg)

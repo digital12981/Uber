@@ -100,6 +100,16 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 25, 2025: Fixed Camera Offer Payment QR Code Generation ✅ WORKING
+  - **PAYMENT API FIX**: Fixed camera offer payment creation in payments.py with dynamic description support
+  - **QR CODE GENERATION**: Enhanced QR code generation logic to handle PIX codes with masking characters
+  - **VALIDATION IMPROVEMENT**: Added PIX code validation and enhanced error handling for camera transactions
+  - **CAMERA DATA TRANSMISSION**: Fixed camera_offer and camera_price data transmission to backend API
+  - **PIX CODE MASKING**: Improved handling of masked PIX codes (***) for successful QR generation
+  - **LOGGING ENHANCEMENT**: Added detailed logging for PIX code extraction and validation process
+  - **TRANSACTION VALIDATION**: Added transaction ID validation with multiple fallback methods
+  - **ERROR HANDLING**: Enhanced error responses for failed camera offer payments
+
 - June 25, 2025: Updated Open Graph Meta Tags on /parcerias/approved Page ✅ WORKING
   - **CONSISTENT MESSAGING**: Updated og:title to "Quer ganhar R$500,00 extra todo mês?" for unified branding
   - **IMPROVED DESCRIPTION**: Changed to compelling "Nós vamos te pagar para você adesivar seu carro com a marca da Uber"
