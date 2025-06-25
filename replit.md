@@ -126,6 +126,9 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **WHATSAPP BUTTON CENTERED**: Compartilhar no WhatsApp button now centered with text-center wrapper
   - **CLICK STATE FIXED**: Prevented WhatsApp button from turning black on click with proper event listeners
   - **FINALIZAR BUTTON RESTORED**: Removed gradient animation from "Finalizar Cadastro" button, back to solid green
+  - **DIRECT APP OPENING**: WhatsApp button now opens app directly on mobile using whatsapp:// protocol
+  - **SMART FALLBACK**: 2-second timeout fallback to web version if app doesn't open
+  - **DEVICE DETECTION**: Automatic mobile/desktop detection for optimal sharing experience
   - **BUTTON INITIALIZATION**: SIM button now starts selected (black) and NÃO starts unselected (white/gray)
   - **3D VISUAL EFFECTS**: Added box-shadow effects for depth - selected buttons have deeper shadows
   - **HEIGHT REDUCTION**: Changed button padding from py-3 to py-2 for more compact appearance
