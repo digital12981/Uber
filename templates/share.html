@@ -247,21 +247,14 @@
 <script>
 // WhatsApp sharing function - force app opening on mobile
 function shareOnWhatsApp() {
-    const message = `🚗 *Programa de Adesivação Uber* 🚗
-
-Oi! Descobri um programa incrível da Uber onde ganho R$ 500 por mês só por ter o adesivo no meu carro!
+    const message = `A Uber paga R$ 500 por mês pra você usar o adesivo da Uber no seu carro!
 
 ✅ R$ 500/mês garantidos por 3 anos
-✅ Compatível com 99, inDriver e outros apps
-✅ Processo 100% online
-✅ Sem taxas ou mensalidades
-
-E o melhor: se você se cadastrar através do meu convite, EU ganho R$ 65 de bônus! 💰
+✅ Não precisa ser motorista de aplicativo
+✅ Qualquer pessoa e qualquer veículo
 
 Link para cadastro:
-${window.location.origin}
-
-Aproveite essa oportunidade única! 🎯`;
+www.ubermotoristas.com/parcerias
 
     // Force WhatsApp app opening with multiple methods
     const whatsappUrl = `whatsapp://send?text=${encodeURIComponent(message)}`;
