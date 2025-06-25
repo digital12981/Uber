@@ -109,7 +109,12 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **USER ENGAGEMENT**: Encourages sharing with friends and family for additional income
   - **DISCLAIMER ADDED**: Small text reminder to complete registration after sharing
 
-- June 25, 2025: Fixed Driver Selection Buttons with 3D Effects ✅ WORKING
+- June 25, 2025: Added Animated Gradient to Share Page + Fixed Driver Selection Buttons ✅ WORKING
+  - **ANIMATED GRADIENT SHARE**: Share page card and buttons now have smooth gradient animations
+  - **SHARE CARD ANIMATION**: Main green card with 3-second gradient shift using lighter green tones
+  - **BUTTON GRADIENTS**: WhatsApp (green), Telegram (blue), and Copy (gray) buttons with animated gradients
+  - **HOVER ENHANCEMENT**: Faster 2-second animation on hover with elevation and shadow effects
+  - **GRADIENT COLORS**: Uses #16a34a, #22c55e, #34d399 for appealing animated transitions
   - **BUTTON INITIALIZATION**: SIM button now starts selected (black) and NÃO starts unselected (white/gray)
   - **3D VISUAL EFFECTS**: Added box-shadow effects for depth - selected buttons have deeper shadows
   - **HEIGHT REDUCTION**: Changed button padding from py-3 to py-2 for more compact appearance

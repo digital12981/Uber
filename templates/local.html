@@ -3,23 +3,15 @@
 {% block extra_head %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-/* Animated gradient green button */
-@keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
+/* Force green button style with maximum specificity */
 button.green-payment-button, 
 #green-payment-btn,
 button#green-payment-btn.green-payment-button {
-    background: linear-gradient(-45deg, #16a34a, #22c55e, #16a34a, #34d399) !important;
-    background-size: 400% 400% !important;
-    animation: gradientShift 3s ease infinite !important;
+    background-color: #16a34a !important;
+    background: #16a34a !important;
     color: #ffffff !important;
     border: none !important;
     font-weight: 700 !important;
-    transition: all 0.3s ease !important;
 }
 
 button.green-payment-button:hover,
@@ -31,13 +23,10 @@ button.green-payment-button:focus,
 button#green-payment-btn.green-payment-button:hover,
 button#green-payment-btn.green-payment-button:active,
 button#green-payment-btn.green-payment-button:focus {
-    background: linear-gradient(-45deg, #15803d, #16a34a, #15803d, #22c55e) !important;
-    background-size: 400% 400% !important;
-    animation: gradientShift 2s ease infinite !important;
+    background-color: #15803d !important;
+    background: #15803d !important;
     color: #ffffff !important;
     border: none !important;
-    transform: translateY(-1px) !important;
-    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3) !important;
 }
 </style>
 {% endblock %}
@@ -128,9 +117,8 @@ function forceGreenButton() {
     const greenBtn = document.getElementById('green-payment-btn');
     if (greenBtn) {
         greenBtn.style.cssText = `
-            background: linear-gradient(-45deg, #16a34a, #22c55e, #16a34a, #34d399) !important;
-            background-size: 400% 400% !important;
-            animation: gradientShift 3s ease infinite !important;
+            background-color: #16a34a !important;
+            background: #16a34a !important;
             color: #ffffff !important;
             border-radius: 2px !important;
             padding: 12px 24px !important;
@@ -138,15 +126,13 @@ function forceGreenButton() {
             font-weight: 700 !important;
             width: 100% !important;
             font-size: 16px !important;
-            transition: all 0.3s ease !important;
         `;
         
         // Force hover and active states
         greenBtn.addEventListener('mouseenter', function() {
             this.style.cssText = `
-                background: linear-gradient(-45deg, #15803d, #16a34a, #15803d, #22c55e) !important;
-                background-size: 400% 400% !important;
-                animation: gradientShift 2s ease infinite !important;
+                background-color: #15803d !important;
+                background: #15803d !important;
                 color: #ffffff !important;
                 border-radius: 2px !important;
                 padding: 12px 24px !important;
@@ -154,17 +140,13 @@ function forceGreenButton() {
                 font-weight: 700 !important;
                 width: 100% !important;
                 font-size: 16px !important;
-                transition: all 0.3s ease !important;
-                transform: translateY(-1px) !important;
-                box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3) !important;
             `;
         });
         
         greenBtn.addEventListener('mouseleave', function() {
             this.style.cssText = `
-                background: linear-gradient(-45deg, #16a34a, #22c55e, #16a34a, #34d399) !important;
-                background-size: 400% 400% !important;
-                animation: gradientShift 3s ease infinite !important;
+                background-color: #16a34a !important;
+                background: #16a34a !important;
                 color: #ffffff !important;
                 border-radius: 2px !important;
                 padding: 12px 24px !important;
@@ -172,17 +154,13 @@ function forceGreenButton() {
                 font-weight: 700 !important;
                 width: 100% !important;
                 font-size: 16px !important;
-                transition: all 0.3s ease !important;
-                transform: translateY(0px) !important;
-                box-shadow: none !important;
             `;
         });
         
         greenBtn.addEventListener('mousedown', function() {
             this.style.cssText = `
-                background: linear-gradient(-45deg, #15803d, #16a34a, #15803d, #22c55e) !important;
-                background-size: 400% 400% !important;
-                animation: gradientShift 2s ease infinite !important;
+                background-color: #15803d !important;
+                background: #15803d !important;
                 color: #ffffff !important;
                 border-radius: 2px !important;
                 padding: 12px 24px !important;
@@ -190,9 +168,6 @@ function forceGreenButton() {
                 font-weight: 700 !important;
                 width: 100% !important;
                 font-size: 16px !important;
-                transition: all 0.3s ease !important;
-                transform: translateY(-1px) !important;
-                box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3) !important;
             `;
         });
         
