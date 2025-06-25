@@ -479,10 +479,10 @@ def create_shipping_payment():
         base_amount = 27.30  # Base shipping fee
         camera_price = float(data.get('camera_price', 0))
         
-        # Use working amounts only to avoid API rejection
+        # Calculate total amount keeping original camera price
         if data.get('camera_offer') and camera_price > 0:
-            total_amount = 84.90  # Use known working amount for camera offers
-            app.logger.info("Using tested amount for camera offer to avoid API rejection")
+            total_amount = base_amount + camera_price  # 27.30 + 79.90 = 107.20
+            app.logger.info(f"Camera offer: base R$ {base_amount:.2f} + camera R$ {camera_price:.2f} = total R$ {total_amount:.2f}")
         else:
             total_amount = base_amount
         
@@ -495,6 +495,7 @@ def create_shipping_payment():
         # Use minimal descriptions that work with API
         description = 'Pedido Uber'
         
+        # Clean payment data - no address fields for API
         payment_request_data = {
             'name': data['name'],
             'email': data['email'],

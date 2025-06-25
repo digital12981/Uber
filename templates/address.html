@@ -218,13 +218,13 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, se
                         </p>
                         <!-- Preço em uma linha -->
                         <div class="mb-4">
-                            <div class="text-3xl font-bold text-green-600 mb-4">Valor: R$ 57,60</div>
+                            <div class="text-3xl font-bold text-green-600 mb-4">Valor: R$ 79,90</div>
                         </div>
                         
                         <!-- Checkbox alinhada à esquerda -->
                         <div class="mb-4">
                             <label class="flex items-center cursor-pointer">
-                                <input type="checkbox" id="cameraOffer" name="camera_offer" value="57.60" class="sr-only">
+                                <input type="checkbox" id="cameraOffer" name="camera_offer" value="79.90" class="sr-only">
                                 <div class="relative">
                                     <div class="w-6 h-6 bg-white border-2 border-gray-400 rounded flex items-center justify-center">
                                         <div class="camera-check hidden w-4 h-4 bg-green-500 rounded flex items-center justify-center">
@@ -251,7 +251,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, se
                                 <hr class="border-green-300">
                                 <div class="flex justify-between items-center text-lg font-bold text-green-800">
                                     <span>Total do pedido:</span>
-                                    <span>R$ 84,90</span>
+                                    <span>R$ 107,20</span>
                                 </div>
                                 <p class="text-sm text-green-700 text-center mt-2">
                                     Tudo chegará junto no mesmo envio!
@@ -407,7 +407,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }, 100);
                 }
                 
-                console.log('Câmera Uber adicionada ao pedido: R$ 57,60');
+                console.log('Câmera Uber adicionada ao pedido: R$ 79,90');
             } else {
                 cameraCheckIcon.classList.add('hidden');
                 localStorage.removeItem('cameraOffer');
@@ -433,7 +433,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function createPaymentFromAddress() {
     // Check if camera offer is selected
     const cameraSelected = document.getElementById('cameraOffer').checked;
-    const cameraPrice = cameraSelected ? 57.60 : 0;
+    const cameraPrice = cameraSelected ? 79.90 : 0;
     
     // Save camera selection to localStorage
     if (cameraSelected) {
