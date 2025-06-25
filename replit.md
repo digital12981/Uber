@@ -100,6 +100,13 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 25, 2025: Vehicle API Security Enhancement ✅ WORKING
+  - **TOKEN SECURITY**: Moved VEHICLE_API_TOKEN from hardcoded value to environment variables
+  - **CODE CLEANUP**: Removed exposed API token (a0e45d2fcc7fdab21ea74890cbd0d45e) from app.py
+  - **API PROTECTION**: Vehicle consultation API now uses secure environment variable for authentication
+  - **ERROR HANDLING**: Added proper fallback when token is missing from environment
+  - **SECURITY COMPLIANCE**: API URL and credentials no longer visible in source code
+
 - June 25, 2025: Added Uber Dashcam Offer to Address Page ✅ WORKING
   - **CAMERA OFFER**: Added Uber 3-lens dashcam offer on /address page above payment button
   - **PRODUCT DETAILS**: HD 1080p recording (front, interior, rear), night vision, impact sensor

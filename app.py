@@ -274,8 +274,15 @@ def consulta_veiculo():
         if cached_result:
             return jsonify(cached_result)
         
-        # Make request to vehicle API with correct format
-        token = "a0e45d2fcc7fdab21ea74890cbd0d45e"
+        # Get API token from environment variables
+        token = os.environ.get("VEHICLE_API_TOKEN")
+        if not token:
+            return jsonify({
+                "success": False, 
+                "error": "Serviço de consulta temporariamente indisponível"
+            })
+        
+        # Make request to vehicle API
         api_url = f"https://wdapi2.com.br/consulta/{placa}/{token}"
         
         import requests
