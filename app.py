@@ -112,7 +112,6 @@ def local():
     return render_template("local.html")
 
 @app.route("/veiculo")
-@simple_mobile_only
 @performance_monitor  
 def veiculo():
     return render_template("veiculo.html")
@@ -273,14 +272,31 @@ def consulta_cpf():
 def consulta_veiculo():
     """API endpoint para consultar dados do veículo por placa"""
     try:
+        # Rate limiting check
+        client_ip = request.environ.get('HTTP_X_FORWARDED_FOR', request.environ.get('REMOTE_ADDR', 'unknown'))
+        rate_limit_key = f"vehicle_api_{client_ip}"
+        current_requests = api_cache.get(rate_limit_key) or 0
+        
+        if current_requests >= 10:  # Max 10 requests per hour per IP
+            return jsonify({"success": False, "error": "Limite de consultas excedido. Tente novamente em uma hora."})
+        
+        # Increment rate limit counter
+        api_cache.set(rate_limit_key, current_requests + 1, ttl=3600)
+        
         data = request.get_json()
         if not data or 'placa' not in data:
             return jsonify({"success": False, "error": "Placa não fornecida"})
         
         placa = data['placa'].upper().replace('-', '').replace(' ', '')
         
+        # Enhanced validation
         if len(placa) != 7:
             return jsonify({"success": False, "error": "Placa deve ter 7 caracteres"})
+        
+        # Validate placa format (3 letters + 4 numbers or Mercosul format)
+        import re
+        if not re.match(r'^[A-Z]{3}[0-9]{4}$', placa) and not re.match(r'^[A-Z]{3}[0-9][A-Z][0-9]{2}$', placa):
+            return jsonify({"success": False, "error": "Formato de placa inválido"})
         
         # Check cache first
         cache_key = f"vehicle_{placa}"
@@ -289,11 +305,21 @@ def consulta_veiculo():
             return jsonify(cached_result)
         
         # Make request to vehicle API with correct format
-        token = "a0e45d2fcc7fdab21ea74890cbd0d45e"
+        token = os.environ.get('VEHICLE_API_TOKEN')
+        if not token:
+            return jsonify({
+                "success": False, 
+                "error": "Serviço de consulta temporariamente indisponível"
+            })
+        
         api_url = f"https://wdapi2.com.br/consulta/{placa}/{token}"
         
         import requests
         try:
+            # Log API usage for monitoring
+            health_monitor.log_request()
+            print(f"Vehicle API request for placa: {placa[:3]}*** from IP: {client_ip}")
+            
             response = requests.get(api_url, timeout=10)
             response.raise_for_status()
             
@@ -328,18 +354,21 @@ def consulta_veiculo():
             
         except requests.exceptions.RequestException as e:
             health_monitor.log_error(f"Vehicle API error: {str(e)}", "consulta_veiculo")
+            print(f"Vehicle API connection error for IP {client_ip}: {str(e)}")
             return jsonify({
                 "success": False, 
                 "error": "Serviço de consulta temporariamente indisponível"
             })
         except ValueError as e:
+            health_monitor.log_error(f"Vehicle API data error: {str(e)}", "consulta_veiculo")
             return jsonify({
                 "success": False, 
                 "error": "Dados do veículo não encontrados"
             })
         
     except Exception as e:
-        health_monitor.log_error(f"Vehicle API error: {str(e)}", "consulta_veiculo")
+        health_monitor.log_error(f"Vehicle API unexpected error: {str(e)}", "consulta_veiculo")
+        print(f"Unexpected vehicle API error for IP {client_ip}: {str(e)}")
         return jsonify({"success": False, "error": "Erro interno do servidor"})
 
 @app.route("/loading", methods=["GET", "POST"])
