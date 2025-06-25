@@ -1345,6 +1345,11 @@ with app.app_context():
     import models
     db.create_all()
 
+@app.route("/test_pixel")
+def test_pixel():
+    """Página de teste para Meta Pixel"""
+    return render_template("test_pixel.html")
+
 @app.route('/admin/meta-pixels')
 def admin_meta_pixels():
     """Página administrativa para configuração dos Meta Pixels"""

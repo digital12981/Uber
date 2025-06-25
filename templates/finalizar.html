@@ -396,9 +396,18 @@ function fireMetaPixelCNVPurchaseEvent(transactionData) {
             
         } else {
             console.error('❌ Facebook Pixel (fbq) not loaded - CNV Purchase event not fired');
-            // Try to load fbq again
-            if (window.fbq === undefined) {
-                console.error('❌ window.fbq is completely undefined');
+            console.error('window.fbq status:', typeof window.fbq);
+            console.error('Available globals:', Object.keys(window).filter(k => k.includes('fb')));
+            
+            // Force manual pixel initialization as last resort
+            if (typeof window.fbq === 'undefined') {
+                console.log('Attempting manual pixel recovery...');
+                setTimeout(() => {
+                    if (typeof window.fbq !== 'undefined') {
+                        console.log('Pixel recovered! Firing delayed CNV Purchase event...');
+                        window.fbq('track', 'Purchase', eventData, customerData);
+                    }
+                }, 2000);
             }
         }
         

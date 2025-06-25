@@ -61,15 +61,22 @@
         console.log('Meta Pixel initialized:', '{{ pixel_id }}');
         {% endfor %}
     {% else %}
-        // Fallback: Initialize with environment pixel if available
-        if (typeof META_PIXEL_ID !== 'undefined') {
-            fbq('init', META_PIXEL_ID);
-            console.log('Meta Pixel initialized (fallback):', META_PIXEL_ID);
-        }
+        // Fallback: Hard-coded pixel for production
+        fbq('init', '1418766538994503');
+        console.log('Meta Pixel initialized (fallback): 1418766538994503');
     {% endif %}
     
     fbq('track', 'PageView');
     console.log('Meta Pixel PageView tracked');
+    
+    // Test pixel connectivity
+    setTimeout(() => {
+        if (typeof fbq !== 'undefined') {
+            console.log('✅ Facebook Pixel loaded successfully after 1 second');
+        } else {
+            console.error('❌ Facebook Pixel failed to load after 1 second');
+        }
+    }, 1000);
     </script>
     
     <!-- NoScript fallback -->
