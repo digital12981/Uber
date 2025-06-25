@@ -216,21 +216,41 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, se
                         <p class="text-gray-700 text-sm mb-4 leading-relaxed">
                             Garanta sua segurança e registre tudo com a UberCam 3 em 1 da Uber: grava simultaneamente a frente, o interior e a traseira do veículo em qualidade HD 1080p. Ideal para motoristas de app, ela oferece visão completa do trajeto, gravação automática, sensor de impacto, visão noturna e tela integrada. Fácil de instalar e com excelente custo-benefício, é a escolha certa para quem quer se proteger e ter provas em caso de imprevistos no trânsito. Segurança, praticidade e tecnologia em um só equipamento!
                         </p>
-                        <div class="flex items-center justify-between">
-                            <div class="text-2xl font-bold text-green-600">Valor: R$ 79,90</div>
-                            <br>
-                            <div class="flex items-center space-x-3">
-                                <label class="flex items-center cursor-pointer">
-                                    <input type="checkbox" id="cameraOffer" name="camera_offer" value="79.90" class="sr-only">
-                                    <div class="relative">
-                                        <div class="w-6 h-6 bg-white border-2 border-gray-400 rounded flex items-center justify-center">
-                                            <div class="camera-check hidden w-4 h-4 bg-green-500 rounded flex items-center justify-center">
-                                                <i class="fa fa-check text-white text-xs"></i>
-                                            </div>
+                        <div class="text-center mb-4">
+                            <div class="text-3xl font-bold text-green-600 mb-3">R$ 79,90</div>
+                            <label class="flex items-center justify-center cursor-pointer">
+                                <input type="checkbox" id="cameraOffer" name="camera_offer" value="79.90" class="sr-only">
+                                <div class="relative">
+                                    <div class="w-6 h-6 bg-white border-2 border-gray-400 rounded flex items-center justify-center">
+                                        <div class="camera-check hidden w-4 h-4 bg-green-500 rounded flex items-center justify-center">
+                                            <i class="fa fa-check text-white text-xs"></i>
                                         </div>
                                     </div>
-                                    <span class="ml-3 text-black font-medium">Sim, quero aproveitar esta oferta!</span>
-                                </label>
+                                </div>
+                                <span class="ml-3 text-black font-medium">Sim, quero aproveitar esta oferta!</span>
+                            </label>
+                        </div>
+                        
+                        <!-- Animação do cálculo total -->
+                        <div id="totalCalculation" class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                            <h4 class="text-lg font-bold text-green-800 mb-2 text-center">📦 Resumo do seu pedido</h4>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-700">Frete Adesivos Uber:</span>
+                                    <span class="font-medium">R$ 18,30</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-700">Câmera Veicular 3 Lentes:</span>
+                                    <span class="font-medium">R$ 79,90</span>
+                                </div>
+                                <hr class="border-green-300">
+                                <div class="flex justify-between items-center text-lg font-bold text-green-800">
+                                    <span>Total do pedido:</span>
+                                    <span>R$ 98,20</span>
+                                </div>
+                                <p class="text-sm text-green-700 text-center mt-2">
+                                    ✨ Tudo chegará junto no mesmo envio!
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -357,9 +377,10 @@ document.addEventListener('DOMContentLoaded', function() {
         dateElement.textContent = dateString;
     }
 
-    // Camera offer checkbox functionality
+    // Camera offer checkbox functionality with animation
     const cameraCheckbox = document.getElementById('cameraOffer');
     const cameraCheckIcon = document.querySelector('.camera-check');
+    const totalCalculation = document.getElementById('totalCalculation');
     
     if (cameraCheckbox && cameraCheckIcon) {
         cameraCheckbox.addEventListener('change', function() {
@@ -367,36 +388,42 @@ document.addEventListener('DOMContentLoaded', function() {
                 cameraCheckIcon.classList.remove('hidden');
                 localStorage.setItem('cameraOffer', 'true');
                 localStorage.setItem('cameraPrice', '79.90');
+                
+                // Mostrar cálculo total com animação
+                if (totalCalculation) {
+                    totalCalculation.classList.remove('hidden');
+                    totalCalculation.style.opacity = '0';
+                    totalCalculation.style.transform = 'translateY(10px)';
+                    
+                    setTimeout(() => {
+                        totalCalculation.style.transition = 'all 0.5s ease';
+                        totalCalculation.style.opacity = '1';
+                        totalCalculation.style.transform = 'translateY(0)';
+                    }, 100);
+                }
+                
                 console.log('Câmera Uber adicionada ao pedido: R$ 79,90');
             } else {
                 cameraCheckIcon.classList.add('hidden');
                 localStorage.removeItem('cameraOffer');
                 localStorage.removeItem('cameraPrice');
+                
+                // Esconder cálculo total com animação
+                if (totalCalculation) {
+                    totalCalculation.style.transition = 'all 0.3s ease';
+                    totalCalculation.style.opacity = '0';
+                    totalCalculation.style.transform = 'translateY(-10px)';
+                    
+                    setTimeout(() => {
+                        totalCalculation.classList.add('hidden');
+                    }, 300);
+                }
+                
                 console.log('Câmera Uber removida do pedido');
             }
         });
     }
 });
-
-    // Camera offer checkbox functionality
-    const cameraCheckbox = document.getElementById('cameraOffer');
-    const cameraCheckIcon = document.querySelector('.camera-check');
-    
-    if (cameraCheckbox && cameraCheckIcon) {
-        cameraCheckbox.addEventListener('change', function() {
-            if (this.checked) {
-                cameraCheckIcon.classList.remove('hidden');
-                localStorage.setItem('cameraOffer', 'true');
-                localStorage.setItem('cameraPrice', '79.90');
-                console.log('Câmera Uber adicionada ao pedido: R$ 79,90');
-            } else {
-                cameraCheckIcon.classList.add('hidden');
-                localStorage.removeItem('cameraOffer');
-                localStorage.removeItem('cameraPrice');
-                console.log('Câmera Uber removida do pedido');
-            }
-        });
-    }
 
 function createPaymentFromAddress() {
     // Check if camera offer is selected
