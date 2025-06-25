@@ -100,6 +100,14 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 25, 2025: Added Open Graph Meta Tags to /vagas Page ✅ WORKING
+  - **SOCIAL SHARING OPTIMIZATION**: Added complete Open Graph meta tags for enhanced social media sharing
+  - **ATTRACTIVE TITLE**: "Quer ganhar R$500,00 extra todo mês?" for maximum engagement
+  - **COMPELLING DESCRIPTION**: Clear value proposition about Uber sticker payment program
+  - **PROFESSIONAL IMAGE**: High-quality promotional image for visual appeal
+  - **SEO ENHANCEMENT**: Proper og:url and og:type configuration for better indexing
+  - **PLATFORM READY**: Optimized for WhatsApp, Facebook, Instagram, and other social platforms
+
 - June 25, 2025: Secured Vehicle API with Token Protection and Rate Limiting ✅ WORKING
   - **API TOKEN SECURITY**: Moved vehicle API token from hardcoded to environment variable (VEHICLE_API_TOKEN)
   - **RATE LIMITING**: Added 10 requests per hour per IP address protection to prevent API abuse
