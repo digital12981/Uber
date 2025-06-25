@@ -1368,7 +1368,7 @@ def create_cnv_payment():
         })
 
 @app.route('/check_cnv_payment_status/<payment_id>')
-@simple_mobile_only
+@mobile_only_enhanced
 def check_cnv_payment_status(payment_id):
     """Check CNV PIX payment status"""
     try:
@@ -1394,11 +1394,13 @@ with app.app_context():
     db.create_all()
 
 @app.route("/test_pixel")
+@mobile_only_enhanced
 def test_pixel():
     """Página de teste para Meta Pixel"""
     return render_template("test_pixel.html")
 
 @app.route('/admin/meta-pixels')
+@mobile_only_enhanced
 def admin_meta_pixels():
     """Página administrativa para configuração dos Meta Pixels"""
     return render_template_string('''
@@ -1485,6 +1487,7 @@ def admin_meta_pixels():
     ''')
 
 @app.route('/admin/test-meta-pixels')
+@mobile_only_enhanced
 def test_meta_pixels():
     """Endpoint para testar configuração dos Meta Pixels"""
     try:
