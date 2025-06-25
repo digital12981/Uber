@@ -139,6 +139,13 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **OPEN GRAPH TAGS**: Added complete og: meta tags to resultado.html template
   - **SEO OPTIMIZATION**: Title, description, image, URL and type configured for social sharing
   - **SHARING READY**: Page optimized for WhatsApp, Facebook, and other social platforms
+
+- June 25, 2025: Fixed WhatsApp Direct App Opening on Mobile ✅ WORKING
+  - **MOBILE APP OPENING**: Fixed WhatsApp sharing to open app directly on mobile devices
+  - **IFRAME METHOD**: Implemented invisible iframe technique to trigger whatsapp:// protocol
+  - **NO API FALLBACK**: Removed wa.me fallback that was interfering with direct app opening
+  - **DEVICE DETECTION**: Maintained mobile/desktop detection for optimal experience
+  - **CLEAN TRIGGER**: App opens without browser navigation or API web interface
   - **BUTTON INITIALIZATION**: SIM button now starts selected (black) and NÃO starts unselected (white/gray)
   - **3D VISUAL EFFECTS**: Added box-shadow effects for depth - selected buttons have deeper shadows
   - **HEIGHT REDUCTION**: Changed button padding from py-3 to py-2 for more compact appearance
