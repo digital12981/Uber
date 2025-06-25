@@ -100,6 +100,24 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 25, 2025: Added Referral Program to /local Page ✅ WORKING
+  - **REFERRAL PROGRAM**: Added yellow warning box with R$ 65 per referral information
+  - **WHATSAPP SHARING**: Created WhatsApp share button with pre-formatted message
+  - **AUTOMATED MESSAGE**: Includes program benefits, bonus details, and current website URL
+  - **VISUAL DESIGN**: Yellow background box with share icon and green WhatsApp button
+  - **USER ENGAGEMENT**: Encourages sharing with friends and family for additional income
+  - **DISCLAIMER ADDED**: Small text reminder to complete registration after sharing
+
+- June 25, 2025: Fixed Driver Selection Buttons with 3D Effects ✅ WORKING
+  - **BUTTON INITIALIZATION**: SIM button now starts selected (black) and NÃO starts unselected (white/gray)
+  - **3D VISUAL EFFECTS**: Added box-shadow effects for depth - selected buttons have deeper shadows
+  - **HEIGHT REDUCTION**: Changed button padding from py-3 to py-2 for more compact appearance
+  - **CSS OVERRIDE SOLUTION**: Created dedicated /static/js/driver-buttons.js to override global button styles
+  - **MULTIPLE INITIALIZATION**: Script runs on DOM ready plus delayed timeouts to ensure correct styling
+  - **HOVER EFFECTS**: Added translateY elevation on hover for enhanced 3D interaction
+  - **GLOBAL CSS EXCLUSIONS**: Updated layout.html to exclude driver selector buttons from global black button rules
+  - **INLINE STYLE PRIORITY**: Used cssText with !important declarations for maximum CSS specificity
+
 - June 24, 2025: Added 10-Minute PIX Expiration Timer to /finalizar ✅ WORKING
   - **COUNTDOWN TIMER**: Added visual 10-minute countdown timer below payment warning box
   - **EXPIRATION WARNING**: Clear message about losing Uber Partners program access after expiration

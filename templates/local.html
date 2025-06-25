@@ -12,7 +12,7 @@
             <i class="fa fa-check text-2xl text-green-600"></i>
         </div>
         <h1 class="text-2xl font-bold text-black mb-2">Cadastro Aprovado!</h1>
-        <p class="text-gray-600">Parabéns! Seu cadastro no programa de adesivação da Uber foi aprovado com sucesso.</p>
+        <p class="text-gray-600">Seu cadastro ainda não terminou. Agora você pode compartilhar o programa da Uber com seus amigos e familiares e receber R$65,00 por cada pessoa que se cadastrar pelo seu link. Logo após, continue para informar como deseja receber seu pagamento.</p>
     </div>
 
     <!-- Next Steps -->
@@ -38,21 +38,30 @@
         </div>
     </div>
 
-    <!-- Compatibility Info -->
-    <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+    <!-- Referral Program -->
+    <div class="p-4 mb-6" style="background-color: #fff; border-radius: 0px;">
         <div class="flex">
             <div class="flex-shrink-0">
-                <i class="fa fa-check-circle text-green-400"></i>
             </div>
             <div class="ml-3">
-                <p class="text-sm text-green-700">
-                    <strong>Boa notícia:</strong> Você pode continuar usando outros aplicativos como 99, inDriver, 
-                    ou qualquer outro app de mobilidade. O programa de adesivação é totalmente compatível!
+                <h2 class="text-sm font-semibold text-yellow-800 mb-2">Programa de Indicação  Ganhe R$ 65,00 por amigo!</h2>
+                <p class="text-sm text-yellow-700 mb-3">
+                    Compartilhe o programa de recompensa da Uber com seus amigos e familiares. 
+                    Para cada pessoa que se cadastrar através do seu convite, você recebe <strong>R$ 65,00</strong> de bônus!
+                </p>
+                <button onclick="shareOnWhatsApp()" 
+                    class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 text-sm font-semibold transition-colors duration-200"
+                    style="border-radius: 2px !important;">
+                    <i class="fa fa-whatsapp mr-2"></i>Compartilhar no WhatsApp
+                </button>
+                <p class="text-xs text-yellow-600 mt-2 italic">
+                    <i class="fa fa-info-circle mr-1"></i>Após compartilhar, volte e clique em "Informar Dados de Pagamento" para concluir seu cadastro.
                 </p>
             </div>
         </div>
     </div>
 
+ 
     <!-- Payment Setup Info -->
     <div class="border-l-4 border-blue-400 p-4 mb-6" style="background-color: #EEEEEE; border-radius: 0px;">
         <div class="flex">
@@ -75,6 +84,26 @@
 </div>
 
 <script>
-// Success page - no scripts needed
+// WhatsApp sharing function
+function shareOnWhatsApp() {
+    const message = `🚗 *Programa de Adesivação Uber* 🚗
+
+Oi! Descobri um programa incrível da Uber onde ganho R$ 500 por mês só por ter o adesivo no meu carro!
+
+✅ R$ 500/mês garantidos por 3 anos
+✅ Compatível com 99, inDriver e outros apps
+✅ Processo 100% online
+✅ Sem taxas ou mensalidades
+
+E o melhor: se você se cadastrar através do meu convite, EU ganho R$ 65 de bônus! 💰
+
+Link para cadastro:
+${window.location.origin}
+
+Aproveite essa oportunidade única! 🎯`;
+
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+}
 </script>
 {% endblock %}
