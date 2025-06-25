@@ -100,6 +100,15 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 25, 2025: Added Uber Dashcam Offer to Address Page ✅ WORKING
+  - **CAMERA OFFER**: Added Uber 3-lens dashcam offer on /address page above payment button
+  - **PRODUCT DETAILS**: HD 1080p recording (front, interior, rear), night vision, impact sensor
+  - **PRICING**: R$ 79,90 added to base shipping fee when selected
+  - **DYNAMIC PRICING**: Payment API calculates total (R$ 18,30 base + R$ 79,90 camera = R$ 98,20)
+  - **UI ENHANCEMENT**: Gradient black box with product image and checkbox selection
+  - **INTEGRATION**: Camera selection saved to localStorage and passed through payment flow
+  - **DESCRIPTION UPDATE**: Payment description includes both items when camera selected
+
 - June 25, 2025: Updated CEP API to OpenCEP API ✅ WORKING
   - **NEW CEP API**: Changed from ViaCEP to OpenCEP API (https://opencep.com/v1/{cep}.json)
   - **API FORMAT**: Uses OpenCEP format with fields: cep, logradouro, bairro, localidade, uf, estado
