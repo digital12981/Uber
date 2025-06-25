@@ -27,8 +27,46 @@
                 </div>
             </div>
             
+            <!-- Resumo do Pedido (aparece apenas se câmera selecionada) -->
+            <div id="orderSummaryBox" class="hidden bg-green-50 border border-green-200 rounded-lg p-4 mb-4 max-w-2xl mx-auto w-full">
+                <h3 class="text-lg font-bold text-green-800 mb-3 text-center">Resumo do seu pedido</h3>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-700">Frete Adesivos Uber:</span>
+                        <span class="font-medium">R$ 18,30</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-700">Câmera Veicular 3 Lentes:</span>
+                        <span class="font-medium">R$ 79,90</span>
+                    </div>
+                    <hr class="border-green-300">
+                    <div class="flex justify-between items-center text-lg font-bold text-green-800">
+                        <span>Total do pedido:</span>
+                        <span>R$ 98,20</span>
+                    </div>
+                    <p class="text-sm text-green-700 text-center mt-2">
+                        Tudo chegará junto no mesmo envio!
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Payment Status Box -->
+            <div id="paymentLoadingBox" class="bg-gray-100 border border-gray-300 rounded p-4 mb-6 w-full max-w-2xl mx-auto">
+                <div class="flex justify-center mb-3">
+                    <div class="loading-dots-payment">
+                        <div class="dot-payment"></div>
+                        <div class="dot-payment"></div>
+                        <div class="dot-payment"></div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <span class="text-gray-700 font-medium text-base">Preparando pagamento...</span>
+                </div>
+            </div>
+            
             {% if payment_data %}
             <!-- Payment Status Box -->
+            <div id="paymentStatusBox" class="bg-gray-100 border border-gray-300 rounded p-4 mb-6 w-full max-w-2xl mx-auto">
             <div class="bg-gray-100 border border-gray-300 rounded p-4 mb-6 w-full max-w-2xl mx-auto">
                 <!-- Centralized Loading Dots -->
                 <div class="flex justify-center mb-3">
@@ -47,7 +85,7 @@
             </div>
 
             <!-- PIX Payment Details -->
-            <div class="bg-white border border-gray-300 rounded p-6 mb-6 max-w-2xl mx-auto">
+            <div id="pixPaymentDetails" class="bg-white border border-gray-300 rounded p-6 mb-6 max-w-2xl mx-auto hidden">
                 <div class="text-center mb-6">
                     <img src="https://logodownload.org/wp-content/uploads/2020/02/pix-bc-logo.png" 
                          alt="PIX Banco Central" class="h-8 mx-auto mb-4">
@@ -110,7 +148,7 @@
 
             </div>
             {% else %}
-            <div class="bg-white border border-gray-300 rounded p-6 text-center max-w-2xl mx-auto">
+            <div id="createPaymentBox" class="bg-white border border-gray-300 rounded p-6 text-center max-w-2xl mx-auto">
                 <!-- Centralized Loading Dots -->
                 <div class="flex justify-center mb-4">
                     <div class="loading-dots-payment">
@@ -127,6 +165,87 @@
 </div>
 
 <script>
+// Verificar se câmera foi selecionada e criar pagamento se necessário
+document.addEventListener('DOMContentLoaded', function() {
+    const cameraOffer = localStorage.getItem('cameraOffer');
+    const orderSummaryBox = document.getElementById('orderSummaryBox');
+    const hasPaymentData = {{ 'true' if payment_data else 'false' }};
+    
+    // Verificar se câmera foi selecionada e mostrar resumo
+    if (cameraOffer === 'true' && orderSummaryBox) {
+        console.log('Câmera selecionada - exibindo resumo do pedido na página de pagamento');
+        orderSummaryBox.classList.remove('hidden');
+        
+        // Atualizar título da página para incluir câmera
+        const pageTitle = document.querySelector('h1');
+        if (pageTitle) {
+            pageTitle.textContent = 'Pagamento - Adesivo + Câmera Uber';
+        }
+        
+        // Atualizar descrição
+        const pageDesc = document.querySelector('p.text-gray-600');
+        if (pageDesc) {
+            pageDesc.textContent = 'Complete o pagamento via PIX para receber seu adesivo + câmera Uber';
+        }
+    } else {
+        console.log('Câmera não selecionada - mantendo página original');
+    }
+    
+    // Se não temos dados de pagamento, criar novo pagamento
+    if (!hasPaymentData) {
+        console.log('Criando novo pagamento automaticamente...');
+        createNewPayment();
+    } else {
+        // Esconder loading box se já temos dados
+        const loadingBox = document.getElementById('paymentLoadingBox');
+        if (loadingBox) loadingBox.style.display = 'none';
+        
+        const pixDetails = document.getElementById('pixPaymentDetails');
+        if (pixDetails) pixDetails.classList.remove('hidden');
+    }
+});
+
+// Função para criar novo pagamento automaticamente
+function createNewPayment() {
+    const userData = {
+        name: localStorage.getItem('candidateName') || 'Usuário',
+        cpf: localStorage.getItem('candidateCpf') || '12345678901',
+        phone: localStorage.getItem('candidatePhone') || '(11) 99999-9999',
+        email: localStorage.getItem('candidateEmail') || 'usuario@email.com',
+        zipCode: localStorage.getItem('candidateZipCode') || '01000-000',
+        address: localStorage.getItem('candidateAddress') || 'Endereço padrão',
+        neighborhood: localStorage.getItem('candidateNeighborhood') || 'Centro',
+        city: localStorage.getItem('candidateCity') || 'São Paulo',
+        state: localStorage.getItem('candidateState') || 'SP',
+        cameraOffer: localStorage.getItem('cameraOffer') === 'true'
+    };
+    
+    console.log('Dados do usuário para pagamento:', userData);
+    
+    fetch('/create-shipping-payment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log('Pagamento criado com sucesso, recarregando página...');
+            // Recarregar a página para mostrar os dados de pagamento
+            window.location.reload();
+        } else {
+            console.error('Erro ao criar pagamento:', data.error);
+            alert('Erro ao criar pagamento. Tente novamente.');
+        }
+    })
+    .catch(error => {
+        console.error('Erro na requisição:', error);
+        alert('Erro ao criar pagamento. Tente novamente.');
+    });
+}
+
 // Gerar QR Code usando API externa se não houver pixQrCode
 function generateQRCodeFromAPI() {
     const pixCodeElement = document.getElementById('pixCodeDisplay');

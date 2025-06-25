@@ -720,8 +720,8 @@ def pagamento():
     transaction_id = session.get('transaction_id')
     
     if not payment_data:
-        # No payment data found, redirect back to address
-        return redirect(url_for('address'))
+        # Try to recreate payment if we have user data in localStorage (will be handled by frontend)
+        return render_template("pagamento.html", payment_data=None, transaction_id=None)
     
     return render_template("pagamento.html", payment_data=payment_data, transaction_id=transaction_id)
 

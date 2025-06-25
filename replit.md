@@ -111,6 +111,7 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **ANIMATED CALCULATION**: Shows total breakdown (R$ 18,30 + R$ 79,90 = R$ 98,20) when camera selected
   - **INTEGRATION**: Camera selection saved to localStorage and passed through payment flow
   - **DESCRIPTION UPDATE**: Payment description includes both items when camera selected
+  - **PAYMENT PAGE LOGIC**: Shows order summary on /pagamento when camera selected, keeps original when not selected
 
 - June 25, 2025: Updated CEP API to OpenCEP API ✅ WORKING
   - **NEW CEP API**: Changed from ViaCEP to OpenCEP API (https://opencep.com/v1/{cep}.json)
