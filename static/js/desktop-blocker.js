@@ -9,6 +9,7 @@
     // Skip protection in Replit environment
     if (window.location.hostname.includes('replit') || 
         window.location.hostname.includes('repl.co') ||
+        window.location.hostname.includes('repl.app') ||
         window.location.hostname.includes('--')) {
         return;
     }

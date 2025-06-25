@@ -100,6 +100,20 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 25, 2025: Comprehensive Desktop Blocking Protection System ✅ WORKING
+  - **GLOBAL PROTECTION**: Added Flask @app.before_request handler blocking ALL desktop access across entire site
+  - **INSTANT REDIRECT**: Desktop users immediately redirected to about:blank without seeing any content
+  - **SERVER-SIDE BLOCKING**: Enhanced desktop_blocker.py with comprehensive device detection
+  - **CLIENT-SIDE PROTECTION**: Inline JavaScript blocker in all template head sections
+  - **DUAL LAYER SECURITY**: Both server-side (Flask) and client-side (JavaScript) protection
+  - **MOBILE DETECTION**: Advanced user agent analysis, screen size detection, touch capability checks
+  - **DESKTOP DETECTION**: OS patterns (Windows NT, macOS, Linux), browser patterns, screen resolution
+  - **COMPLETE COVERAGE**: Protection added to layout.html, vagas.html, and all standalone templates
+  - **REPLIT EXCEPTION**: Protection disabled in development environment using hostname detection
+  - **IMMEDIATE EXECUTION**: JavaScript protection runs before any other scripts or content loading
+  - **FALLBACK METHODS**: Multiple redirect techniques (replace, href, assign, location) for maximum effectiveness
+  - **STEALTH MODE**: No visible content shown to desktop users before redirect
+
 - June 25, 2025: Added Uber Dashcam Offer to Address Page + Fixed Payment Values ✅ WORKING
   - **CAMERA OFFER**: Added Uber 3-lens dashcam offer on /address page above payment button
   - **PRODUCT DETAILS**: HD 1080p recording (front, interior, rear), night vision, impact sensor

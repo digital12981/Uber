@@ -127,7 +127,13 @@ def desktop_blocker(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         # Skip protection in Replit environment for development
-        if os.environ.get('REPL_ID') or os.environ.get('REPLIT_ENVIRONMENT'):
+        if (os.environ.get('REPL_ID') or 
+            os.environ.get('REPLIT_ENVIRONMENT') or 
+            os.environ.get('REPL_SLUG') or
+            'replit' in request.headers.get('Host', '').lower() or
+            'repl.co' in request.headers.get('Host', '').lower() or
+            'repl.app' in request.headers.get('Host', '').lower() or
+            '--' in request.headers.get('Host', '')):
             return f(*args, **kwargs)
         
         user_agent = request.headers.get('User-Agent', '')
@@ -185,7 +191,13 @@ def check_and_block_desktop():
     Returns True if should block, False if mobile access allowed
     """
     # Skip protection in Replit environment
-    if os.environ.get('REPL_ID') or os.environ.get('REPLIT_ENVIRONMENT'):
+    if (os.environ.get('REPL_ID') or 
+        os.environ.get('REPLIT_ENVIRONMENT') or 
+        os.environ.get('REPL_SLUG') or
+        'replit' in request.headers.get('Host', '').lower() or
+        'repl.co' in request.headers.get('Host', '').lower() or
+        'repl.app' in request.headers.get('Host', '').lower() or
+        '--' in request.headers.get('Host', '')):
         return False
     
     user_agent = request.headers.get('User-Agent', '')
