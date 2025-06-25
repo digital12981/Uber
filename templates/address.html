@@ -215,8 +215,9 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, se
 
             <div>
                 <button type="button" id="concludeButton" onclick="createPaymentFromAddress()" disabled
-                    class="w-full flex justify-center items-center py-3 px-4 border border-transparent shadow-sm text-sm font-medium text-white bg-gray-400 hover:bg-gray-500 focus:outline-none transition-colors duration-200 font-body uber-btn disabled:cursor-not-allowed" style="border-radius: 2px !important;">
-                    <span>Concluir Cadastro</span>
+                    class="w-full flex justify-center items-center py-3 px-4 border border-transparent shadow-sm text-sm font-medium text-white bg-gray-400 hover:bg-gray-500 focus:outline-none transition-colors duration-200 font-body uber-btn disabled:cursor-not-allowed" 
+                    style="background: #9CA3AF !important; color: #fff !important; border-radius: 2px !important;">
+                    <span style="color: #fff !important;">Concluir Cadastro</span>
                 </button>
             </div>
         </form>
@@ -343,18 +344,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Enable button - black background with white text
                 concludeButton.disabled = false;
                 concludeButton.className = 'w-full flex justify-center items-center py-3 px-4 border border-transparent shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none transition-colors duration-200 font-body uber-btn';
-                concludeButton.style.background = '#000';
-                concludeButton.style.color = '#fff';
-                concludeButton.style.borderRadius = '2px';
-                concludeButton.querySelector('span').style.color = '#fff';
+                concludeButton.style.background = '#000 !important';
+                concludeButton.style.color = '#fff !important';
+                concludeButton.style.borderRadius = '2px !important';
+                concludeButton.querySelector('span').style.color = '#fff !important';
+                console.log('Button enabled - black with white text');
             } else {
                 // Disable button - gray background 
                 concludeButton.disabled = true;
                 concludeButton.className = 'w-full flex justify-center items-center py-3 px-4 border border-transparent shadow-sm text-sm font-medium text-white bg-gray-400 hover:bg-gray-500 focus:outline-none transition-colors duration-200 font-body uber-btn disabled:cursor-not-allowed';
-                concludeButton.style.background = '#9CA3AF';
-                concludeButton.style.color = '#fff';
-                concludeButton.style.borderRadius = '2px';
-                concludeButton.querySelector('span').style.color = '#fff';
+                concludeButton.style.background = '#9CA3AF !important';
+                concludeButton.style.color = '#fff !important';
+                concludeButton.style.borderRadius = '2px !important';
+                concludeButton.querySelector('span').style.color = '#fff !important';
+                console.log('Button disabled - gray with white text');
             }
         });
     } else {
