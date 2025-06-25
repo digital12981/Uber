@@ -213,8 +213,8 @@
           font-family: "UberMoveText", "UberMove", system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
         }
         
-        /* FORCE WHITE TEXT AND BLACK BUTTONS */
-        .uber-btn, button, .btn, input[type="submit"], input[type="button"], 
+        /* FORCE WHITE TEXT AND BLACK BUTTONS - EXCEPT DRIVER SELECTORS */
+        .uber-btn, button:not(.driver-selector), .btn, input[type="submit"], input[type="button"], 
         .bg-black, .bg-black600, .bg-black500, .bg-green-600 {
           background: #000 !important;
           color: #fff !important;
@@ -225,7 +225,7 @@
           transition: background 0.2s;
           border: none !important;
         }
-        .uber-btn:hover, button:hover, .btn:hover, input[type="submit"]:hover, input[type="button"]:hover,
+        .uber-btn:hover, button:not(.driver-selector):hover, .btn:hover, input[type="submit"]:hover, input[type="button"]:hover,
         .bg-black:hover, .bg-black600:hover, .bg-black500:hover, .bg-green-600:hover {
           background: #222 !important;
           color: #fff !important;
@@ -259,6 +259,35 @@
         /* Force 0px border radius globally */
         *, *::before, *::after {
           border-radius: 0px !important;
+        }
+
+        /* Driver Selector Buttons - Override all global button styles */
+        .driver-selector {
+          font-family: "UberMoveText", "UberMove", Arial, sans-serif !important;
+          font-size: 16px !important;
+          font-weight: 600 !important;
+          border-radius: 0px !important;
+          padding: 12px 32px !important;
+          transition: all 0.2s ease !important;
+          cursor: pointer !important;
+          border: 2px solid !important;
+        }
+        
+        .driver-selector.unselected {
+          background-color: #ffffff !important;
+          color: #6b7280 !important;
+          border-color: #d1d5db !important;
+        }
+        
+        .driver-selector.unselected:hover {
+          background-color: #f9fafb !important;
+          border-color: #9ca3af !important;
+        }
+        
+        .driver-selector.selected {
+          background-color: #000000 !important;
+          color: #ffffff !important;
+          border-color: #000000 !important;
         }
 
         /* Headings with Uber styling */
