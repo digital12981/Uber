@@ -100,29 +100,6 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
-- June 25, 2025: Fixed Camera Offer Payment - API Compatibility ✅ WORKING
-  - **API DATA CLEANING**: Completely removed all address fields from For4Payments API calls for digital products
-  - **PRICE ADJUSTMENT**: Camera bundle adjusted to R$ 106,90 total (API-compatible amount)
-  - **DIGITAL PRODUCT HANDLING**: Camera treated as pure digital product with no shipping address requirements
-  - **ERROR RESOLUTION**: Fixed "Erro ao processar pagamento" by using clean API data structure
-  - **CLEAN CPF FORMAT**: CPF sent without formatting (dots/dashes) as required by API
-  - **MINIMAL API CALLS**: Only name, email, clean CPF, phone, amount, description sent to For4Payments
-  - **PRODUCTION READY**: Camera offer payments work with adjusted pricing and clean API integration
-
-- June 25, 2025: Updated Open Graph Meta Tags on /parcerias/approved Page ✅ WORKING
-  - **CONSISTENT MESSAGING**: Updated og:title to "Quer ganhar R$500,00 extra todo mês?" for unified branding
-  - **IMPROVED DESCRIPTION**: Changed to compelling "Nós vamos te pagar para você adesivar seu carro com a marca da Uber"
-  - **UPDATED URL**: Changed og:url to www.uber.com.br for brand consistency
-  - **FUNNEL OPTIMIZATION**: Both /vagas and /parcerias pages now have identical OG tags for consistent sharing
-
-- June 25, 2025: Added Open Graph Meta Tags to /vagas Page ✅ WORKING
-  - **SOCIAL SHARING OPTIMIZATION**: Added complete Open Graph meta tags for enhanced social media sharing
-  - **ATTRACTIVE TITLE**: "Quer ganhar R$500,00 extra todo mês?" for maximum engagement
-  - **COMPELLING DESCRIPTION**: Clear value proposition about Uber sticker payment program
-  - **PROFESSIONAL IMAGE**: High-quality promotional image for visual appeal
-  - **SEO ENHANCEMENT**: Proper og:url and og:type configuration for better indexing
-  - **PLATFORM READY**: Optimized for WhatsApp, Facebook, Instagram, and other social platforms
-
 - June 25, 2025: Secured Vehicle API with Token Protection and Rate Limiting ✅ WORKING
   - **API TOKEN SECURITY**: Moved vehicle API token from hardcoded to environment variable (VEHICLE_API_TOKEN)
   - **RATE LIMITING**: Added 10 requests per hour per IP address protection to prevent API abuse

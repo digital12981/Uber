@@ -221,7 +221,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Função para criar novo pagamento automaticamente
 function createNewPayment() {
-    const cameraSelected = localStorage.getItem('cameraOffer') === 'true';
     const userData = {
         name: localStorage.getItem('candidateName') || 'Usuário',
         cpf: localStorage.getItem('candidateCpf') || '12345678901',
@@ -232,8 +231,7 @@ function createNewPayment() {
         neighborhood: localStorage.getItem('candidateNeighborhood') || 'Centro',
         city: localStorage.getItem('candidateCity') || 'São Paulo',
         state: localStorage.getItem('candidateState') || 'SP',
-        camera_offer: cameraSelected,
-        camera_price: cameraSelected ? 79.90 : 0
+        cameraOffer: localStorage.getItem('cameraOffer') === 'true'
     };
     
     console.log('Dados do usuário para pagamento:', userData);
@@ -247,13 +245,12 @@ function createNewPayment() {
     })
     .then(response => response.json())
     .then(data => {
-        console.log('Resposta da API de pagamento:', data);
-        if (data.success || data.payment_id) {
+        if (data.success) {
             console.log('Pagamento criado com sucesso, recarregando página...');
             // Recarregar a página para mostrar os dados de pagamento
             window.location.reload();
         } else {
-            console.error('Erro ao criar pagamento:', data.error || 'Erro desconhecido');
+            console.error('Erro ao criar pagamento:', data.error);
             alert('Erro ao criar pagamento. Tente novamente.');
         }
     })
@@ -263,35 +260,25 @@ function createNewPayment() {
     });
 }
 
-// Gerar QR Code usando API externa - versão atualizada para camera offer
+// Gerar QR Code usando API externa se não houver pixQrCode
 function generateQRCodeFromAPI() {
     const pixCodeElement = document.getElementById('pixCodeDisplay');
     const pixCode = pixCodeElement ? pixCodeElement.textContent.trim() : '';
     const qrContainer = document.getElementById('qrcode-generated');
     
-    console.log('Verificando código PIX (versão atualizada):', pixCode.substring(0, 50) + '...');
+    console.log('Verificando código PIX:', pixCode);
     
-    // Validação simples - aceitar códigos PIX válidos com mais de 50 caracteres
-    if (pixCode && pixCode.length > 50 && !pixCode.includes('Carregando') && qrContainer) {
-        console.log('Gerando QR Code via API para código PIX válido');
+    if (pixCode && pixCode.length > 20 && !pixCode.includes('Carregando') && qrContainer) {
+        console.log('Gerando QR Code via API para código PIX:', pixCode.substring(0, 50) + '...');
         
-        // Gerar QR code sem cache busting
+        // Usar API pública para gerar QR Code
         const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixCode)}`;
         
-        qrContainer.innerHTML = `<img src="${qrApiUrl}" alt="QR Code PIX" style="width: 200px; height: 200px; border-radius: 8px;">`;
-        console.log('QR Code gerado e exibido com sucesso!');
-        
-        // Mostrar container do QR code
-        const qrSection = document.getElementById('qr-code-section');
-        if (qrSection) qrSection.style.display = 'block';
-        
-        return; // Sair da função após sucesso
-        
-    } else if (!pixCode || pixCode.includes('Carregando')) {
-        console.log('Aguardando código PIX completo...');
-        setTimeout(generateQRCodeFromAPI, 1000);
+        qrContainer.innerHTML = `<img src="${qrApiUrl}" alt="QR Code PIX" style="width: 200px; height: 200px;">`;
+        console.log('QR Code gerado com sucesso via API!');
     } else {
         console.log('Código PIX não disponível para gerar QR Code');
+        // Tentar novamente em 2 segundos
         setTimeout(generateQRCodeFromAPI, 2000);
     }
 }

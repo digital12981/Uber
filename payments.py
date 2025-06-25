@@ -129,11 +129,7 @@ class For4PaymentsAPI:
                 phone = self._generate_random_phone()
                 current_app.logger.info(f"Telefone não fornecido, gerado automaticamente: {phone}")
 
-
-            
-            # Preparação dos dados para a API com descrição dinâmica
-            description = data.get('description', 'Taxa de envio - Programa Uber Stickers')
-            
+            # Preparação dos dados para a API
             payment_data = {
                 "name": data['name'],
                 "email": email,
@@ -142,7 +138,7 @@ class For4PaymentsAPI:
                 "paymentMethod": "PIX",
                 "amount": amount_in_cents,
                 "items": [{
-                    "title": description,
+                    "title": "Bolo de Mandioca e Mel",
                     "quantity": 1,
                     "unitPrice": amount_in_cents,
                     "tangible": False
@@ -259,19 +255,8 @@ class For4PaymentsAPI:
                         'status': response_data.get('status', 'pending')
                     }
 
-                    # Log do resultado final com validação do PIX code
-                    pix_code = result.get('pixCode')
-                    if pix_code:
-                        current_app.logger.info(f"PIX Code extraído com sucesso: {pix_code[:50]}...")
-                        # Verificar se o código PIX está completo e válido
-                        if len(pix_code) > 50 and not pix_code.count('*') > 5:
-                            current_app.logger.info("PIX Code válido para geração de QR Code")
-                        else:
-                            current_app.logger.warning(f"PIX Code pode estar incompleto ou mascarado: {pix_code}")
-                    else:
-                        current_app.logger.error("PIX Code não encontrado na resposta da API")
-                    
-                    current_app.logger.info(f"Resposta mapeada para o formato padrão: transaction_id={result.get('id')}, pix_available={bool(pix_code)}")
+                    # Log do resultado final
+                    current_app.logger.info(f"Resposta mapeada para o formato padrão: {result}")
 
                     # Transaction completed successfully
                     transaction_id = result.get('id')
