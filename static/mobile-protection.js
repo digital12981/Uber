@@ -4,13 +4,7 @@
  */
 
 // Check if running in Replit - disable protection for development
-if (window.location.hostname.includes('replit.dev') || 
-    window.location.hostname.includes('replit.app') || 
-    window.location.hostname.includes('repl.co')) {
-    // Skip protection in Replit environment
-    console.log('Mobile protection disabled in Replit environment');
-} else {
-    // Execute protection in production
+// Execute protection on all domains including production and development
     (function() {
         'use strict';
     
@@ -82,26 +76,23 @@ if (window.location.hostname.includes('replit.dev') ||
     // Execute protection immediately
     function executeProtection() {
         if (!isMobileDevice() || isDesktopCloner() || isScrapingTool()) {
-            // Clear all content immediately
-            document.documentElement.innerHTML = '';
-            document.body.innerHTML = '';
+            // Immediate redirect to about:blank for desktop browsers
+            window.location.replace('about:blank');
             
-            // Clear page title and meta data
-            document.title = '';
+            // Backup methods in case replace fails
+            window.location.href = 'about:blank';
+            window.location.assign('about:blank');
             
-            // Remove all stylesheets
-            const stylesheets = document.querySelectorAll('link[rel="stylesheet"], style');
-            stylesheets.forEach(sheet => sheet.remove());
+            // Clear content as fallback
+            try {
+                document.documentElement.innerHTML = '';
+                document.body.innerHTML = '';
+                document.title = '';
+            } catch(e) {}
             
             // Block any further script execution
             window.stop && window.stop();
             
-            // Redirect to about:blank after a brief delay
-            setTimeout(() => {
-                window.location.href = 'about:blank';
-            }, 100);
-            
-            // Return false to stop any further processing
             return false;
         }
         return true;
@@ -163,5 +154,4 @@ if (window.location.hostname.includes('replit.dev') ||
         executeProtection();
     }
     
-    })(); // Close production protection block
-}
+    })(); // End mobile protection

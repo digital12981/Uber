@@ -5,6 +5,7 @@ from flask import request, abort, Response
 from functools import wraps
 import re
 import time
+import os
 
 def is_mobile_device(user_agent):
     """
@@ -88,6 +89,10 @@ def mobile_only(f):
     """
     @wraps(f)
     def decorated_function(*args, **kwargs):
+        # Skip protection only in Replit preview environment
+        if os.environ.get('REPLIT_DEV_DOMAIN'):
+            return f(*args, **kwargs)
+            
         user_agent = request.headers.get('User-Agent', '')
         
         # Advanced fingerprinting checks
