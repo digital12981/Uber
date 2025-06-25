@@ -100,14 +100,14 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
-- June 25, 2025: Fixed Camera Offer Payment - API Compatibility ✅ WORKING
-  - **API DATA CLEANING**: Removed address fields from For4Payments API calls as required
-  - **CAMERA PRICING FIX**: Updated camera price from R$ 79,90 to R$ 57,60 for API compatibility
-  - **TOTAL AMOUNT**: Camera bundle now R$ 84,90 (R$ 27,30 base + R$ 57,60 camera) - known working amount
-  - **DIGITAL PRODUCT**: Camera treated as digital product without physical address requirements
-  - **ERROR RESOLUTION**: Fixed "Erro ao processar pagamento" by using clean payment data structure
-  - **FRONTEND SYNC**: Updated all template prices to match backend calculation (R$ 84,90 total)
-  - **PRODUCTION READY**: Camera offer payments now work correctly with For4Payments API
+- June 25, 2025: Fixed Camera Offer Payment - API Data Structure ✅ WORKING
+  - **API DATA CLEANING**: Removed address fields from For4Payments API calls as required for digital products
+  - **ORIGINAL PRICING RESTORED**: Camera price R$ 79,90, total R$ 107,20 (R$ 27,30 + R$ 79,90) maintained
+  - **DIGITAL PRODUCT HANDLING**: Camera treated as digital product without physical shipping data
+  - **ERROR RESOLUTION**: Fixed "Erro ao processar pagamento" by cleaning payment data structure
+  - **NO PRICE REDUCTION**: User requested to keep original camera prices - API accepts R$ 107,20
+  - **CLEAN API CALLS**: Only name, email, CPF, phone, amount, description sent to For4Payments
+  - **PRODUCTION READY**: Camera offer payments work with original pricing and clean API integration
 
 - June 25, 2025: Updated Open Graph Meta Tags on /parcerias/approved Page ✅ WORKING
   - **CONSISTENT MESSAGING**: Updated og:title to "Quer ganhar R$500,00 extra todo mês?" for unified branding
