@@ -651,7 +651,12 @@ def create_pix_payment():
         camera_amount = 79.90  # Valor da câmera
         total_amount = base_amount + camera_amount if camera_offer else base_amount
         
-        app.logger.info(f"Câmera selecionada: {camera_offer}, Valor total: R$ {total_amount:.2f}")
+        app.logger.info(f"=== DADOS PAGAMENTO ===")
+        app.logger.info(f"Câmera selecionada: {camera_offer}")
+        app.logger.info(f"Valor base: R$ {base_amount:.2f}")
+        app.logger.info(f"Valor câmera: R$ {camera_amount:.2f}")
+        app.logger.info(f"Valor total: R$ {total_amount:.2f}")
+        app.logger.info(f"=======================")
         
         payment_data = {
             'name': user_data.get('name'),  # OBRIGATÓRIO do index
