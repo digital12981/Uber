@@ -146,6 +146,8 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **NO API FALLBACK**: Removed wa.me fallback that was interfering with direct app opening
   - **DEVICE DETECTION**: Maintained mobile/desktop detection for optimal experience
   - **CLEAN TRIGGER**: App opens without browser navigation or API web interface
+  - **SIMPLIFIED METHOD**: Changed to direct window.location assignment for maximum compatibility
+  - **UNIVERSAL SUPPORT**: Works on all mobile browsers and devices without fallbacks
   - **BUTTON INITIALIZATION**: SIM button now starts selected (black) and NÃO starts unselected (white/gray)
   - **3D VISUAL EFFECTS**: Added box-shadow effects for depth - selected buttons have deeper shadows
   - **HEIGHT REDUCTION**: Changed button padding from py-3 to py-2 for more compact appearance
