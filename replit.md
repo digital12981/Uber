@@ -105,7 +105,8 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **PRODUCT DETAILS**: HD 1080p recording (front, interior, rear), night vision, impact sensor
   - **PRICING**: R$ 79,90 added to base shipping fee when selected
   - **DYNAMIC PRICING**: Payment API calculates total (R$ 18,30 base + R$ 79,90 camera = R$ 98,20)
-  - **UI ENHANCEMENT**: Gradient black box with product image and checkbox selection
+  - **UI ENHANCEMENT**: White background box with promotional title and product image
+  - **PROMOTIONAL TITLE**: "Oferta Especial - Aproveite e Garanta Já!" with emoji and subtitle
   - **INTEGRATION**: Camera selection saved to localStorage and passed through payment flow
   - **DESCRIPTION UPDATE**: Payment description includes both items when camera selected
 
