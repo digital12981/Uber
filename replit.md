@@ -100,11 +100,12 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
-- June 25, 2025: Added Referral Program to /local Page ✅ WORKING
+- June 25, 2025: Added Referral Program + Dedicated Share Page ✅ WORKING
   - **REFERRAL PROGRAM**: Added yellow warning box with R$ 65 per referral information
-  - **WHATSAPP SHARING**: Created WhatsApp share button with pre-formatted message
+  - **SHARE PAGE CREATED**: New /share route with dedicated share page (share.html)
+  - **MULTIPLE PLATFORMS**: WhatsApp, Telegram, and copy link functionality
+  - **PROFESSIONAL DESIGN**: Green gradient card with benefits list and share buttons
   - **AUTOMATED MESSAGE**: Includes program benefits, bonus details, and current website URL
-  - **VISUAL DESIGN**: Yellow background box with share icon and green WhatsApp button
   - **USER ENGAGEMENT**: Encourages sharing with friends and family for additional income
   - **DISCLAIMER ADDED**: Small text reminder to complete registration after sharing
 

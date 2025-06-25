@@ -1191,6 +1191,11 @@ def login():
     """Login page for CNAS activation"""
     return render_template("login.html")
 
+@app.route('/share')
+def share():
+    """Share page for referral program"""
+    return render_template("share.html")
+
 @app.route('/aviso')
 @simple_mobile_only
 def aviso():

