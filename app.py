@@ -436,7 +436,7 @@ def create_shipping_payment():
             'email': data['email'],
             'cpf': data['cpf'],
             'phone': data.get('phone', ''),
-            'amount': data.get('amount', 18.30),
+            'amount': data.get('amount', 27.30),
             'description': data.get('description', 'Frete Adesivo Uber - Sedex')
         }
         
@@ -759,7 +759,7 @@ def check_payment_status(transaction_id):
                         }
                         
                         purchase_data = {
-                            'amount': status_response.get('payment_amount', 18.30),
+                            'amount': status_response.get('payment_amount', 27.30),
                             'transaction_id': transaction_id,
                             'currency': 'BRL',
                             'content_name': 'Uber Sticker Shipping Fee'
