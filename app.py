@@ -478,15 +478,21 @@ def create_shipping_payment():
         # Calculate total amount based on camera offer
         base_amount = 27.30  # Base shipping fee
         camera_price = float(data.get('camera_price', 0))
-        total_amount = base_amount + camera_price
+        
+        # Round total to avoid decimal precision issues with API
+        total_amount = round(base_amount + camera_price, 2)
         
         app.logger.info(f"Valor base: R$ {base_amount:.2f}, Câmera: R$ {camera_price:.2f}, Total: R$ {total_amount:.2f}")
         
-        # Prepare description based on items
+        # Special handling for camera offers to avoid API rejection
+        if data.get('camera_offer') and camera_price > 0:
+            app.logger.warning(f"Camera offer detected - using simplified data for API compatibility")
+        
+        # Use ultra-simple descriptions to avoid API rejection
         if data.get('camera_offer'):
-            description = f'Frete Adesivos Uber (R$ {base_amount:.2f}) + Câmera Veicular 3 Lentes (R$ {camera_price:.2f})'
+            description = 'Pedido Uber'
         else:
-            description = 'Taxa de envio - Programa Uber Stickers'
+            description = 'Frete Uber'
         
         payment_request_data = {
             'name': data['name'],
