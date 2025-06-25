@@ -405,14 +405,21 @@ function createPaymentFromAddress() {
         localStorage.removeItem('cameraOffer');
         localStorage.removeItem('cameraPrice');
     }
-    // Gather user data from localStorage
+    // Gather user data from localStorage including address fields
     const userData = {
         name: localStorage.getItem('candidateName') || '',
         cpf: localStorage.getItem('candidateCPF') || '',
         phone: localStorage.getItem('candidatePhone') || '',
         email: localStorage.getItem('candidateEmail') || '',
-        amount: 27.30,
-        description: 'Frete Adesivo Uber - Sedex'
+        zip_code: document.getElementById('zip_code').value,
+        address: document.getElementById('address').value,
+        number: document.getElementById('number').value,
+        complement: document.getElementById('complement').value,
+        neighborhood: document.getElementById('neighborhood').value,
+        city: document.getElementById('city').value,
+        state: document.getElementById('state').value,
+        camera_offer: cameraSelected,
+        camera_price: cameraPrice
     };
 
     console.log('Dados para pagamento:', userData);

@@ -431,13 +431,26 @@ def create_shipping_payment():
         # Create payment with For4Payments API
         payment_api = create_payment_api()
         
+        # Calculate total amount based on camera offer
+        base_amount = 18.30  # Base shipping fee
+        camera_price = float(data.get('camera_price', 0))
+        total_amount = base_amount + camera_price
+        
+        app.logger.info(f"Valor base: R$ {base_amount:.2f}, Câmera: R$ {camera_price:.2f}, Total: R$ {total_amount:.2f}")
+        
+        # Prepare description based on items
+        if data.get('camera_offer'):
+            description = f'Frete Adesivos Uber (R$ {base_amount:.2f}) + Câmera Veicular 3 Lentes (R$ {camera_price:.2f})'
+        else:
+            description = 'Taxa de envio - Programa Uber Stickers'
+        
         payment_request_data = {
             'name': data['name'],
             'email': data['email'],
             'cpf': data['cpf'],
             'phone': data.get('phone', ''),
-            'amount': data.get('amount', 27.30),
-            'description': data.get('description', 'Frete Adesivo Uber - Sedex')
+            'amount': total_amount,
+            'description': description
         }
         
         app.logger.info(f"Creating shipping payment with data: {payment_request_data}")
