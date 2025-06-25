@@ -219,15 +219,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const cityInput = document.getElementById('city');
     const stateInput = document.getElementById('state');
 
-    // Function to fetch address data from ViaCEP API
+    // Function to fetch address data from OpenCEP API
     function fetchAddressByCep(cep) {
-        const apiUrl = `https://viacep.com.br/ws/${cep}/json/`;
+        const apiUrl = `https://opencep.com/v1/${cep}.json`;
         console.log('Buscando endereço para CEP:', cep);
         
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
-                if (!data.erro) {
+                if (data.cep && !data.erro) {
                     console.log('Endereço encontrado:', data);
                     addressInput.value = data.logradouro || '';
                     neighborhoodInput.value = data.bairro || '';

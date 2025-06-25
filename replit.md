@@ -100,6 +100,13 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 25, 2025: Updated CEP API to OpenCEP API ✅ WORKING
+  - **NEW CEP API**: Changed from ViaCEP to OpenCEP API (https://opencep.com/v1/{cep}.json)
+  - **API FORMAT**: Uses OpenCEP format with fields: cep, logradouro, bairro, localidade, uf, estado
+  - **IMPROVED RELIABILITY**: OpenCEP provides more reliable and updated address data
+  - **SAME FUNCTIONALITY**: Maintains auto-fill functionality when CEP is entered
+  - **ERROR HANDLING**: Preserved error handling for invalid CEPs
+
 - June 25, 2025: Complete Facebook Pixel Purchase Event Integration ✅ WORKING
   - **CAMPAIGN DATA CAPTURE**: Automatic capture of Facebook/Instagram campaign parameters from URL
   - **URL PARAMETERS**: Captures fbclid, utm_source, utm_medium, utm_campaign, fb_action_ids, etc.
