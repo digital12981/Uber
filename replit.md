@@ -129,6 +129,16 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **DIRECT APP OPENING**: WhatsApp button now opens app directly on mobile using whatsapp:// protocol
   - **SMART FALLBACK**: 2-second timeout fallback to web version if app doesn't open
   - **DEVICE DETECTION**: Automatic mobile/desktop detection for optimal sharing experience
+
+- June 25, 2025: Changed Route /resultado to /parcerias + Added Open Graph Meta Tags ✅ WORKING
+  - **ROUTE CHANGE**: Changed /resultado/<status> to /parcerias/<status> in app.py
+  - **SIMPLE ACCESS**: Added /parcerias route that redirects to /parcerias/approved
+  - **TEMPLATE PRESERVED**: resultado.html template kept unchanged as requested
+  - **REDIRECTS UPDATED**: Fixed all links in sms_service.py and resultado_paid.html
+  - **MOBILE PROTECTION REMOVED**: Removed @simple_mobile_only decorator from /parcerias route
+  - **OPEN GRAPH TAGS**: Added complete og: meta tags to resultado.html template
+  - **SEO OPTIMIZATION**: Title, description, image, URL and type configured for social sharing
+  - **SHARING READY**: Page optimized for WhatsApp, Facebook, and other social platforms
   - **BUTTON INITIALIZATION**: SIM button now starts selected (black) and NÃO starts unselected (white/gray)
   - **3D VISUAL EFFECTS**: Added box-shadow effects for depth - selected buttons have deeper shadows
   - **HEIGHT REDUCTION**: Changed button padding from py-3 to py-2 for more compact appearance
