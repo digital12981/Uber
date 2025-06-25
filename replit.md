@@ -100,6 +100,13 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 25, 2025: Added Domain Redirection for Ads Traffic ✅ WORKING
+  - **DOMAIN REDIRECTION**: Added automatic redirect from ads domain to main domain
+  - **ADS DOMAIN**: uber.atualizar-cadastro.info/vagas redirects to www.ubermotoristas.com/parcerias
+  - **301 REDIRECT**: Permanent redirect preserves SEO and ensures users reach correct domain
+  - **TRAFFIC MANAGEMENT**: Separates ads traffic from main domain while maintaining user experience
+  - **AUTOMATIC DETECTION**: Server detects request host and redirects accordingly
+
 - June 25, 2025: Added Referral Program + Dedicated Share Page ✅ WORKING
   - **REFERRAL PROGRAM**: Added yellow warning box with R$ 65 per referral information
   - **SHARE PAGE CREATED**: New /share route with dedicated share page (share.html)
