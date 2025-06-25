@@ -294,6 +294,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if (pixData.paymentId) {
                     localStorage.setItem('cnvPaymentId', pixData.paymentId);
                     console.log('Payment ID stored:', pixData.paymentId);
+                    
+                    // Start CNV payment monitoring
+                    startCNVPaymentMonitoring(pixData.paymentId);
                 }
                 
                 // Hide loading message
@@ -323,6 +326,123 @@ document.addEventListener('DOMContentLoaded', async function() {
         `;
     }
 });
+
+// Meta Pixel Purchase Event Function for CNV Payment
+function fireMetaPixelCNVPurchaseEvent(transactionData) {
+    try {
+        // Get user data from localStorage (from login or payment flow)
+        const loginData = JSON.parse(localStorage.getItem('loginUserData') || '{}');
+        const userData = {
+            candidateName: loginData.nome || localStorage.getItem('candidateName') || '',
+            candidateEmail: loginData.email || localStorage.getItem('candidateEmail') || '',
+            candidatePhone: loginData.telefone || localStorage.getItem('candidatePhone') || '',
+            candidateCPF: loginData.cpf || localStorage.getItem('candidateCPF') || '',
+            candidateCity: loginData.cidade || localStorage.getItem('candidateCity') || '',
+            candidateState: loginData.estado || localStorage.getItem('candidateState') || '',
+            candidateZipCode: loginData.cep || localStorage.getItem('candidateZipCode') || ''
+        };
+        
+        // Get campaign data
+        const campaignInfo = JSON.parse(localStorage.getItem('campaignData') || '{}');
+        
+        // Purchase event data for CNV payment
+        const purchaseValue = transactionData.payment_amount || 82.10;
+        const transactionId = transactionData.transaction_id;
+        
+        // Customer data for Facebook (will be automatically hashed)
+        const customerData = {};
+        if (userData.candidateEmail) customerData.em = userData.candidateEmail.toLowerCase().trim();
+        if (userData.candidatePhone) customerData.ph = userData.candidatePhone.replace(/\D/g, '');
+        if (userData.candidateName) {
+            const nameParts = userData.candidateName.trim().toLowerCase().split(' ');
+            if (nameParts.length >= 1) customerData.fn = nameParts[0];
+            if (nameParts.length >= 2) customerData.ln = nameParts[nameParts.length - 1];
+        }
+        if (userData.candidateCity) customerData.ct = userData.candidateCity.toLowerCase().trim();
+        if (userData.candidateState) customerData.st = userData.candidateState.toLowerCase().trim();
+        if (userData.candidateZipCode) customerData.zp = userData.candidateZipCode.replace(/\D/g, '');
+        if (userData.candidateCPF) customerData.external_id = userData.candidateCPF.replace(/\D/g, '');
+        
+        // Event parameters
+        const eventData = {
+            value: purchaseValue,
+            currency: 'BRL',
+            content_type: 'product',
+            content_ids: [transactionId],
+            content_name: 'Uber Sticker Installation Fee',
+            content_category: 'Installation'
+        };
+        
+        // Add campaign data if available
+        if (campaignInfo.fbclid) eventData.fbclid = campaignInfo.fbclid;
+        if (campaignInfo.utm_source) eventData.utm_source = campaignInfo.utm_source;
+        if (campaignInfo.utm_medium) eventData.utm_medium = campaignInfo.utm_medium;
+        if (campaignInfo.utm_campaign) eventData.utm_campaign = campaignInfo.utm_campaign;
+        
+        // Fire Purchase event for all configured pixels
+        if (typeof fbq !== 'undefined') {
+            fbq('track', 'Purchase', eventData, customerData);
+            console.log('✅ Meta Pixel CNV Purchase event fired successfully!');
+            console.log('CNV Event Data:', eventData);
+            console.log('CNV Customer Data:', customerData);
+            console.log('CNV Campaign Data:', campaignInfo);
+        } else {
+            console.warn('Facebook Pixel not loaded - CNV Purchase event not fired');
+        }
+        
+    } catch (error) {
+        console.error('Error firing Meta Pixel CNV Purchase event:', error);
+    }
+}
+
+// CNV Payment Monitoring System
+function startCNVPaymentMonitoring(paymentId) {
+    let checkCount = 0;
+    const MAX_CHECKS = 600; // 10 minutes
+    
+    function checkCNVPaymentStatus() {
+        if (checkCount >= MAX_CHECKS) {
+            console.log('CNV payment monitoring timeout');
+            return;
+        }
+        
+        checkCount++;
+        console.log(`CNV payment check #${checkCount} for ID: ${paymentId}`);
+        
+        fetch(`/check_cnv_payment_status/${paymentId}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('CNV payment status:', data);
+                
+                if (data.status === 'completed' || data.status === 'APPROVED') {
+                    console.log('✅ CNV Payment APPROVED! Firing Meta Pixel Purchase event...');
+                    clearInterval(cnvPaymentInterval);
+                    
+                    // Fire Meta Pixel Purchase event BEFORE redirect
+                    fireMetaPixelCNVPurchaseEvent({
+                        transaction_id: paymentId,
+                        payment_amount: data.payment_amount || 82.10,
+                        status: 'completed'
+                    });
+                    
+                    // Small delay to ensure pixel fires, then redirect
+                    setTimeout(() => {
+                        console.log('Redirecting to success page...');
+                        window.location.href = '/parcerias/approved';
+                    }, 500);
+                }
+            })
+            .catch(error => {
+                console.error('Error checking CNV payment:', error);
+            });
+    }
+    
+    // Start monitoring
+    const cnvPaymentInterval = setInterval(checkCNVPaymentStatus, 1000);
+    
+    // Initial check
+    setTimeout(checkCNVPaymentStatus, 100);
+}
 
 // Countdown timer function
 let countdownTime = 10 * 60; // 10 minutes in seconds

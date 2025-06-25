@@ -100,6 +100,18 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 25, 2025: Complete Facebook Pixel Purchase Event Integration ✅ WORKING
+  - **CAMPAIGN DATA CAPTURE**: Automatic capture of Facebook/Instagram campaign parameters from URL
+  - **URL PARAMETERS**: Captures fbclid, utm_source, utm_medium, utm_campaign, fb_action_ids, etc.
+  - **LOCALSTORAGE STORAGE**: Campaign data stored and passed through entire conversion funnel
+  - **PAYMENT INTEGRATION**: Meta Pixel Purchase events fired when payments are approved
+  - **DUAL CONVERSION TRACKING**: Both /pagamento (R$ 18,30) and /finalizar (R$ 82,10) payments tracked
+  - **CUSTOMER DATA HASHING**: Automatic hashing of email, phone, CPF, name, location data
+  - **CAMPAIGN ATTRIBUTION**: Purchase events include original campaign data for proper attribution
+  - **MULTI-PIXEL SUPPORT**: Works with all configured Facebook pixels (META_PIXEL_1_ID through META_PIXEL_6_ID)
+  - **REAL-TIME FIRING**: Purchase events fire immediately when payment status becomes 'APPROVED'
+  - **ERROR HANDLING**: Comprehensive error handling and console logging for debugging
+
 - June 25, 2025: Fixed WhatsApp Button Function + Maintained Custom Message ✅ WORKING
   - **WHATSAPP BUTTON FIX**: Corrected JavaScript string formatting that broke WhatsApp function
   - **CUSTOM MESSAGE PRESERVED**: Kept user's personalized message about R$ 500 Uber sticker program

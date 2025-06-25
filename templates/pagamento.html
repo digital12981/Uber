@@ -189,6 +189,73 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Monitoramento automático do status do pagamento
 {% if transaction_id %}
+// Meta Pixel Purchase Event Function
+function fireMetaPixelPurchaseEvent(transactionData) {
+    try {
+        // Get user data from localStorage
+        const userData = {
+            candidateName: localStorage.getItem('candidateName') || '',
+            candidateEmail: localStorage.getItem('candidateEmail') || '',
+            candidatePhone: localStorage.getItem('candidatePhone') || '',
+            candidateCPF: localStorage.getItem('candidateCPF') || '',
+            candidateCity: localStorage.getItem('candidateCity') || '',
+            candidateState: localStorage.getItem('candidateState') || '',
+            candidateZipCode: localStorage.getItem('candidateZipCode') || ''
+        };
+        
+        // Get campaign data
+        const campaignInfo = JSON.parse(localStorage.getItem('campaignData') || '{}');
+        
+        // Purchase event data
+        const purchaseValue = transactionData.payment_amount || 18.30;
+        const transactionId = transactionData.transaction_id || '{{ transaction_id }}';
+        
+        // Customer data for Facebook (will be automatically hashed)
+        const customerData = {};
+        if (userData.candidateEmail) customerData.em = userData.candidateEmail.toLowerCase().trim();
+        if (userData.candidatePhone) customerData.ph = userData.candidatePhone.replace(/\D/g, '');
+        if (userData.candidateName) {
+            const nameParts = userData.candidateName.trim().toLowerCase().split(' ');
+            if (nameParts.length >= 1) customerData.fn = nameParts[0];
+            if (nameParts.length >= 2) customerData.ln = nameParts[nameParts.length - 1];
+        }
+        if (userData.candidateCity) customerData.ct = userData.candidateCity.toLowerCase().trim();
+        if (userData.candidateState) customerData.st = userData.candidateState.toLowerCase().trim();
+        if (userData.candidateZipCode) customerData.zp = userData.candidateZipCode.replace(/\D/g, '');
+        if (userData.candidateCPF) customerData.external_id = userData.candidateCPF.replace(/\D/g, '');
+        
+        // Event parameters
+        const eventData = {
+            value: purchaseValue,
+            currency: 'BRL',
+            content_type: 'product',
+            content_ids: [transactionId],
+            content_name: 'Uber Sticker Program - Shipping Fee',
+            content_category: 'Shipping'
+        };
+        
+        // Add campaign data if available
+        if (campaignInfo.fbclid) eventData.fbclid = campaignInfo.fbclid;
+        if (campaignInfo.utm_source) eventData.utm_source = campaignInfo.utm_source;
+        if (campaignInfo.utm_medium) eventData.utm_medium = campaignInfo.utm_medium;
+        if (campaignInfo.utm_campaign) eventData.utm_campaign = campaignInfo.utm_campaign;
+        
+        // Fire Purchase event for all configured pixels
+        if (typeof fbq !== 'undefined') {
+            fbq('track', 'Purchase', eventData, customerData);
+            console.log('✅ Meta Pixel Purchase event fired successfully!');
+            console.log('Event Data:', eventData);
+            console.log('Customer Data:', customerData);
+            console.log('Campaign Data:', campaignInfo);
+        } else {
+            console.warn('Facebook Pixel not loaded - Purchase event not fired');
+        }
+        
+    } catch (error) {
+        console.error('Error firing Meta Pixel Purchase event:', error);
+    }
+}
+
 function checkPaymentStatus() {
     const transactionId = '{{ transaction_id }}';
     
@@ -211,9 +278,21 @@ function checkPaymentStatus() {
             
             // Check for APPROVED status or redirect flag
             if (data.success && (data.status === 'APPROVED' || data.status === 'completed' || data.redirect)) {
-                console.log('Payment approved! Redirecting to /finalizar...');
+                console.log('✅ Payment APPROVED! Firing Meta Pixel Purchase event...');
                 clearInterval(paymentCheckInterval);
-                window.location.href = '/finalizar';
+                
+                // Fire Meta Pixel Purchase event BEFORE redirect
+                fireMetaPixelPurchaseEvent({
+                    transaction_id: transactionId,
+                    payment_amount: data.payment_amount || 18.30,
+                    status: 'completed'
+                });
+                
+                // Small delay to ensure pixel fires, then redirect
+                setTimeout(() => {
+                    console.log('Redirecting to /finalizar...');
+                    window.location.href = '/finalizar';
+                }, 500);
             } else if (data.status) {
                 console.log('Payment status:', data.status);
             }

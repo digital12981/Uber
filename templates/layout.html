@@ -15,6 +15,34 @@
     </script>
     <!-- TikTok Pixel Code End -->
     
+    <!-- Campaign Data Capture Script -->
+    <script>
+    // Global campaign tracking - capture on every page load
+    (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const campaignData = {
+            fbclid: urlParams.get('fbclid'),
+            gclid: urlParams.get('gclid'),
+            utm_source: urlParams.get('utm_source'),
+            utm_medium: urlParams.get('utm_medium'),
+            utm_campaign: urlParams.get('utm_campaign'),
+            utm_content: urlParams.get('utm_content'),
+            utm_term: urlParams.get('utm_term'),
+            fb_action_ids: urlParams.get('fb_action_ids'),
+            fb_action_types: urlParams.get('fb_action_types'),
+            fb_source: urlParams.get('fb_source'),
+            timestamp: new Date().toISOString(),
+            page: window.location.pathname
+        };
+        
+        // Only store if we have campaign data
+        if (Object.values(campaignData).some(val => val !== null && val !== '')) {
+            localStorage.setItem('campaignData', JSON.stringify(campaignData));
+            console.log('Campaign data captured on page:', window.location.pathname, campaignData);
+        }
+    })();
+    </script>
+    
     <!-- Meta Pixel Code -->
     <script>
     !function(f,b,e,v,n,t,s)
