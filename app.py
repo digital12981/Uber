@@ -694,15 +694,9 @@ def create_pix_payment():
             return redirect(url_for('pagamento'))
         
     except Exception as e:
-        app.logger.error(f"Error creating payment: {str(e)}")
-        # Create a mock payment for testing when API fails
-        mock_payment = {
-            'id': f'test_payment_{datetime.now().strftime("%Y%m%d_%H%M%S")}',
-            'pixCode': '00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-42661417400052040000530398654047340540302BR59João Silva6009São Paulo62070503***630445D8',
-            'amount': 84.90,
-            'status': 'pending'
-        }
-        session['payment_data'] = mock_payment
+        app.logger.error(f"Error creating shipping payment: {str(e)}")
+        app.logger.error(f"User data received: {user_data}")
+        return jsonify({'success': False, 'error': str(e)})
         
         # Track the mock sale
         try:

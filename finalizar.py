@@ -246,12 +246,18 @@ class For4PaymentsAPI:
                     current_app.logger.error("Erro de autenticação com a API For4Payments")
                     raise ValueError("Falha na autenticação com a API For4Payments. Verifique a chave de API.")
                 else:
+                    # Log detailed error information
+                    current_app.logger.error(f"API For4Payments retornou status: {response.status_code}")
+                    current_app.logger.error(f"Headers da resposta: {dict(response.headers)}")
+                    current_app.logger.error(f"Conteúdo da resposta: {response.text}")
+                    
                     error_message = 'Erro ao processar pagamento'
                     try:
                         error_data = response.json()
                         if isinstance(error_data, dict):
                             error_message = error_data.get('message') or error_data.get('error') or '; '.join(error_data.get('errors', []))
                             current_app.logger.error(f"Erro da API For4Payments: {error_message}")
+                            current_app.logger.error(f"Dados completos do erro: {error_data}")
                     except Exception as e:
                         error_message = f'Erro ao processar pagamento (Status: {response.status_code})'
                         current_app.logger.error(f"Erro ao processar resposta da API: {str(e)}")
