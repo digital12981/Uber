@@ -502,11 +502,14 @@ def create_shipping_payment():
         result = payment_api.create_pix_payment(payment_request_data)
         app.logger.info(f"Payment API result: {result}")
         
-        # Simple success check - only fail if no transaction created
-        if not result.get('id') and not result.get('pixCode'):
-            error_msg = result.get('error', 'Falha na criação da transação')
+        # Check if transaction was created successfully
+        transaction_id = result.get('id') or result.get('paymentId') or result.get('transaction_id')
+        if not transaction_id:
+            error_msg = result.get('error', 'ID da transação não encontrado')
             app.logger.error(f"Payment creation failed: {error_msg}")
             raise ValueError(error_msg)
+        
+        app.logger.info(f"Transaction created successfully: {transaction_id}")
         
         # Extract PIX code from result with improved extraction
         pix_code = (

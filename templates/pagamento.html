@@ -247,12 +247,13 @@ function createNewPayment() {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.success) {
+        console.log('Resposta da API de pagamento:', data);
+        if (data.success || data.payment_id) {
             console.log('Pagamento criado com sucesso, recarregando página...');
             // Recarregar a página para mostrar os dados de pagamento
             window.location.reload();
         } else {
-            console.error('Erro ao criar pagamento:', data.error);
+            console.error('Erro ao criar pagamento:', data.error || 'Erro desconhecido');
             alert('Erro ao criar pagamento. Tente novamente.');
         }
     })
