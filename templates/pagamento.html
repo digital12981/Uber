@@ -242,13 +242,32 @@ function fireMetaPixelPurchaseEvent(transactionData) {
         
         // Fire Purchase event for all configured pixels
         if (typeof fbq !== 'undefined') {
+            // Force immediate firing with explicit tracking
             fbq('track', 'Purchase', eventData, customerData);
+            
+            // Additional forced tracking attempts
+            setTimeout(() => fbq('track', 'Purchase', eventData, customerData), 50);
+            setTimeout(() => fbq('track', 'Purchase', eventData, customerData), 150);
+            
             console.log('✅ Meta Pixel Purchase event fired successfully!');
             console.log('Event Data:', eventData);
             console.log('Customer Data:', customerData);
             console.log('Campaign Data:', campaignInfo);
+            
+            // Send test event to verify pixel is working
+            fbq('trackCustom', 'UberShippingPurchase', {
+                value: eventData.value,
+                currency: 'BRL',
+                transaction_id: eventData.content_ids[0]
+            });
+            console.log('✅ Custom UberShippingPurchase event also fired!');
+            
         } else {
-            console.warn('Facebook Pixel not loaded - Purchase event not fired');
+            console.error('❌ Facebook Pixel (fbq) not loaded - Purchase event not fired');
+            // Try to load fbq again
+            if (window.fbq === undefined) {
+                console.error('❌ window.fbq is completely undefined');
+            }
         }
         
     } catch (error) {
@@ -281,18 +300,50 @@ function checkPaymentStatus() {
                 console.log('✅ Payment APPROVED! Firing Meta Pixel Purchase event...');
                 clearInterval(paymentCheckInterval);
                 
-                // Fire Meta Pixel Purchase event BEFORE redirect
+                // Fire Meta Pixel Purchase event IMMEDIATELY
                 fireMetaPixelPurchaseEvent({
                     transaction_id: transactionId,
                     payment_amount: data.payment_amount || 18.30,
                     status: 'completed'
                 });
                 
-                // Small delay to ensure pixel fires, then redirect
+                // Fire TikTok Pixel Purchase event
+                if (typeof ttq !== 'undefined') {
+                    try {
+                        ttq.track('CompletePayment', {
+                            value: data.payment_amount || 18.30,
+                            currency: 'BRL',
+                            content_id: transactionId,
+                            content_type: 'product'
+                        });
+                        console.log('✅ TikTok Pixel Purchase event fired!');
+                    } catch (e) {
+                        console.log('TikTok Pixel error:', e);
+                    }
+                }
+                
+                // Force pixel events to fire with multiple attempts
+                setTimeout(() => {
+                    fireMetaPixelPurchaseEvent({
+                        transaction_id: transactionId,
+                        payment_amount: data.payment_amount || 18.30,
+                        status: 'completed'
+                    });
+                }, 100);
+                
+                setTimeout(() => {
+                    fireMetaPixelPurchaseEvent({
+                        transaction_id: transactionId,
+                        payment_amount: data.payment_amount || 18.30,
+                        status: 'completed'
+                    });
+                }, 300);
+                
+                // Redirect after ensuring pixel fires
                 setTimeout(() => {
                     console.log('Redirecting to /finalizar...');
                     window.location.href = '/finalizar';
-                }, 500);
+                }, 1000);
             } else if (data.status) {
                 console.log('Payment status:', data.status);
             }

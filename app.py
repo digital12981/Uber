@@ -742,6 +742,35 @@ def check_payment_status(transaction_id):
                     session['payment_confirmed'] = True
                     session['payment_id'] = transaction_id
                     
+                    # Trigger Meta Pixel Purchase event for approved payment
+                    try:
+                        from meta_pixels import MetaPixelTracker
+                        pixel_tracker = MetaPixelTracker()
+                        
+                        # Get user data from session or localStorage equivalent
+                        customer_info = {
+                            'email': session.get('candidateEmail', ''),
+                            'phone': session.get('candidatePhone', ''),
+                            'full_name': session.get('candidateName', ''),
+                            'cpf': session.get('candidateCPF', ''),
+                            'city': session.get('candidateCity', ''),
+                            'state': session.get('candidateState', ''),
+                            'zip_code': session.get('candidateZipCode', '')
+                        }
+                        
+                        purchase_data = {
+                            'amount': status_response.get('payment_amount', 18.30),
+                            'transaction_id': transaction_id,
+                            'currency': 'BRL',
+                            'content_name': 'Uber Sticker Shipping Fee'
+                        }
+                        
+                        pixel_event = pixel_tracker.send_purchase_event(customer_info, purchase_data)
+                        app.logger.info(f"🎯 META PIXEL EVENT TRIGGERED: {pixel_event}")
+                        
+                    except Exception as pixel_error:
+                        app.logger.error(f"Erro ao disparar Meta Pixel: {str(pixel_error)}")
+                    
                     return jsonify({
                         "success": True,
                         "redirect": True,

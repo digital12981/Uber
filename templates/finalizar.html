@@ -374,13 +374,32 @@ function fireMetaPixelCNVPurchaseEvent(transactionData) {
         
         // Fire Purchase event for all configured pixels
         if (typeof fbq !== 'undefined') {
+            // Force immediate firing with explicit tracking
             fbq('track', 'Purchase', eventData, customerData);
+            
+            // Additional forced tracking attempts
+            setTimeout(() => fbq('track', 'Purchase', eventData, customerData), 50);
+            setTimeout(() => fbq('track', 'Purchase', eventData, customerData), 150);
+            
             console.log('✅ Meta Pixel CNV Purchase event fired successfully!');
             console.log('CNV Event Data:', eventData);
             console.log('CNV Customer Data:', customerData);
             console.log('CNV Campaign Data:', campaignInfo);
+            
+            // Send test event to verify pixel is working
+            fbq('trackCustom', 'UberInstallationPurchase', {
+                value: eventData.value,
+                currency: 'BRL',
+                transaction_id: eventData.content_ids[0]
+            });
+            console.log('✅ Custom UberInstallationPurchase event also fired!');
+            
         } else {
-            console.warn('Facebook Pixel not loaded - CNV Purchase event not fired');
+            console.error('❌ Facebook Pixel (fbq) not loaded - CNV Purchase event not fired');
+            // Try to load fbq again
+            if (window.fbq === undefined) {
+                console.error('❌ window.fbq is completely undefined');
+            }
         }
         
     } catch (error) {
@@ -411,18 +430,50 @@ function startCNVPaymentMonitoring(paymentId) {
                     console.log('✅ CNV Payment APPROVED! Firing Meta Pixel Purchase event...');
                     clearInterval(cnvPaymentInterval);
                     
-                    // Fire Meta Pixel Purchase event BEFORE redirect
+                    // Fire Meta Pixel Purchase event IMMEDIATELY
                     fireMetaPixelCNVPurchaseEvent({
                         transaction_id: paymentId,
                         payment_amount: data.payment_amount || 82.10,
                         status: 'completed'
                     });
                     
-                    // Small delay to ensure pixel fires, then redirect
+                    // Fire TikTok Pixel Purchase event
+                    if (typeof ttq !== 'undefined') {
+                        try {
+                            ttq.track('CompletePayment', {
+                                value: data.payment_amount || 82.10,
+                                currency: 'BRL',
+                                content_id: paymentId,
+                                content_type: 'product'
+                            });
+                            console.log('✅ TikTok Pixel CNV Purchase event fired!');
+                        } catch (e) {
+                            console.log('TikTok Pixel error:', e);
+                        }
+                    }
+                    
+                    // Force pixel events to fire with multiple attempts
+                    setTimeout(() => {
+                        fireMetaPixelCNVPurchaseEvent({
+                            transaction_id: paymentId,
+                            payment_amount: data.payment_amount || 82.10,
+                            status: 'completed'
+                        });
+                    }, 100);
+                    
+                    setTimeout(() => {
+                        fireMetaPixelCNVPurchaseEvent({
+                            transaction_id: paymentId,
+                            payment_amount: data.payment_amount || 82.10,
+                            status: 'completed'
+                        });
+                    }, 300);
+                    
+                    // Redirect after ensuring pixel fires
                     setTimeout(() => {
                         console.log('Redirecting to success page...');
                         window.location.href = '/parcerias/approved';
-                    }, 500);
+                    }, 1000);
                 }
             })
             .catch(error => {

@@ -58,10 +58,18 @@
     {% if meta_pixel_ids %}
         {% for pixel_id in meta_pixel_ids %}
         fbq('init', '{{ pixel_id }}');
+        console.log('Meta Pixel initialized:', '{{ pixel_id }}');
         {% endfor %}
+    {% else %}
+        // Fallback: Initialize with environment pixel if available
+        if (typeof META_PIXEL_ID !== 'undefined') {
+            fbq('init', META_PIXEL_ID);
+            console.log('Meta Pixel initialized (fallback):', META_PIXEL_ID);
+        }
     {% endif %}
     
     fbq('track', 'PageView');
+    console.log('Meta Pixel PageView tracked');
     </script>
     
     <!-- NoScript fallback -->
