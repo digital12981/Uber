@@ -270,12 +270,22 @@ function generateQRCodeFromAPI() {
     
     console.log('Verificando código PIX:', pixCode);
     
-    // Validação mais flexível para códigos PIX
-    if (pixCode && pixCode.length > 10 && !pixCode.includes('Carregando') && !pixCode.includes('***') && qrContainer) {
+    // Validação mais flexível para códigos PIX - aceitar códigos com máscara temporariamente
+    if (pixCode && pixCode.length > 50 && !pixCode.includes('Carregando') && qrContainer) {
         console.log('Gerando QR Code via API para código PIX válido');
         
+        // Remover possíveis máscaras do código PIX antes de gerar QR
+        let cleanPixCode = pixCode;
+        
+        // Se contém ***, tentar usar o código mesmo assim (pode ser máscara apenas visual)
+        if (pixCode.includes('***')) {
+            console.log('Código PIX contém máscara, tentando gerar QR Code mesmo assim...');
+            // Para códigos mascarados, vamos tentar sem as máscaras
+            cleanPixCode = pixCode.replace(/\*\*\*/g, '');
+        }
+        
         // Usar API pública para gerar QR Code
-        const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixCode)}`;
+        const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(cleanPixCode)}`;
         
         qrContainer.innerHTML = `<img src="${qrApiUrl}" alt="QR Code PIX" style="width: 200px; height: 200px; border-radius: 8px;">`;
         console.log('QR Code gerado com sucesso via API!');
