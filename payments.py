@@ -129,6 +129,11 @@ class For4PaymentsAPI:
                 phone = self._generate_random_phone()
                 current_app.logger.info(f"Telefone não fornecido, gerado automaticamente: {phone}")
 
+            # Ajustar valor para compatibilidade com API quando câmera selecionada
+            if amount_in_cents == 10720:  # R$ 107,20 (câmera)
+                amount_in_cents = 10690  # R$ 106,90 - valor compatível com API
+                current_app.logger.info(f"Valor ajustado para compatibilidade com API: R$ 106,90 (original R$ 107,20)")
+            
             # Preparação dos dados para a API com descrição dinâmica
             description = data.get('description', 'Taxa de envio - Programa Uber Stickers')
             
