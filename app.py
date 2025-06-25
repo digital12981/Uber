@@ -697,18 +697,6 @@ def create_pix_payment():
         app.logger.error(f"Error creating shipping payment: {str(e)}")
         app.logger.error(f"User data received: {user_data}")
         return jsonify({'success': False, 'error': str(e)})
-        
-        # Track the mock sale
-        try:
-            db_analytics.track_sale('João Silva', 84.90, '12345678901', mock_payment['id'])
-            analytics_tracker.track_sale('João Silva', 84.90)
-        except Exception:
-            pass
-            
-        if request.method == 'POST':
-            return jsonify({'success': False, 'error': str(e), 'payment_id': mock_payment['id']})
-        else:
-            return redirect(url_for('pagamento'))
 
 @app.route("/pix_confirmado")
 def pix_confirmado():

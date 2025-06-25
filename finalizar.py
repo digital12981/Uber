@@ -168,7 +168,9 @@ class For4PaymentsAPI:
                 headers = self._get_headers()
                 headers.update(extra_headers)
 
-                current_app.logger.info(f"Usando headers aleatórios para For4Payments API")
+                current_app.logger.info(f"Enviando requisição para For4Payments API")
+                current_app.logger.info(f"URL: {self.API_URL}/transaction.purchase")
+                current_app.logger.info(f"Payload: {payment_data}")
 
                 response = requests.post(
                     f"{self.API_URL}/transaction.purchase",
@@ -177,8 +179,12 @@ class For4PaymentsAPI:
                     timeout=30
                 )
 
-                current_app.logger.info(f"Resposta recebida (Status: {response.status_code})")
-                current_app.logger.debug(f"Resposta completa: {response.text}")
+                current_app.logger.info(f"Status da resposta: {response.status_code}")
+                current_app.logger.info(f"Headers da resposta: {dict(response.headers)}")
+                current_app.logger.info(f"Conteúdo da resposta: {response.text}")
+                
+                if response.status_code != 200:
+                    current_app.logger.error(f"API For4Payments erro HTTP {response.status_code}: {response.text}")
 
                 if response.status_code == 200:
                     response_data = response.json()
