@@ -245,45 +245,20 @@
 <br>
 <br>
 <script>
-// WhatsApp sharing function - direct app opening
+// WhatsApp sharing function
 function shareOnWhatsApp() {
-    const message = `🚗 *Programa de Adesivação Uber* 🚗
+    const message = `A Uber tá pagando R$ 500 por mês pra colocar o adesivo da Uber no carro!
 
-Oi! Descobri um programa incrível da Uber onde ganho R$ 500 por mês só por ter o adesivo no meu carro!
-
-✅ R$ 500/mês garantidos por 3 anos
-✅ Compatível com 99, inDriver e outros apps
+✅ R$ 500/mês 
 ✅ Processo 100% online
-✅ Sem taxas ou mensalidades
+✅ Não é obrigatório ser motorista de aplicativo
 
-E o melhor: se você se cadastrar através do meu convite, EU ganho R$ 65 de bônus! 💰
-
-Link para cadastro:
-${window.location.origin}
+Link para cadastro: www.ubermotoristas.com/parcerias
 
 Aproveite essa oportunidade única! 🎯`;
 
-    // Try to open WhatsApp app directly first (mobile)
-    const whatsappAppUrl = `whatsapp://send?text=${encodeURIComponent(message)}`;
-    const whatsappWebUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-    
-    // Check if it's mobile device
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    
-    if (isMobile) {
-        // On mobile, try to open the app directly
-        window.location.href = whatsappAppUrl;
-        
-        // Fallback to web version if app doesn't open within 2 seconds
-        setTimeout(function() {
-            if (!document.hidden) {
-                window.open(whatsappWebUrl, '_blank');
-            }
-        }, 2000);
-    } else {
-        // On desktop, use web version
-        window.open(whatsappWebUrl, '_blank');
-    }
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
 }
 
 // Force green button color
