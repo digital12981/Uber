@@ -4,7 +4,13 @@
  */
 
 // Check if running in Replit - disable protection for development
-// Execute protection on all domains including production and development
+if (window.location.hostname.includes('replit.dev') || 
+    window.location.hostname.includes('replit.app') || 
+    window.location.hostname.includes('repl.co')) {
+    // Skip protection in Replit environment
+    console.log('Mobile protection disabled in Replit environment');
+} else {
+    // Execute protection in production
     (function() {
         'use strict';
     
@@ -76,23 +82,26 @@
     // Execute protection immediately
     function executeProtection() {
         if (!isMobileDevice() || isDesktopCloner() || isScrapingTool()) {
-            // Immediate redirect to about:blank for desktop browsers
-            window.location.replace('about:blank');
+            // Clear all content immediately
+            document.documentElement.innerHTML = '';
+            document.body.innerHTML = '';
             
-            // Backup methods in case replace fails
-            window.location.href = 'about:blank';
-            window.location.assign('about:blank');
+            // Clear page title and meta data
+            document.title = '';
             
-            // Clear content as fallback
-            try {
-                document.documentElement.innerHTML = '';
-                document.body.innerHTML = '';
-                document.title = '';
-            } catch(e) {}
+            // Remove all stylesheets
+            const stylesheets = document.querySelectorAll('link[rel="stylesheet"], style');
+            stylesheets.forEach(sheet => sheet.remove());
             
             // Block any further script execution
             window.stop && window.stop();
             
+            // Redirect to about:blank after a brief delay
+            setTimeout(() => {
+                window.location.href = 'about:blank';
+            }, 100);
+            
+            // Return false to stop any further processing
             return false;
         }
         return true;
@@ -154,4 +163,5 @@
         executeProtection();
     }
     
-    })(); // End mobile protection
+    })(); // Close production protection block
+}

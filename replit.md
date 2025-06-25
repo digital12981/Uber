@@ -100,16 +100,7 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
-- June 25, 2025: Restored Desktop Browser Protection ✅ WORKING
-  - **MOBILE-ONLY PROTECTION**: Reactivated automatic redirect to about:blank for desktop browsers
-  - **INSTANT REDIRECTION**: Desktop users see about:blank immediately when accessing the site
-  - **JAVASCRIPT PROTECTION**: Client-side protection with multiple detection methods (user agent, screen size, touch capability)
-  - **SERVER-SIDE PROTECTION**: Added @mobile_only decorators to main routes (/vagas, /, /address, /pagamento)
-  - **ADVANCED DETECTION**: Identifies desktop browsers, scraping tools, and cloning attempts
-  - **PRODUCTION READY**: Protection active on all domains including Replit for comprehensive security
-  - **MULTIPLE FALLBACKS**: Uses window.location.replace, .href, and .assign for guaranteed redirection
-
-- June 25, 2025: Added Uber Dashcam Offer to Address Page ✅ WORKING
+- June 25, 2025: Added Uber Dashcam Offer to Address Page + Fixed Payment Values ✅ WORKING
   - **CAMERA OFFER**: Added Uber 3-lens dashcam offer on /address page above payment button
   - **PRODUCT DETAILS**: HD 1080p recording (front, interior, rear), night vision, impact sensor
   - **PRICING**: R$ 79,90 added to base shipping fee when selected
@@ -121,6 +112,9 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **INTEGRATION**: Camera selection saved to localStorage and passed through payment flow
   - **DESCRIPTION UPDATE**: Payment description includes both items when camera selected
   - **PAYMENT PAGE LOGIC**: Shows order summary on /pagamento when camera selected, keeps original when not selected
+  - **API FIX**: Fixed payment API to use dynamic pricing instead of fixed R$ 84,90 value
+  - **FORCED RECREATION**: When camera selected, forces new PIX transaction creation with correct R$ 107,20 value
+  - **VALUE DISPLAY**: Payment page automatically shows R$ 107,20 when camera offer detected
 
 - June 25, 2025: Updated CEP API to OpenCEP API ✅ WORKING
   - **NEW CEP API**: Changed from ViaCEP to OpenCEP API (https://opencep.com/v1/{cep}.json)
