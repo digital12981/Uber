@@ -843,6 +843,11 @@ def check_payment_status(transaction_id):
         logging.error(f"Error checking payment status: {str(e)}")
         return jsonify({"success": False, "error": str(e)})
 
+@app.route("/parcerias")
+def parcerias():
+    # Redirecionar para a página de parcerias com status padrão
+    return redirect("/parcerias/approved")
+
 @app.route("/parcerias/<status>")
 def resultado(status):
     # Obter dados de registro da sessão ou criar dados básicos padrão
