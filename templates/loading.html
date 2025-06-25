@@ -78,21 +78,11 @@
         <img src="https://i.ibb.co/wFFn5HSn/13093103960002-1.png" alt="Uber" class="h-16 pulse-logo">
     </div>
 
-    <!-- Status text -->
-    <div id="loadingStatus" class="text-xl mb-4 text-center font-bold text-animate max-w-xs mx-auto" style="color: #fff !important;">
-        Carregando Programa Uber...
-    </div>
-
-    <div class="text-base mb-8 text-center max-w-sm mx-auto" style="color: #fff !important;">
-        Preparando seu acesso ao programa de R$ 500,00 mensais
-    </div>
-
-    <!-- Spinner Uber -->
-    <div class="uber-spinner"></div>
-
-    <div class="text-sm text-center mt-6 max-w-xs mx-auto" style="color: #fff !important;">
-        <i class="fa fa-clock-o mr-2" style="color: #fff !important;"></i>
-        Aguarde alguns instantes...
+    <!-- Progress Bar -->
+    <div class="w-64 mx-auto">
+        <div class="bg-gray-700 rounded-full h-2">
+            <div id="progress-bar" class="bg-white h-2 rounded-full transition-all duration-4000" style="width: 0%"></div>
+        </div>
     </div>
 </div>
 
@@ -176,9 +166,14 @@
         // Inicia o pré-carregamento imediatamente
         const preloadPromise = preloadNextPage();
 
+        // Animate progress bar
+        setTimeout(() => {
+            document.getElementById('progress-bar').style.width = '100%';
+        }, 100);
+
         // Espera tanto o tempo mínimo quanto o pré-carregamento completo
         Promise.all([
-            new Promise(resolve => setTimeout(resolve, minLoadingTime)),
+            new Promise(resolve => setTimeout(resolve, 4000)), // 4 segundos fixos
             preloadPromise
         ]).then(() => {
             loadingScreen.style.opacity = '0';

