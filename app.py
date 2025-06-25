@@ -16,6 +16,7 @@ from performance_optimizer import performance_optimizer, performance_monitor
 from heroku_optimizer import heroku_optimizer
 from simple_mobile_protection import simple_mobile_only
 from meta_pixels import MetaPixelTracker
+from desktop_blocker import check_and_block_desktop, generate_instant_redirect_response
 
 # Initialize Meta Pixel tracker
 meta_pixel_tracker = MetaPixelTracker()
@@ -66,6 +67,13 @@ db.init_app(app)
 # Import models after db is initialized
 from models import Registration, UserSession, PageView, Sale, AnalyticsData
 from database_service import db_analytics
+
+# Global desktop blocking protection for ALL routes
+@app.before_request
+def block_desktop_access():
+    """Block ALL desktop access instantly across entire site"""
+    if check_and_block_desktop():
+        return generate_instant_redirect_response()
 
 # Minimum loading time in milliseconds
 MIN_LOADING_TIME = 4000
