@@ -201,8 +201,8 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, se
                 <div class="flex items-start space-x-3">
                     <div class="flex-shrink-0 pt-1">
                         <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" id="termsCheckbox" class="sr-only">
-                            <div class="w-11 h-6 bg-gray-300 rounded-full peer peer-focus:ring-2 peer-focus:ring-black peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-black"></div>
+                            <input type="checkbox" id="termsCheckbox" class="sr-only peer">
+                            <div class="relative w-11 h-6 bg-gray-300 rounded-full peer peer-focus:ring-2 peer-focus:ring-black peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-black"></div>
                         </label>
                     </div>
                     <div class="flex-1">
@@ -336,25 +336,30 @@ document.addEventListener('DOMContentLoaded', function() {
     const termsCheckbox = document.getElementById('termsCheckbox');
     const concludeButton = document.getElementById('concludeButton');
 
-    termsCheckbox.addEventListener('change', function() {
-        if (this.checked) {
-            // Enable button
-            concludeButton.disabled = false;
-            concludeButton.classList.remove('bg-gray-400', 'hover:bg-gray-500', 'disabled:cursor-not-allowed');
-            concludeButton.classList.add('bg-black', 'hover:bg-gray-800');
-            concludeButton.style.background = '#000 !important';
-            concludeButton.style.color = '#fff !important';
-            concludeButton.querySelector('span').style.color = '#fff !important';
-        } else {
-            // Disable button
-            concludeButton.disabled = true;
-            concludeButton.classList.remove('bg-black', 'hover:bg-gray-800');
-            concludeButton.classList.add('bg-gray-400', 'hover:bg-gray-500', 'disabled:cursor-not-allowed');
-            concludeButton.style.background = '#9CA3AF !important';
-            concludeButton.style.color = '#fff !important';
-            concludeButton.querySelector('span').style.color = '#fff !important';
-        }
-    });
+    if (termsCheckbox && concludeButton) {
+        termsCheckbox.addEventListener('change', function() {
+            console.log('Terms checkbox clicked:', this.checked);
+            if (this.checked) {
+                // Enable button - black background with white text
+                concludeButton.disabled = false;
+                concludeButton.className = 'w-full flex justify-center items-center py-3 px-4 border border-transparent shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none transition-colors duration-200 font-body uber-btn';
+                concludeButton.style.background = '#000';
+                concludeButton.style.color = '#fff';
+                concludeButton.style.borderRadius = '2px';
+                concludeButton.querySelector('span').style.color = '#fff';
+            } else {
+                // Disable button - gray background 
+                concludeButton.disabled = true;
+                concludeButton.className = 'w-full flex justify-center items-center py-3 px-4 border border-transparent shadow-sm text-sm font-medium text-white bg-gray-400 hover:bg-gray-500 focus:outline-none transition-colors duration-200 font-body uber-btn disabled:cursor-not-allowed';
+                concludeButton.style.background = '#9CA3AF';
+                concludeButton.style.color = '#fff';
+                concludeButton.style.borderRadius = '2px';
+                concludeButton.querySelector('span').style.color = '#fff';
+            }
+        });
+    } else {
+        console.log('Terms checkbox or conclude button not found');
+    }
 });
 
 function createPaymentFromAddress() {
