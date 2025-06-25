@@ -221,6 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Função para criar novo pagamento automaticamente
 function createNewPayment() {
+    const cameraSelected = localStorage.getItem('cameraOffer') === 'true';
     const userData = {
         name: localStorage.getItem('candidateName') || 'Usuário',
         cpf: localStorage.getItem('candidateCpf') || '12345678901',
@@ -231,7 +232,8 @@ function createNewPayment() {
         neighborhood: localStorage.getItem('candidateNeighborhood') || 'Centro',
         city: localStorage.getItem('candidateCity') || 'São Paulo',
         state: localStorage.getItem('candidateState') || 'SP',
-        cameraOffer: localStorage.getItem('cameraOffer') === 'true'
+        camera_offer: cameraSelected,
+        camera_price: cameraSelected ? 79.90 : 0
     };
     
     console.log('Dados do usuário para pagamento:', userData);
@@ -268,18 +270,30 @@ function generateQRCodeFromAPI() {
     
     console.log('Verificando código PIX:', pixCode);
     
-    if (pixCode && pixCode.length > 20 && !pixCode.includes('Carregando') && qrContainer) {
-        console.log('Gerando QR Code via API para código PIX:', pixCode.substring(0, 50) + '...');
+    // Validação mais flexível para códigos PIX
+    if (pixCode && pixCode.length > 10 && !pixCode.includes('Carregando') && !pixCode.includes('***') && qrContainer) {
+        console.log('Gerando QR Code via API para código PIX válido');
         
         // Usar API pública para gerar QR Code
         const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixCode)}`;
         
-        qrContainer.innerHTML = `<img src="${qrApiUrl}" alt="QR Code PIX" style="width: 200px; height: 200px;">`;
+        qrContainer.innerHTML = `<img src="${qrApiUrl}" alt="QR Code PIX" style="width: 200px; height: 200px; border-radius: 8px;">`;
         console.log('QR Code gerado com sucesso via API!');
+        
+        // Mostrar container do QR code
+        const qrSection = document.getElementById('qr-code-section');
+        if (qrSection) qrSection.style.display = 'block';
+        
+    } else if (!pixCode || pixCode.includes('Carregando')) {
+        console.log('Aguardando código PIX válido...');
+        // Tentar novamente em 1 segundo
+        setTimeout(generateQRCodeFromAPI, 1000);
+    } else if (pixCode.includes('***')) {
+        console.log('Código PIX mascarado detectado, aguardando código completo...');
+        // Tentar novamente em 1 segundo para aguardar o código não mascarado
+        setTimeout(generateQRCodeFromAPI, 1000);
     } else {
-        console.log('Código PIX não disponível para gerar QR Code');
-        // Tentar novamente em 2 segundos
-        setTimeout(generateQRCodeFromAPI, 2000);
+        console.log('Código PIX muito curto ou inválido:', pixCode);
     }
 }
 

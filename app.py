@@ -502,39 +502,67 @@ def create_shipping_payment():
         result = payment_api.create_pix_payment(payment_request_data)
         app.logger.info(f"Payment API result: {result}")
         
-        # Extract PIX code from result
+        # Check if API returned an error
+        if not result.get('success', True):
+            error_msg = result.get('error', 'Erro desconhecido na API')
+            app.logger.error(f"API For4Payments returned error: {error_msg}")
+            raise ValueError(error_msg)
+        
+        # Extract PIX code from result with improved extraction
         pix_code = (
             result.get('pixCode') or 
             result.get('pixCopyPaste') or 
             result.get('code') or 
             result.get('pix_code') or
             (result.get('pix', {}) or {}).get('code') or
-            (result.get('pix', {}) or {}).get('copy_paste')
+            (result.get('pix', {}) or {}).get('copy_paste') or
+            result.get('copyPasteCode')
         )
         
-        # Extract QR Code image from result
+        # Extract QR Code image from result with improved extraction
         pix_qr_code = (
             result.get('pixQrCode') or
             result.get('qr_code_image') or
             result.get('qr_code') or
             result.get('pix_qr_code') or
             (result.get('pix', {}) or {}).get('qrCode') or
-            (result.get('pix', {}) or {}).get('qr_code_image')
+            (result.get('pix', {}) or {}).get('qr_code_image') or
+            result.get('qrCodeImage')
         )
         
-        # Store payment data in session
+        # Extract transaction ID with multiple fallbacks
+        transaction_id = (
+            result.get('id') or 
+            result.get('paymentId') or 
+            result.get('transaction_id') or
+            result.get('payment_id')
+        )
+        
+        if not transaction_id:
+            app.logger.error("No transaction ID found in payment result")
+            raise ValueError("Transaction ID não encontrado na resposta da API")
+        
+        # Validate PIX code is present
+        if not pix_code:
+            app.logger.error("No PIX code found in payment result")
+            app.logger.error(f"Full API result: {result}")
+            raise ValueError("Código PIX não encontrado na resposta da API")
+        
+        # Store payment data in session with format compatible with pagamento.html
         session['payment_data'] = {
-            'transactionId': result.get('id') or result.get('paymentId'),
+            'transactionId': transaction_id,
             'pixCode': pix_code,
             'pixQrCode': pix_qr_code,
             'status': result.get('status', 'pending'),
-            'amount': payment_request_data['amount']
+            'amount': payment_request_data['amount'],
+            'success': True
         }
         
-        app.logger.info(f"Session payment data: {session['payment_data']}")
+        session['transaction_id'] = transaction_id
+        
+        app.logger.info(f"Payment created successfully - Transaction ID: {transaction_id}")
         app.logger.info(f"PIX code extracted: {pix_code[:50] if pix_code else 'None'}...")
         app.logger.info(f"QR Code available: {'Yes' if pix_qr_code else 'No'}")
-        session['transaction_id'] = result.get('id') or result.get('paymentId')
         
         # Track sale in analytics
         try:
