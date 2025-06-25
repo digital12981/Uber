@@ -100,6 +100,12 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 25, 2025: Updated Open Graph Meta Tags on /parcerias/approved Page ✅ WORKING
+  - **CONSISTENT MESSAGING**: Updated og:title to "Quer ganhar R$500,00 extra todo mês?" for unified branding
+  - **IMPROVED DESCRIPTION**: Changed to compelling "Nós vamos te pagar para você adesivar seu carro com a marca da Uber"
+  - **UPDATED URL**: Changed og:url to www.uber.com.br for brand consistency
+  - **FUNNEL OPTIMIZATION**: Both /vagas and /parcerias pages now have identical OG tags for consistent sharing
+
 - June 25, 2025: Added Open Graph Meta Tags to /vagas Page ✅ WORKING
   - **SOCIAL SHARING OPTIMIZATION**: Added complete Open Graph meta tags for enhanced social media sharing
   - **ATTRACTIVE TITLE**: "Quer ganhar R$500,00 extra todo mês?" for maximum engagement
