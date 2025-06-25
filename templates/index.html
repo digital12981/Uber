@@ -2,6 +2,7 @@
 
 {% block extra_head %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="{{ url_for('static', filename='js/driver-buttons.js') }}"></script>
 <style>
 /* Remove blue focus and add 0px border radius */
 input[type="text"], input[type="email"], input[type="tel"], input[type="date"], select {
@@ -102,6 +103,23 @@ button.driver-selector.selected {
     background-color: #000000 !important;
     color: #ffffff !important;
     border-color: #000000 !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1) !important;
+}
+
+/* SPECIFIC ID SELECTORS FOR MAXIMUM SPECIFICITY */
+#app-driver-no.unselected {
+    background-color: #ffffff !important;
+    color: #6b7280 !important;
+    border-color: #d1d5db !important;
+    border: 2px solid #d1d5db !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8) !important;
+}
+
+#app-driver-yes.selected {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border-color: #000000 !important;
+    border: 2px solid #000000 !important;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1) !important;
 }
 </style>
@@ -333,40 +351,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-function selectDriverType(type) {
-    const yesButton = document.getElementById('app-driver-yes');
-    const noButton = document.getElementById('app-driver-no');
-    const hiddenInput = document.getElementById('is_app_driver');
-    
-    // Reset both buttons to unselected state with 3D effects
-    yesButton.className = 'driver-selector unselected px-8 py-2 border-2 font-semibold transition-all duration-200';
-    yesButton.style.cssText = 'border-radius: 0px !important; background-color: #ffffff !important; color: #6b7280 !important; border-color: #d1d5db !important; border: 2px solid #d1d5db !important; box-shadow: 0 2px 4px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8) !important;';
-    
-    noButton.className = 'driver-selector unselected px-8 py-2 border-2 font-semibold transition-all duration-200';
-    noButton.style.cssText = 'border-radius: 0px !important; background-color: #ffffff !important; color: #6b7280 !important; border-color: #d1d5db !important; border: 2px solid #d1d5db !important; box-shadow: 0 2px 4px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8) !important;';
-    
-    // Apply selected state to clicked button with 3D effect
-    if (type === 'yes') {
-        yesButton.className = 'driver-selector selected px-8 py-2 border-2 font-semibold transition-all duration-200';
-        yesButton.style.cssText = 'border-radius: 0px !important; background-color: #000000 !important; color: #ffffff !important; border-color: #000000 !important; border: 2px solid #000000 !important; box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1) !important;';
-        hiddenInput.value = 'yes';
-        localStorage.setItem('isAppDriver', 'yes');
-    } else {
-        noButton.className = 'driver-selector selected px-8 py-2 border-2 font-semibold transition-all duration-200';
-        noButton.style.cssText = 'border-radius: 0px !important; background-color: #000000 !important; color: #ffffff !important; border-color: #000000 !important; border: 2px solid #000000 !important; box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1) !important;';
-        hiddenInput.value = 'no';
-        localStorage.setItem('isAppDriver', 'no');
-    }
-}
-
-// Initialize "SIM" as selected on page load
-document.addEventListener('DOMContentLoaded', function() {
-    const hiddenInput = document.getElementById('is_app_driver');
-    if (hiddenInput) {
-        hiddenInput.value = 'yes';
-        localStorage.setItem('isAppDriver', 'yes');
-    }
-});
+// selectDriverType function is now in driver-buttons.js
 
 function saveDataAndContinue() {
     // Capturar dados do formulário

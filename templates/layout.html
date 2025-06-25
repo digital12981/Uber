@@ -214,7 +214,7 @@
         }
         
         /* FORCE WHITE TEXT AND BLACK BUTTONS - EXCEPT DRIVER SELECTORS */
-        .uber-btn, button:not(.driver-selector), .btn, input[type="submit"], input[type="button"], 
+        .uber-btn, button:not(.driver-selector):not(#app-driver-yes):not(#app-driver-no), .btn, input[type="submit"], input[type="button"], 
         .bg-black, .bg-black600, .bg-black500, .bg-green-600 {
           background: #000 !important;
           color: #fff !important;
@@ -225,10 +225,18 @@
           transition: background 0.2s;
           border: none !important;
         }
-        .uber-btn:hover, button:not(.driver-selector):hover, .btn:hover, input[type="submit"]:hover, input[type="button"]:hover,
+        .uber-btn:hover, button:not(.driver-selector):not(#app-driver-yes):not(#app-driver-no):hover, .btn:hover, input[type="submit"]:hover, input[type="button"]:hover,
         .bg-black:hover, .bg-black600:hover, .bg-black500:hover, .bg-green-600:hover {
           background: #222 !important;
           color: #fff !important;
+        }
+        
+        /* SPECIFIC OVERRIDES FOR DRIVER SELECTOR BUTTONS */
+        #app-driver-yes, #app-driver-no {
+          background: initial !important;
+          color: initial !important;
+          border: initial !important;
+          box-shadow: initial !important;
         }
         
         /* FORCE ALL FOOTER TEXT TO WHITE */
