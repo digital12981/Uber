@@ -72,6 +72,10 @@ from database_service import db_analytics
 @app.before_request
 def block_desktop_access():
     """Block ALL desktop access instantly across entire site"""
+    # Skip in Replit development environment
+    if os.environ.get('REPL_ID'):
+        return None
+    
     if check_and_block_desktop():
         return generate_instant_redirect_response()
 
