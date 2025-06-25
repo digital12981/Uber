@@ -100,6 +100,15 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 25, 2025: Secured Vehicle API with Token Protection and Rate Limiting ✅ WORKING
+  - **API TOKEN SECURITY**: Moved vehicle API token from hardcoded to environment variable (VEHICLE_API_TOKEN)
+  - **RATE LIMITING**: Added 10 requests per hour per IP address protection to prevent API abuse
+  - **ENHANCED VALIDATION**: Improved license plate format validation (ABC1234 and ABC1D23 Mercosul)
+  - **SECURITY LOGGING**: Added comprehensive logging for API requests and errors with IP tracking
+  - **ERROR HANDLING**: Enhanced error responses with detailed logging for monitoring
+  - **ATTACK PREVENTION**: Protected against unauthorized API usage and scraping attempts
+  - **PRODUCTION READY**: API now secure for production use with proper rate limiting
+
 - June 25, 2025: Comprehensive Desktop Blocking Protection System ✅ WORKING
   - **GLOBAL PROTECTION**: Added Flask @app.before_request handler blocking ALL desktop access across entire site
   - **INSTANT REDIRECT**: Desktop users immediately redirected to about:blank without seeing any content

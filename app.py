@@ -112,6 +112,7 @@ def local():
     return render_template("local.html")
 
 @app.route("/veiculo")
+@simple_mobile_only
 @performance_monitor  
 def veiculo():
     return render_template("veiculo.html")
