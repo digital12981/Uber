@@ -1287,7 +1287,7 @@ def create_cnv_payment():
             'email': user_data.get('email', ''),
             'phone': user_data.get('phone', ''),
             'amount': 82.10,
-            'description': 'Taxa de Instalação do Adesivo - Programa Uber R$ 500 mensais'
+            'description': 'Pão de Queijo e Presunto'
         }
         
         app.logger.info(f"Prepared payment data: {payment_data}")
