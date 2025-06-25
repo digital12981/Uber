@@ -100,6 +100,13 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 25, 2025: Fixed WhatsApp Button Function + Maintained Custom Message ✅ WORKING
+  - **WHATSAPP BUTTON FIX**: Corrected JavaScript string formatting that broke WhatsApp function
+  - **CUSTOM MESSAGE PRESERVED**: Kept user's personalized message about R$ 500 Uber sticker program
+  - **GRADIENT RESTORED**: Fixed green animated gradient that disappeared after message edit
+  - **MOBILE APP OPENING**: Restored multiple methods for forcing WhatsApp app opening on mobile
+  - **CLICK PREVENTION**: Added event listeners to prevent button color changes on interaction
+
 - June 25, 2025: Added Domain Redirection for Ads Traffic ✅ WORKING
   - **DOMAIN REDIRECTION**: Added automatic redirect from ads domain to main domain
   - **ADS DOMAIN**: uber.atualizar-cadastro.info/vagas redirects to www.ubermotoristas.com/parcerias
