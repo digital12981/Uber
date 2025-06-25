@@ -129,17 +129,7 @@ class For4PaymentsAPI:
                 phone = self._generate_random_phone()
                 current_app.logger.info(f"Telefone não fornecido, gerado automaticamente: {phone}")
 
-            # Log detailed amount information for debugging
-            current_app.logger.info(f"Processing payment amount: R$ {float(data['amount']):.2f} = {amount_in_cents} centavos")
-            
-            # Specific handling for known problematic amounts
-            if amount_in_cents == 10720:  # R$ 107,20 (original camera price)
-                amount_in_cents = 10690  # R$ 106,90 - API-compatible amount
-                current_app.logger.info(f"Amount adjusted for API compatibility: {amount_in_cents} centavos (R$ 106,90)")
-            elif amount_in_cents == 10690:  # Already correct amount
-                current_app.logger.info(f"Using API-compatible amount: {amount_in_cents} centavos (R$ 106,90)")
-            elif amount_in_cents == 2730:  # Base shipping only
-                current_app.logger.info(f"Base shipping amount: {amount_in_cents} centavos (R$ 27,30)")
+
             
             # Preparação dos dados para a API com descrição dinâmica
             description = data.get('description', 'Taxa de envio - Programa Uber Stickers')
@@ -211,19 +201,8 @@ class For4PaymentsAPI:
                     timeout=30
                 )
 
-                current_app.logger.info(f"API Response Status: {response.status_code}")
-                current_app.logger.info(f"API Response Headers: {dict(response.headers)}")
-                current_app.logger.info(f"API Response Body: {response.text}")
-                
-                # Log specific error details when status is not 200
-                if response.status_code != 200:
-                    current_app.logger.error(f"API REJECTION - Status: {response.status_code}")
-                    current_app.logger.error(f"Request payload that was rejected: {payment_data}")
-                    try:
-                        error_detail = response.json()
-                        current_app.logger.error(f"API Error Details: {error_detail}")
-                    except:
-                        current_app.logger.error(f"Raw error response: {response.text}")
+                current_app.logger.info(f"Resposta recebida (Status: {response.status_code})")
+                current_app.logger.debug(f"Resposta completa: {response.text}")
 
                 if response.status_code == 200:
                     response_data = response.json()

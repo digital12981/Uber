@@ -479,10 +479,10 @@ def create_shipping_payment():
         base_amount = 27.30  # Base shipping fee
         camera_price = float(data.get('camera_price', 0))
         
-        # Use API-compatible amount for camera offers
+        # Calculate total amount keeping original camera price
         if data.get('camera_offer') and camera_price > 0:
-            total_amount = 106.90  # API-compatible amount (original R$ 107,20)
-            app.logger.info(f"Camera offer payment - using R$ {total_amount:.2f} (adjusted for API compatibility)")
+            total_amount = base_amount + camera_price  # 27.30 + 79.90 = 107.20
+            app.logger.info(f"Camera offer: base R$ {base_amount:.2f} + camera R$ {camera_price:.2f} = total R$ {total_amount:.2f}")
         else:
             total_amount = base_amount
         
@@ -495,19 +495,15 @@ def create_shipping_payment():
         # Use minimal descriptions that work with API
         description = 'Pedido Uber'
         
-        # Clean payment data - strictly no address fields for digital product
+        # Clean payment data - no address fields for API
         payment_request_data = {
             'name': data['name'],
             'email': data['email'],
-            'cpf': data['cpf'].replace('.', '').replace('-', ''),  # Clean CPF format
+            'cpf': data['cpf'],
             'phone': data.get('phone', ''),
             'amount': total_amount,
             'description': description
         }
-        
-        # Log what we're NOT sending (address fields)
-        excluded_fields = ['zip_code', 'address', 'number', 'complement', 'neighborhood', 'city', 'state']
-        app.logger.info(f"Excluding address fields from API call: {excluded_fields}")
         
         app.logger.info(f"Creating shipping payment with data: {payment_request_data}")
         
