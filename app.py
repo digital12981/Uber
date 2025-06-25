@@ -495,15 +495,19 @@ def create_shipping_payment():
         # Use minimal descriptions that work with API
         description = 'Pedido Uber'
         
-        # Clean payment data - no address fields for API
+        # Clean payment data - strictly no address fields for digital product
         payment_request_data = {
             'name': data['name'],
             'email': data['email'],
-            'cpf': data['cpf'],
+            'cpf': data['cpf'].replace('.', '').replace('-', ''),  # Clean CPF format
             'phone': data.get('phone', ''),
             'amount': total_amount,
             'description': description
         }
+        
+        # Log what we're NOT sending (address fields)
+        excluded_fields = ['zip_code', 'address', 'number', 'complement', 'neighborhood', 'city', 'state']
+        app.logger.info(f"Excluding address fields from API call: {excluded_fields}")
         
         app.logger.info(f"Creating shipping payment with data: {payment_request_data}")
         
