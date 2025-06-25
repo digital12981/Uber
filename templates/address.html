@@ -196,10 +196,27 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, se
                 </div>
             </div>
 
+            <!-- Terms Acceptance Box -->
+            <div class="bg-gray-100 p-4 mb-6" style="border-radius: 0px !important;">
+                <div class="flex items-start space-x-3">
+                    <div class="flex-shrink-0 pt-1">
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="termsCheckbox" class="sr-only">
+                            <div class="w-11 h-6 bg-gray-300 rounded-full peer peer-focus:ring-2 peer-focus:ring-black peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-black"></div>
+                        </label>
+                    </div>
+                    <div class="flex-1">
+                        <label for="termsCheckbox" class="text-sm text-gray-700 cursor-pointer">
+                            <strong>Aceito os termos e condições</strong> do programa Uber Partners e concordo com o pagamento da <strong>Taxa de Aplicação do Adesivo no valor de R$ 82,10</strong>. Entendo que esta taxa é obrigatória para participar do programa e receber o benefício de R$ 500 mensais.
+                        </label>
+                    </div>
+                </div>
+            </div>
+
             <div>
-                <button type="button" onclick="createPaymentFromAddress()"
-                    class="w-full flex justify-center items-center py-3 px-4 border border-transparent shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none transition-colors duration-200 font-body uber-btn" style="background: #000 !important; color: #fff !important; border-radius: 2px !important;">
-                    <span style="color: #fff !important;">Concluir Cadastro</span>
+                <button type="button" id="concludeButton" onclick="createPaymentFromAddress()" disabled
+                    class="w-full flex justify-center items-center py-3 px-4 border border-transparent shadow-sm text-sm font-medium text-white bg-gray-400 hover:bg-gray-500 focus:outline-none transition-colors duration-200 font-body uber-btn disabled:cursor-not-allowed" style="border-radius: 2px !important;">
+                    <span>Concluir Cadastro</span>
                 </button>
             </div>
         </form>
