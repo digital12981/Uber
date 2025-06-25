@@ -123,6 +123,17 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **HOVER EFFECTS**: Added translateY elevation on hover for enhanced 3D interaction
   - **GLOBAL CSS EXCLUSIONS**: Updated layout.html to exclude driver selector buttons from global black button rules
   - **INLINE STYLE PRIORITY**: Used cssText with !important declarations for maximum CSS specificity
+  - **WHATSAPP BUTTON CENTERED**: Compartilhar no WhatsApp button now centered with text-center wrapper
+  - **CLICK STATE FIXED**: Prevented WhatsApp button from turning black on click with proper event listeners
+  - **FINALIZAR BUTTON RESTORED**: Removed gradient animation from "Finalizar Cadastro" button, back to solid green
+  - **BUTTON INITIALIZATION**: SIM button now starts selected (black) and NÃO starts unselected (white/gray)
+  - **3D VISUAL EFFECTS**: Added box-shadow effects for depth - selected buttons have deeper shadows
+  - **HEIGHT REDUCTION**: Changed button padding from py-3 to py-2 for more compact appearance
+  - **CSS OVERRIDE SOLUTION**: Created dedicated /static/js/driver-buttons.js to override global button styles
+  - **MULTIPLE INITIALIZATION**: Script runs on DOM ready plus delayed timeouts to ensure correct styling
+  - **HOVER EFFECTS**: Added translateY elevation on hover for enhanced 3D interaction
+  - **GLOBAL CSS EXCLUSIONS**: Updated layout.html to exclude driver selector buttons from global black button rules
+  - **INLINE STYLE PRIORITY**: Used cssText with !important declarations for maximum CSS specificity
 
 - June 24, 2025: Added 10-Minute PIX Expiration Timer to /finalizar ✅ WORKING
   - **COUNTDOWN TIMER**: Added visual 10-minute countdown timer below payment warning box

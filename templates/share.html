@@ -202,11 +202,13 @@
                 <p class="text-sm text-yellow-700 mb-3">
                     Após clicar, selecione os contatos que deseja fazer o convite e envie a mensagem de convite com seu link. Após isso <strong>retorne a este site</strong> para continuar com o seu cadastro.
                 </p>
-                <button onclick="shareOnWhatsApp()" 
-                    class="whatsapp-btn share-btn"
-                    style="border-radius: 2px !important;">
-                    <i class="fa fa-whatsapp mr-2"></i>Compartilhar no WhatsApp
-                </button>
+                <div class="text-center">
+                    <button onclick="shareOnWhatsApp()" 
+                        class="whatsapp-btn share-btn"
+                        style="border-radius: 2px !important;">
+                        <i class="fa fa-whatsapp mr-2"></i>Compartilhar no WhatsApp
+                    </button>
+                </div>
                 <br>
                 <div class="mt-3 p-2" style="background-color: #FEF3C7; border-radius: 0px; border-left: 3px solid #F59E0B;">
                     <p class="text-xs text-yellow-800">
@@ -270,9 +272,8 @@ function forceGreenButton() {
     const greenBtn = document.getElementById('green-payment-btn');
     if (greenBtn) {
         greenBtn.style.cssText = `
-            background: linear-gradient(-45deg, #16a34a, #22c55e, #16a34a, #34d399) !important;
-            background-size: 400% 400% !important;
-            animation: gradientShift 3s ease infinite !important;
+            background-color: #16a34a !important;
+            background: #16a34a !important;
             color: #ffffff !important;
             border-radius: 2px !important;
             padding: 12px 24px !important;
@@ -285,9 +286,8 @@ function forceGreenButton() {
         // Force hover and active states
         greenBtn.addEventListener('mouseenter', function() {
             this.style.cssText = `
-                background: linear-gradient(-45deg, #15803d, #16a34a, #15803d, #22c55e) !important;
-                background-size: 400% 400% !important;
-                animation: gradientShift 2s ease infinite !important;
+                background-color: #15803d !important;
+                background: #15803d !important;
                 color: #ffffff !important;
                 border-radius: 2px !important;
                 padding: 12px 24px !important;
@@ -295,16 +295,13 @@ function forceGreenButton() {
                 font-weight: 700 !important;
                 width: 100% !important;
                 font-size: 16px !important;
-                transform: translateY(-1px) !important;
-                box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3) !important;
             `;
         });
 
         greenBtn.addEventListener('mouseleave', function() {
             this.style.cssText = `
-                background: linear-gradient(-45deg, #16a34a, #22c55e, #16a34a, #34d399) !important;
-                background-size: 400% 400% !important;
-                animation: gradientShift 3s ease infinite !important;
+                background-color: #16a34a !important;
+                background: #16a34a !important;
                 color: #ffffff !important;
                 border-radius: 2px !important;
                 padding: 12px 24px !important;
@@ -312,8 +309,6 @@ function forceGreenButton() {
                 font-weight: 700 !important;
                 width: 100% !important;
                 font-size: 16px !important;
-                transform: translateY(0px) !important;
-                box-shadow: none !important;
             `;
         });
 
@@ -348,12 +343,75 @@ function forceWhatsAppButtonGradient() {
             font-weight: 600 !important;
             padding: 15px 25px !important;
             border-radius: 2px !important;
-            display: flex !important;
+            display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
             font-size: 14px !important;
             transition: all 0.3s ease !important;
+            margin: 0 auto !important;
         `;
+        
+        // Prevent button from turning black on click
+        whatsappBtn.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            this.style.cssText = `
+                background: linear-gradient(-45deg, #20ba5a, #25d366, #20ba5a, #34d399) !important;
+                background-size: 400% 400% !important;
+                animation: gradientShift 2s ease infinite !important;
+                color: white !important;
+                border: none !important;
+                font-weight: 600 !important;
+                padding: 15px 25px !important;
+                border-radius: 2px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                font-size: 14px !important;
+                transition: all 0.3s ease !important;
+                margin: 0 auto !important;
+                transform: translateY(1px) !important;
+            `;
+        });
+        
+        whatsappBtn.addEventListener('mouseup', function() {
+            this.style.cssText = `
+                background: linear-gradient(-45deg, #25d366, #34d399, #25d366, #10b981) !important;
+                background-size: 400% 400% !important;
+                animation: gradientShift 3s ease infinite !important;
+                color: white !important;
+                border: none !important;
+                font-weight: 600 !important;
+                padding: 15px 25px !important;
+                border-radius: 2px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                font-size: 14px !important;
+                transition: all 0.3s ease !important;
+                margin: 0 auto !important;
+                transform: translateY(0px) !important;
+            `;
+        });
+        
+        whatsappBtn.addEventListener('focus', function() {
+            this.style.cssText = `
+                background: linear-gradient(-45deg, #25d366, #34d399, #25d366, #10b981) !important;
+                background-size: 400% 400% !important;
+                animation: gradientShift 3s ease infinite !important;
+                color: white !important;
+                border: none !important;
+                font-weight: 600 !important;
+                padding: 15px 25px !important;
+                border-radius: 2px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                font-size: 14px !important;
+                transition: all 0.3s ease !important;
+                margin: 0 auto !important;
+                outline: none !important;
+            `;
+        });
         console.log('WhatsApp button gradient forced!');
     }
 }
