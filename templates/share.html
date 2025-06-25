@@ -351,6 +351,49 @@ function forceWhatsAppButtonGradient() {
             margin: 0 auto !important;
         `;
         
+        // Add hover states to prevent black color
+        whatsappBtn.addEventListener('mouseenter', function() {
+            this.style.cssText = `
+                background: linear-gradient(-45deg, #20ba5a, #25d366, #20ba5a, #34d399) !important;
+                background-size: 400% 400% !important;
+                animation: gradientShift 2s ease infinite !important;
+                color: white !important;
+                border: none !important;
+                font-weight: 600 !important;
+                padding: 15px 25px !important;
+                border-radius: 2px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                font-size: 14px !important;
+                transition: all 0.3s ease !important;
+                margin: 0 auto !important;
+                transform: translateY(-2px) !important;
+                box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3) !important;
+            `;
+        });
+        
+        whatsappBtn.addEventListener('mouseleave', function() {
+            this.style.cssText = `
+                background: linear-gradient(-45deg, #25d366, #34d399, #25d366, #10b981) !important;
+                background-size: 400% 400% !important;
+                animation: gradientShift 3s ease infinite !important;
+                color: white !important;
+                border: none !important;
+                font-weight: 600 !important;
+                padding: 15px 25px !important;
+                border-radius: 2px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                font-size: 14px !important;
+                transition: all 0.3s ease !important;
+                margin: 0 auto !important;
+                transform: translateY(0px) !important;
+                box-shadow: none !important;
+            `;
+        });
+        
         // Prevent button from turning black on click
         whatsappBtn.addEventListener('mousedown', function(e) {
             e.preventDefault();
