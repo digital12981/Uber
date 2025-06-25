@@ -100,18 +100,7 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
-- June 25, 2025: Comprehensive Desktop Blocking Protection System ✅ WORKING
-  - **GLOBAL PROTECTION**: Added Flask @app.before_request handler blocking ALL desktop access across entire site
-  - **INSTANT REDIRECT**: Desktop users immediately redirected to about:blank without seeing any content
-  - **SERVER-SIDE BLOCKING**: Enhanced desktop_blocker.py with comprehensive device detection
-  - **PRODUCTION READY**: Server-side protection only, no client-side interference
-  - **MOBILE DETECTION**: Advanced user agent analysis, screen size detection, touch capability checks
-  - **DESKTOP DETECTION**: OS patterns (Windows NT, macOS, Linux), browser patterns, screen resolution
-  - **REPLIT EXCEPTION**: Complete protection bypass in development environment
-  - **STEALTH MODE**: No visible content shown to desktop users before redirect
-  - **PERFORMANCE OPTIMIZED**: Lightweight detection without affecting page load speeds
-
-- June 25, 2025: Added Uber Dashcam Offer to Address Page + Fixed Payment Values ✅ WORKING
+- June 25, 2025: Added Uber Dashcam Offer to Address Page ✅ WORKING
   - **CAMERA OFFER**: Added Uber 3-lens dashcam offer on /address page above payment button
   - **PRODUCT DETAILS**: HD 1080p recording (front, interior, rear), night vision, impact sensor
   - **PRICING**: R$ 79,90 added to base shipping fee when selected
@@ -123,9 +112,6 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **INTEGRATION**: Camera selection saved to localStorage and passed through payment flow
   - **DESCRIPTION UPDATE**: Payment description includes both items when camera selected
   - **PAYMENT PAGE LOGIC**: Shows order summary on /pagamento when camera selected, keeps original when not selected
-  - **API FIX**: Fixed payment API to use dynamic pricing instead of fixed R$ 84,90 value
-  - **FORCED RECREATION**: When camera selected, forces new PIX transaction creation with correct R$ 107,20 value
-  - **VALUE DISPLAY**: Payment page automatically shows R$ 107,20 when camera offer detected
 
 - June 25, 2025: Updated CEP API to OpenCEP API ✅ WORKING
   - **NEW CEP API**: Changed from ViaCEP to OpenCEP API (https://opencep.com/v1/{cep}.json)

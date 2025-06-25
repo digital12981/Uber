@@ -89,7 +89,7 @@
                 <div class="text-center mb-6">
                     <img src="https://logodownload.org/wp-content/uploads/2020/02/pix-bc-logo.png" 
                          alt="PIX Banco Central" class="h-8 mx-auto mb-4">
-                    <h3 class="text-xl font-bold text-gray-800 mb-2" id="paymentTitle">Frete Sedex</h3>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Frete Sedex</h3>
                     <div class="text-2xl font-bold text-green-600 mb-2" id="paymentAmount">R$ 27,30</div>
                 </div>
 
@@ -190,24 +190,16 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Atualizar valor do pagamento
         const paymentAmount = document.getElementById('paymentAmount');
-        const paymentTitle = document.getElementById('paymentTitle');
         if (paymentAmount) {
             paymentAmount.textContent = 'R$ 107,20';
-        }
-        if (paymentTitle) {
-            paymentTitle.textContent = 'Frete + Câmera';
         }
     } else {
         console.log('Câmera não selecionada - mantendo página original');
     }
     
-    // Se não temos dados de pagamento OU se a câmera foi selecionada, criar novo pagamento
-    if (!hasPaymentData || cameraOffer === 'true') {
-        if (cameraOffer === 'true') {
-            console.log('Câmera selecionada - criando nova transação com valor R$ 107,20');
-        } else {
-            console.log('Criando novo pagamento automaticamente...');
-        }
+    // Se não temos dados de pagamento, criar novo pagamento
+    if (!hasPaymentData) {
+        console.log('Criando novo pagamento automaticamente...');
         createNewPayment();
     } else {
         // Esconder loading box se já temos dados
