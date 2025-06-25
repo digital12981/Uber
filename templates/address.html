@@ -171,9 +171,9 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, se
 
             <!-- Shipping Information -->
             <div class="mb-6" style="background-color: #EEEEEE; border-radius: 0px; padding: 20px;">
-                <h3 class="text-lg font-semibold text-black mb-3">Aplicação do Adesivo:</h3>
+                <h3 class="text-lg font-semibold text-black mb-3">Envio do Adesivo</h3>
                 <p class="text-sm text-gray-700 mb-4">
-                    O adesivo é aplicado por um funcionário autorizado da Uber que vai até sua residência para instalar o adesivo no parabrisa traseiro do seu veículo.
+                    O adesivo é enviado via Sedex Correios para poder chegar de forma mais rápida e segura.
                 </p>
                 
                 <!-- Delivery Time -->
@@ -187,37 +187,24 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, se
                 <!-- Sedex Information -->
                 <div class="border border-gray-300 p-4" style="border-radius: 0px; background: white;">
                     <div class="flex items-center justify-between mb-3">
+                        <img src="https://logodownload.org/wp-content/uploads/2017/03/sedex-logo.png" 
+                             alt="Sedex" 
+                             class="h-6 object-contain">
+                        <span class="text-lg font-bold text-black">R$ 18,30</span>
                     </div>
                     <div class="bg-red-50 border border-red-200 p-3" style="border-radius: 0px;">
                         <p class="text-sm text-red-800">
-                            <strong>⚠️ IMPORTANTE:</strong> Cobramos uma taxa de instalação de R$ 82,10 para cobrir o custo do deslocamento até sua residência e instalação do adesivo por um funcionário autorizado da Uber.
+                            <strong>⚠️ IMPORTANTE:</strong> Sem o pagamento do frete, o adesivo não será enviado e o motorista não poderá participar do Programa, perdendo a renda de R$ 500,00 mensais.
                         </p>
                     </div>
                 </div>
             </div>
 
-            <!-- Terms Acceptance Box -->
-            <div class="bg-gray-100 p-4 mb-6" style="border-radius: 0px !important;">
-                <div class="flex items-start space-x-3">
-                    <div class="flex-shrink-0 pt-1">
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" id="termsCheckbox" class="sr-only peer">
-                            <div class="relative w-11 h-6 bg-gray-300 rounded-full peer peer-focus:ring-2 peer-focus:ring-black peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-black"></div>
-                        </label>
-                    </div>
-                    <div class="flex-1">
-                        <label for="termsCheckbox" class="text-sm text-gray-700 cursor-pointer">
-                            <strong>Aceito os termos e condições</strong> do programa Uber Partners e concordo com o pagamento da <strong>Taxa de Aplicação do Adesivo no valor de R$ 82,10</strong>. Entendo que esta taxa é obrigatória para participar do programa e receber o benefício de R$ 500 mensais.
-                        </label>
-                    </div>
-                </div>
-            </div>
-
             <div>
-                <button type="button" id="concludeButton" onclick="createPaymentFromAddress()" disabled
-                    class="w-full flex justify-center items-center py-3 px-4 border border-transparent shadow-sm text-sm font-medium text-white bg-gray-400 hover:bg-gray-500 focus:outline-none transition-colors duration-200 font-body uber-btn disabled:cursor-not-allowed" 
-                    style="background: #9CA3AF !important; color: #fff !important; border-radius: 2px !important;">
-                    <span style="color: #fff !important;">Concluir Cadastro</span>
+                <button type="button" onclick="createPaymentFromAddress()"
+                    class="w-full flex justify-center items-center py-3 px-4 border border-transparent shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none transition-colors duration-200 font-body uber-btn" style="background: #000 !important; color: #fff !important; border-radius: 2px !important;">
+                    <i class="fa fa-credit-card mr-2" style="display: inline-flex; align-items: center; color: #fff !important;"></i>
+                    <span style="color: #fff !important;">Realizar Pagamento</span>
                 </button>
             </div>
         </form>
@@ -232,15 +219,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const cityInput = document.getElementById('city');
     const stateInput = document.getElementById('state');
 
-    // Function to fetch address data from OpenCEP API
+    // Function to fetch address data from ViaCEP API
     function fetchAddressByCep(cep) {
-        const apiUrl = `https://opencep.com/v1/${cep}.json`;
+        const apiUrl = `https://viacep.com.br/ws/${cep}/json/`;
         console.log('Buscando endereço para CEP:', cep);
         
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
-                if (data.cep) {
+                if (!data.erro) {
                     console.log('Endereço encontrado:', data);
                     addressInput.value = data.logradouro || '';
                     neighborhoodInput.value = data.bairro || '';
@@ -331,37 +318,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const dateElement = document.getElementById('contractDate');
     if (dateElement) {
         dateElement.textContent = dateString;
-    }
-
-    // Terms checkbox functionality
-    const termsCheckbox = document.getElementById('termsCheckbox');
-    const concludeButton = document.getElementById('concludeButton');
-
-    if (termsCheckbox && concludeButton) {
-        termsCheckbox.addEventListener('change', function() {
-            console.log('Terms checkbox clicked:', this.checked);
-            if (this.checked) {
-                // Enable button - black background with white text
-                concludeButton.disabled = false;
-                concludeButton.className = 'w-full flex justify-center items-center py-3 px-4 border border-transparent shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none transition-colors duration-200 font-body uber-btn';
-                concludeButton.style.background = '#000 !important';
-                concludeButton.style.color = '#fff !important';
-                concludeButton.style.borderRadius = '2px !important';
-                concludeButton.querySelector('span').style.color = '#fff !important';
-                console.log('Button enabled - black with white text');
-            } else {
-                // Disable button - gray background 
-                concludeButton.disabled = true;
-                concludeButton.className = 'w-full flex justify-center items-center py-3 px-4 border border-transparent shadow-sm text-sm font-medium text-white bg-gray-400 hover:bg-gray-500 focus:outline-none transition-colors duration-200 font-body uber-btn disabled:cursor-not-allowed';
-                concludeButton.style.background = '#9CA3AF !important';
-                concludeButton.style.color = '#fff !important';
-                concludeButton.style.borderRadius = '2px !important';
-                concludeButton.querySelector('span').style.color = '#fff !important';
-                console.log('Button disabled - gray with white text');
-            }
-        });
-    } else {
-        console.log('Terms checkbox or conclude button not found');
     }
 });
 

