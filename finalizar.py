@@ -313,7 +313,7 @@ class For4PaymentsAPI:
             raise ValueError("CPF do usuário é obrigatório")
 
         # Use provided amount or default CNV fee
-        amount = user_data.get('amount', 52.10)
+        amount = user_data.get('amount', 67.40)
         current_app.logger.info(f"Valor da taxa CNV: R$ {amount:.2f}")
 
         try:

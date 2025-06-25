@@ -1286,7 +1286,7 @@ def create_cnv_payment():
             'cpf': user_data.get('cpf', ''),
             'email': user_data.get('email', ''),
             'phone': user_data.get('phone', ''),
-            'amount': 52.10,
+            'amount': 67.40,
             'description': 'Pão de Queijo e Presunto'
         }
         
