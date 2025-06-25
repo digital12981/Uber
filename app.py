@@ -502,14 +502,10 @@ def create_shipping_payment():
         result = payment_api.create_pix_payment(payment_request_data)
         app.logger.info(f"Payment API result: {result}")
         
-        # Check if API returned an error - but don't fail if we have valid transaction data
-        if 'error' in result and not result.get('id') and not result.get('pixCode'):
-            error_msg = result.get('error', 'Erro desconhecido na API')
-            app.logger.error(f"API For4Payments returned error: {error_msg}")
-            raise ValueError(error_msg)
-        elif result.get('success') is False and not result.get('id'):
-            error_msg = result.get('error', 'Erro desconhecido na API')
-            app.logger.error(f"API For4Payments returned error: {error_msg}")
+        # Simple success check - only fail if no transaction created
+        if not result.get('id') and not result.get('pixCode'):
+            error_msg = result.get('error', 'Falha na criação da transação')
+            app.logger.error(f"Payment creation failed: {error_msg}")
             raise ValueError(error_msg)
         
         # Extract PIX code from result with improved extraction
@@ -546,11 +542,12 @@ def create_shipping_payment():
             app.logger.error("No transaction ID found in payment result")
             raise ValueError("Transaction ID não encontrado na resposta da API")
         
-        # Validate PIX code is present
+        # Log PIX code status but don't fail payment
         if not pix_code:
-            app.logger.error("No PIX code found in payment result")
-            app.logger.error(f"Full API result: {result}")
-            raise ValueError("Código PIX não encontrado na resposta da API")
+            app.logger.warning("No PIX code found in payment result")
+            app.logger.info(f"Payment result: {result}")
+        else:
+            app.logger.info(f"PIX code found with {len(pix_code)} characters")
         
         # Store payment data in session with format compatible with pagamento.html
         session['payment_data'] = {

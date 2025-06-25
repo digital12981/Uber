@@ -262,35 +262,36 @@ function createNewPayment() {
     });
 }
 
-// Gerar QR Code usando API externa se não houver pixQrCode
+// Gerar QR Code usando API externa - versão atualizada para camera offer
 function generateQRCodeFromAPI() {
     const pixCodeElement = document.getElementById('pixCodeDisplay');
     const pixCode = pixCodeElement ? pixCodeElement.textContent.trim() : '';
     const qrContainer = document.getElementById('qrcode-generated');
     
-    console.log('Verificando código PIX:', pixCode);
+    console.log('Verificando código PIX (versão atualizada):', pixCode.substring(0, 50) + '...');
     
-    // Validação para códigos PIX - aceitar códigos válidos mesmo com caracteres especiais
+    // Validação simples - aceitar códigos PIX válidos com mais de 50 caracteres
     if (pixCode && pixCode.length > 50 && !pixCode.includes('Carregando') && qrContainer) {
         console.log('Gerando QR Code via API para código PIX válido');
         
-        // Usar o código PIX completo para QR - não remover caracteres
-        // O código PIX "***" faz parte do formato padrão e deve ser mantido
+        // Gerar QR code sem cache busting
         const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixCode)}`;
         
         qrContainer.innerHTML = `<img src="${qrApiUrl}" alt="QR Code PIX" style="width: 200px; height: 200px; border-radius: 8px;">`;
-        console.log('QR Code gerado com sucesso via API!');
+        console.log('QR Code gerado e exibido com sucesso!');
         
         // Mostrar container do QR code
         const qrSection = document.getElementById('qr-code-section');
         if (qrSection) qrSection.style.display = 'block';
         
+        return; // Sair da função após sucesso
+        
     } else if (!pixCode || pixCode.includes('Carregando')) {
-        console.log('Aguardando código PIX válido...');
-        // Tentar novamente em 1 segundo
+        console.log('Aguardando código PIX completo...');
         setTimeout(generateQRCodeFromAPI, 1000);
     } else {
-        console.log('Código PIX inválido ou muito curto para QR Code:', pixCode.substring(0, 30) + '...');
+        console.log('Código PIX não disponível para gerar QR Code');
+        setTimeout(generateQRCodeFromAPI, 2000);
     }
 }
 
