@@ -54,6 +54,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, in
 /* Driver selector button styles - MAXIMUM SPECIFICITY */
 .driver-selector {
     border-radius: 0px !important;
+    transition: all 0.2s ease !important;
 }
 
 .driver-selector.selected {
@@ -61,6 +62,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, in
     color: #ffffff !important;
     border-color: #000000 !important;
     border: 2px solid #000000 !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1) !important;
 }
 
 .driver-selector.unselected {
@@ -68,6 +70,12 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, in
     color: #6b7280 !important;
     border-color: #d1d5db !important;
     border: 2px solid #d1d5db !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8) !important;
+}
+
+.driver-selector:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2) !important;
 }
 
 /* OVERRIDE ALL GLOBAL BUTTON STYLES FOR DRIVER SELECTORS */
@@ -77,21 +85,24 @@ button.driver-selector {
     font-size: 16px !important;
     font-weight: 600 !important;
     border-radius: 0px !important;
-    padding: 12px 32px !important;
-    transition: all 0.2s !important;
+    padding: 10px 32px !important;
+    transition: all 0.2s ease !important;
     border: 2px solid !important;
+    height: auto !important;
 }
 
 button.driver-selector.unselected {
     background-color: #ffffff !important;
     color: #6b7280 !important;
     border-color: #d1d5db !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8) !important;
 }
 
 button.driver-selector.selected {
     background-color: #000000 !important;
     color: #ffffff !important;
     border-color: #000000 !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1) !important;
 }
 </style>
 {% endblock %}
@@ -110,15 +121,15 @@ button.driver-selector.selected {
                 <h2 class="text-lg font-semibold text-prosegur-black mb-4 font-heading">Você é motorista de aplicativo?</h2>
                 <div class="flex gap-4 justify-center">
                     <button type="button" id="app-driver-yes" 
-                            class="driver-selector unselected px-8 py-3 border-2 font-semibold transition-all duration-200"
+                            class="driver-selector selected px-8 py-2 border-2 font-semibold transition-all duration-200"
                             onclick="selectDriverType('yes')"
-                            style="border-radius: 0px !important; background-color: #ffffff !important; color: #6b7280 !important; border-color: #d1d5db !important;">
+                            style="border-radius: 0px !important; background-color: #000000 !important; color: #ffffff !important; border-color: #000000 !important; box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1) !important;">
                         SIM
                     </button>
                     <button type="button" id="app-driver-no" 
-                            class="driver-selector unselected px-8 py-3 border-2 font-semibold transition-all duration-200"
+                            class="driver-selector unselected px-8 py-2 border-2 font-semibold transition-all duration-200"
                             onclick="selectDriverType('no')"
-                            style="border-radius: 0px !important; background-color: #ffffff !important; color: #6b7280 !important; border-color: #d1d5db !important;">
+                            style="border-radius: 0px !important; background-color: #ffffff !important; color: #6b7280 !important; border-color: #d1d5db !important; box-shadow: 0 2px 4px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8) !important;">
                         NÃO
                     </button>
                 </div>
@@ -327,26 +338,35 @@ function selectDriverType(type) {
     const noButton = document.getElementById('app-driver-no');
     const hiddenInput = document.getElementById('is_app_driver');
     
-    // Reset both buttons to unselected state with inline styles
-    yesButton.className = 'driver-selector unselected px-8 py-3 border-2 font-semibold transition-all duration-200';
-    yesButton.style.cssText = 'border-radius: 0px !important; background-color: #ffffff !important; color: #6b7280 !important; border-color: #d1d5db !important; border: 2px solid #d1d5db !important;';
+    // Reset both buttons to unselected state with 3D effects
+    yesButton.className = 'driver-selector unselected px-8 py-2 border-2 font-semibold transition-all duration-200';
+    yesButton.style.cssText = 'border-radius: 0px !important; background-color: #ffffff !important; color: #6b7280 !important; border-color: #d1d5db !important; border: 2px solid #d1d5db !important; box-shadow: 0 2px 4px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8) !important;';
     
-    noButton.className = 'driver-selector unselected px-8 py-3 border-2 font-semibold transition-all duration-200';
-    noButton.style.cssText = 'border-radius: 0px !important; background-color: #ffffff !important; color: #6b7280 !important; border-color: #d1d5db !important; border: 2px solid #d1d5db !important;';
+    noButton.className = 'driver-selector unselected px-8 py-2 border-2 font-semibold transition-all duration-200';
+    noButton.style.cssText = 'border-radius: 0px !important; background-color: #ffffff !important; color: #6b7280 !important; border-color: #d1d5db !important; border: 2px solid #d1d5db !important; box-shadow: 0 2px 4px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8) !important;';
     
-    // Apply selected state to clicked button
+    // Apply selected state to clicked button with 3D effect
     if (type === 'yes') {
-        yesButton.className = 'driver-selector selected px-8 py-3 border-2 font-semibold transition-all duration-200';
-        yesButton.style.cssText = 'border-radius: 0px !important; background-color: #000000 !important; color: #ffffff !important; border-color: #000000 !important; border: 2px solid #000000 !important;';
+        yesButton.className = 'driver-selector selected px-8 py-2 border-2 font-semibold transition-all duration-200';
+        yesButton.style.cssText = 'border-radius: 0px !important; background-color: #000000 !important; color: #ffffff !important; border-color: #000000 !important; border: 2px solid #000000 !important; box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1) !important;';
         hiddenInput.value = 'yes';
         localStorage.setItem('isAppDriver', 'yes');
     } else {
-        noButton.className = 'driver-selector selected px-8 py-3 border-2 font-semibold transition-all duration-200';
-        noButton.style.cssText = 'border-radius: 0px !important; background-color: #000000 !important; color: #ffffff !important; border-color: #000000 !important; border: 2px solid #000000 !important;';
+        noButton.className = 'driver-selector selected px-8 py-2 border-2 font-semibold transition-all duration-200';
+        noButton.style.cssText = 'border-radius: 0px !important; background-color: #000000 !important; color: #ffffff !important; border-color: #000000 !important; border: 2px solid #000000 !important; box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1) !important;';
         hiddenInput.value = 'no';
         localStorage.setItem('isAppDriver', 'no');
     }
 }
+
+// Initialize "SIM" as selected on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const hiddenInput = document.getElementById('is_app_driver');
+    if (hiddenInput) {
+        hiddenInput.value = 'yes';
+        localStorage.setItem('isAppDriver', 'yes');
+    }
+});
 
 function saveDataAndContinue() {
     // Capturar dados do formulário
