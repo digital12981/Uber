@@ -844,7 +844,6 @@ def check_payment_status(transaction_id):
         return jsonify({"success": False, "error": str(e)})
 
 @app.route("/parcerias/<status>")
-@simple_mobile_only
 def resultado(status):
     # Obter dados de registro da sessão ou criar dados básicos padrão
     registration_data = session.get('registration_data', {})
