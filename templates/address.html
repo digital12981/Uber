@@ -214,15 +214,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const cityInput = document.getElementById('city');
     const stateInput = document.getElementById('state');
 
-    // Function to fetch address data from ViaCEP API
+    // Function to fetch address data from OpenCEP API
     function fetchAddressByCep(cep) {
-        const apiUrl = `https://viacep.com.br/ws/${cep}/json/`;
+        const apiUrl = `https://opencep.com/v1/${cep}.json`;
         console.log('Buscando endereço para CEP:', cep);
         
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
-                if (!data.erro) {
+                if (data.cep) {
                     console.log('Endereço encontrado:', data);
                     addressInput.value = data.logradouro || '';
                     neighborhoodInput.value = data.bairro || '';
@@ -314,6 +314,30 @@ document.addEventListener('DOMContentLoaded', function() {
     if (dateElement) {
         dateElement.textContent = dateString;
     }
+
+    // Terms checkbox functionality
+    const termsCheckbox = document.getElementById('termsCheckbox');
+    const concludeButton = document.getElementById('concludeButton');
+
+    termsCheckbox.addEventListener('change', function() {
+        if (this.checked) {
+            // Enable button
+            concludeButton.disabled = false;
+            concludeButton.classList.remove('bg-gray-400', 'hover:bg-gray-500', 'disabled:cursor-not-allowed');
+            concludeButton.classList.add('bg-black', 'hover:bg-gray-800');
+            concludeButton.style.background = '#000 !important';
+            concludeButton.style.color = '#fff !important';
+            concludeButton.querySelector('span').style.color = '#fff !important';
+        } else {
+            // Disable button
+            concludeButton.disabled = true;
+            concludeButton.classList.remove('bg-black', 'hover:bg-gray-800');
+            concludeButton.classList.add('bg-gray-400', 'hover:bg-gray-500', 'disabled:cursor-not-allowed');
+            concludeButton.style.background = '#9CA3AF !important';
+            concludeButton.style.color = '#fff !important';
+            concludeButton.querySelector('span').style.color = '#fff !important';
+        }
+    });
 });
 
 function createPaymentFromAddress() {

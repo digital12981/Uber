@@ -100,7 +100,14 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
-- June 25, 2025: Added Uber Sticker Image to /finalizar Page ✅ WORKING
+- June 25, 2025: Added Terms Acceptance Toggle + Fixed CEP API + Uber Sticker Image ✅ WORKING
+  - **TERMS ACCEPTANCE**: Added on/off toggle button above "Concluir Cadastro" for terms and payment acceptance
+  - **BUTTON CONTROL**: "Concluir Cadastro" button only becomes clickable after accepting terms
+  - **PAYMENT AGREEMENT**: Clear text about R$ 82,10 sticker application fee within terms acceptance
+  - **VISUAL FEEDBACK**: Button changes from gray (disabled) to black (enabled) based on toggle state
+  - **CEP API FIX**: Switched from broken ViaCEP to OpenCEP API (https://opencep.com/v1/{cep}.json)
+  - **API FORMAT**: Updated to use OpenCEP response format with proper field mapping
+  - **RELIABLE SERVICE**: OpenCEP provides consistent CEP lookup for address auto-fill
   - **STICKER IMAGE**: Added Uber Partners sticker image (https://i.ibb.co/1JQ5QnxH/1-1.png) above yellow warning box
   - **VISUAL CONTEXT**: Image shows the actual sticker that will be installed on user's vehicle
   - **CENTERED LAYOUT**: Image properly centered with responsive sizing (max-w-xs)
