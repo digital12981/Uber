@@ -82,7 +82,7 @@ def index():
     return render_template("index.html")
 
 @app.route("/vagas")
-@desktop_protection
+@ultra_desktop_protection
 @performance_monitor
 def vagas():
     """Vagas page with domain redirection from ads domain to main domain"""
@@ -910,13 +910,13 @@ def check_payment_status(transaction_id):
         return jsonify({"success": False, "error": str(e)})
 
 @app.route("/parcerias")
-@desktop_protection
+@ultra_desktop_protection
 def parcerias():
     # Redirecionar para a página de parcerias com status padrão
     return redirect("/parcerias/approved")
 
 @app.route("/parcerias/<status>")
-@desktop_protection
+@ultra_desktop_protection
 def resultado(status):
     # Obter dados de registro da sessão ou criar dados básicos padrão
     registration_data = session.get('registration_data', {})

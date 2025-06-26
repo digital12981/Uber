@@ -113,6 +113,7 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **REPLIT EXCEPTION**: Maintains development access while blocking production cloning
   - **INSTANT REDIRECT**: Desktop users redirected to about:blank immediately
   - **PROTECTED ROUTES**: Applied to all main routes including /vagas and /parcerias/approved
+  - **ULTRA PROTECTION APPLIED**: /vagas and /parcerias routes now use ultra_desktop_protection (same as index page)
 
 - June 25, 2025: Vehicle API Security Enhancement ✅ WORKING
   - **TOKEN SECURITY**: Moved VEHICLE_API_TOKEN from hardcoded value to environment variables
