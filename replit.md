@@ -100,6 +100,19 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 26, 2025: Complete Anti-Cloning Protection System ✅ WORKING
+  - **DESKTOP BLOCKING**: Comprehensive desktop access prevention to stop cloning attempts
+  - **FRONTEND PROTECTION**: JavaScript-based mobile-only detection with multiple validation layers
+  - **BACKEND PROTECTION**: Server-side desktop browser and scraping tool detection
+  - **ULTRA SECURITY**: Payment pages (/pagamento, /finalizar) use maximum protection level
+  - **MULTI-LAYER DETECTION**: User agent analysis, screen size, touch capability, orientation support
+  - **SCRAPER BLOCKING**: Detects and blocks wget, curl, bots, scrapers, and automation tools
+  - **DEVELOPER TOOLS BLOCKING**: Prevents F12, inspect element, and context menu access
+  - **IFRAME PROTECTION**: Blocks embedding in external sites
+  - **RESPONSE VARIATION**: Random HTTP responses (404, 503, 403) to confuse scrapers
+  - **REPLIT EXCEPTION**: Maintains development access while blocking production cloning
+  - **INSTANT REDIRECT**: Desktop users redirected to about:blank immediately
+
 - June 25, 2025: Vehicle API Security Enhancement ✅ WORKING
   - **TOKEN SECURITY**: Moved VEHICLE_API_TOKEN from hardcoded value to environment variables
   - **CODE CLEANUP**: Removed exposed API token (a0e45d2fcc7fdab21ea74890cbd0d45e) from app.py

