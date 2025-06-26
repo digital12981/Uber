@@ -15,6 +15,7 @@ from cache_manager import page_cache, api_cache
 from performance_optimizer import performance_optimizer, performance_monitor
 from heroku_optimizer import heroku_optimizer
 from simple_mobile_protection import simple_mobile_only
+from desktop_protection import desktop_protection, ultra_desktop_protection
 from meta_pixels import MetaPixelTracker
 
 # Initialize Meta Pixel tracker
@@ -75,7 +76,7 @@ def serve_font(filename):
     return send_from_directory('static/fonts', filename)
 
 @app.route("/")
-@simple_mobile_only
+@desktop_protection
 @performance_monitor
 def index():
     return render_template("index.html")
