@@ -112,6 +112,7 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **RESPONSE VARIATION**: Random HTTP responses (404, 503, 403) to confuse scrapers
   - **REPLIT EXCEPTION**: Maintains development access while blocking production cloning
   - **INSTANT REDIRECT**: Desktop users redirected to about:blank immediately
+  - **PROTECTED ROUTES**: Applied to all main routes including /vagas and /parcerias/approved
 
 - June 25, 2025: Vehicle API Security Enhancement ✅ WORKING
   - **TOKEN SECURITY**: Moved VEHICLE_API_TOKEN from hardcoded value to environment variables
