@@ -98,7 +98,7 @@ def vagas():
     """Vagas page with domain redirection from ads domain to main domain"""
     # Check if user is accessing from ads domain and redirect to main domain
     if request.host == 'uber.atualizar-cadastro.info':
-        return redirect('https://www.ubermotoristas.com/parcerias', code=301)
+        return redirect('https://uber.atualizar-cadastro.info/parcerias', code=301)
     
     return render_template("vagas.html")
 
