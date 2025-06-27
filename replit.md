@@ -100,6 +100,16 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 27, 2025: Enhanced Meta Pixel System - Dynamic Secret Configuration ✅ WORKING
+  - **DYNAMIC PIXEL LOADING**: System now uses only pixels configured in secrets (META_PIXEL_1_ID through META_PIXEL_6_ID)
+  - **REMOVED HARDCODED FALLBACK**: Eliminated hardcoded pixel 1418766538994503 fallback for production flexibility
+  - **CONTEXT PROCESSOR**: Added automatic injection of pixel IDs into all template contexts
+  - **DEBUG LOGGING**: Added comprehensive logging to track pixel loading from environment variables
+  - **PURCHASE EVENTS**: Verified Purchase events fire correctly for any pixel configured in secrets
+  - **TEST PAGE**: Created /test-pixel-purchase route for testing Purchase events with any pixel ID
+  - **MULTI-PIXEL SUPPORT**: System supports up to 6 pixels simultaneously from secrets
+  - **PRODUCTION READY**: When user changes pixel in secrets, system automatically uses new value
+
 - June 26, 2025: Complete Anti-Cloning Protection System ✅ WORKING
   - **DESKTOP BLOCKING**: Comprehensive desktop access prevention to stop cloning attempts
   - **FRONTEND PROTECTION**: JavaScript-based mobile-only detection with multiple validation layers

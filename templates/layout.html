@@ -57,16 +57,14 @@
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
     
-    // Initialize pixels if configured
-    {% if meta_pixel_ids %}
+    // Initialize pixels from secrets only
+    {% if meta_pixel_ids and meta_pixel_ids|length > 0 %}
         {% for pixel_id in meta_pixel_ids %}
         fbq('init', '{{ pixel_id }}');
-        console.log('Meta Pixel initialized:', '{{ pixel_id }}');
+        console.log('✅ Meta Pixel from SECRET initialized:', '{{ pixel_id }}');
         {% endfor %}
     {% else %}
-        // Fallback: Hard-coded pixel for production
-        fbq('init', '1418766538994503');
-        console.log('Meta Pixel initialized (fallback): 1418766538994503');
+        console.error('❌ Nenhum pixel configurado nas secrets! Configure META_PIXEL_1_ID, META_PIXEL_2_ID, etc.');
     {% endif %}
     
     fbq('track', 'PageView');

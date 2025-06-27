@@ -25,12 +25,16 @@ class MetaPixelTracker:
         for i in range(1, 7):  # Support 6 pixels
             pixel_id = os.environ.get(f'META_PIXEL_{i}_ID')
             
-            if pixel_id:
+            if pixel_id and pixel_id.strip():
                 pixels.append({
-                    'id': pixel_id,
+                    'id': pixel_id.strip(),
                     'name': f'Pixel_{i}'
                 })
+                print(f"✅ META_PIXEL_{i}_ID loaded: {pixel_id.strip()}")
+            else:
+                print(f"❌ META_PIXEL_{i}_ID not found or empty")
         
+        print(f"📊 Total pixels loaded: {len(pixels)}")
         return pixels
     
     def get_pixel_ids(self) -> List[str]:

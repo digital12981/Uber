@@ -1494,5 +1494,10 @@ def test_meta_pixels():
             'error': str(e)
         })
 
+@app.route("/test-pixel-purchase")
+def test_pixel_purchase():
+    """Página de teste específica para eventos Purchase do Meta Pixel"""
+    return render_template_string(open('test_pixel_purchase.html').read())
+
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
