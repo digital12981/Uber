@@ -71,6 +71,16 @@ from database_service import db_analytics
 # Minimum loading time in milliseconds
 MIN_LOADING_TIME = 4000
 
+# Context processor to pass pixel IDs to all templates
+@app.context_processor
+def inject_meta_pixels():
+    """Inject Meta Pixel IDs into all template contexts"""
+    pixel_ids = meta_pixel_tracker.get_pixel_ids()
+    app.logger.info(f"Meta Pixel Context Processor - Pixel IDs found: {pixel_ids}")
+    return {
+        'meta_pixel_ids': pixel_ids if pixel_ids else None
+    }
+
 @app.route('/static/fonts/<path:filename>')
 def serve_font(filename):
     return send_from_directory('static/fonts', filename)
