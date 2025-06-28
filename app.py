@@ -1434,7 +1434,7 @@ def check_cnv_payment_status(payment_id):
                 app.logger.error(f"❌ Erro ao verificar API CNV: {str(e)}")
         
         # SISTEMA DE SIMULAÇÃO AUTOMÁTICA APENAS NO REPLIT - MESMA LÓGICA DO /pagamento
-        if os.environ.get('REPLIT_DEPLOYMENT_ID') or 'replit' in os.environ.get('HOSTNAME', '').lower():
+        if os.environ.get('REPL_ID') or os.environ.get('REPLIT_USER') or 'replit.dev' in os.environ.get('REPLIT_DOMAINS', ''):
             app.logger.info(f"🧪 SIMULAÇÃO REPLIT CNV: Aprovando automaticamente após 5 segundos para teste")
             from datetime import datetime, timedelta
             
