@@ -203,6 +203,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Redirect to next step - you can change this URL as needed
         window.location.href = '/address';
     }
+    
+    // Inicializar precarregamento do cartão antecipadamente
+    setTimeout(() => {
+        if (window.preloadCardAssets) {
+            window.preloadCardAssets();
+            console.log('🚀 Precarregamento do cartão iniciado na página veículo');
+        }
+    }, 2000);
 });
 </script>
 

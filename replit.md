@@ -100,6 +100,18 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 28, 2025: Advanced Card Preloading System - Instant Card Display ✅ WORKING
+  - **UNIVERSAL PRELOADING**: Created /static/js/preload-card.js for automatic image and font preloading
+  - **EARLY INITIALIZATION**: Card assets preload starting from /veiculo and /local pages (2+ pages ahead)
+  - **MULTIPLE STRATEGIES**: Uses Image() objects + invisible DOM elements + HTML preload tags
+  - **DATA CACHING**: Preformatted card data stored in localStorage for instant display
+  - **SESSION MANAGEMENT**: Assets marked as preloaded in sessionStorage to avoid duplicate work
+  - **SMART FALLBACK**: Pages use preloaded data first, fall back to traditional localStorage lookup
+  - **HTML PRELOAD TAGS**: Added <link rel="preload"> tags in /recebedor and /cartao pages
+  - **COMPREHENSIVE COVERAGE**: All card images preloaded: logos, chip, Mastercard, partner logos
+  - **FONT PRELOADING**: UberMoveText fonts preloaded with multiple weights for instant rendering
+  - **PERFORMANCE OPTIMIZED**: Background preloading doesn't interfere with page loading
+
 - June 28, 2025: Complete Payment Flow Redirection System - CNV Endpoint Solution ✅ WORKING
   - **PAGAMENTO → CARTAO**: Payment approval redirects from /pagamento to /cartao working
   - **CARTAO → FINALIZAR**: CNV payment approval redirects from /cartao to /finalizar working

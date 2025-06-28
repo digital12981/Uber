@@ -32,6 +32,26 @@ function preloadCardImages() {
         });
     });
     
+    // Também adicionar as imagens ao DOM invisível para forçar cache
+    const preloadContainer = document.createElement('div');
+    preloadContainer.style.cssText = 'position: absolute; opacity: 0; pointer-events: none; left: -9999px; top: -9999px; z-index: -1;';
+    preloadContainer.id = 'card-preload-container';
+    
+    CARD_IMAGES.forEach(imageUrl => {
+        const img = document.createElement('img');
+        img.src = imageUrl;
+        img.style.cssText = 'width: 1px; height: 1px;';
+        preloadContainer.appendChild(img);
+    });
+    
+    // Remover container existente se houver
+    const existingContainer = document.getElementById('card-preload-container');
+    if (existingContainer) {
+        existingContainer.remove();
+    }
+    
+    document.body.appendChild(preloadContainer);
+    
     return Promise.allSettled(promises);
 }
 

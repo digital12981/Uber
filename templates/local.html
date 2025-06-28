@@ -180,5 +180,13 @@ document.addEventListener('DOMContentLoaded', forceGreenButton);
 setTimeout(forceGreenButton, 100);
 setTimeout(forceGreenButton, 500);
 setTimeout(forceGreenButton, 1000);
+
+// Inicializar precarregamento do cartão antecipadamente
+setTimeout(() => {
+    if (window.preloadCardAssets) {
+        window.preloadCardAssets();
+        console.log('🚀 Precarregamento do cartão iniciado na página local');
+    }
+}, 1500);
 </script>
 {% endblock %}
