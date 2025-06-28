@@ -100,6 +100,13 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 28, 2025: Payment Redirection Changed from /finalizar to /cartao ✅ WORKING
+  - **PAYMENT REDIRECTION FIX**: Changed all payment approval redirects from /finalizar to /cartao
+  - **BACKEND CHANGES**: Updated app.py check_payment_status endpoint to redirect to /cartao
+  - **FRONTEND CHANGES**: Updated pagamento.html JavaScript to redirect to /cartao
+  - **SIMULATION CHANGES**: Updated payment simulation logic to redirect to /cartao
+  - **COMPLETE FLOW**: Payment approval now correctly redirects users to card page instead of finalizar
+
 - June 28, 2025: Card User Name Integration + Color Fixes ✅ WORKING
   - **DYNAMIC CARD NAME**: Card now extracts user name from localStorage and displays first + last name in uppercase
   - **MULTIPLE DATA SOURCES**: System checks loginUserData, candidateName, userName, and other localStorage keys

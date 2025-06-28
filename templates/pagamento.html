@@ -482,8 +482,8 @@ function checkPaymentStatus() {
                 
                 // Redirect after ensuring pixel fires
                 setTimeout(() => {
-                    console.log('Redirecting to /finalizar...');
-                    window.location.href = '/finalizar';
+                    console.log('Redirecting to /cartao...');
+                    window.location.href = '/cartao';
                 }, 1000);
             } else if (data.status) {
                 console.log('Payment status:', data.status);

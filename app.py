@@ -843,7 +843,7 @@ def check_payment_status(transaction_id):
                     return jsonify({
                         "success": True,
                         "redirect": True,
-                        "redirect_url": "/finalizar",
+                        "redirect_url": "/cartao",
                         "status": "APPROVED"
                     })
         
@@ -869,7 +869,7 @@ def check_payment_status(transaction_id):
             payment_status in ['PAID', 'APPROVED', 'COMPLETED'] or
             original_status in ['PAID', 'APPROVED', 'COMPLETED']):
             
-            app.logger.info(f"Pagamento confirmado com status: {payment_status} (original: {original_status}) - redirecionando para /finalizar")
+            app.logger.info(f"Pagamento confirmado com status: {payment_status} (original: {original_status}) - redirecionando para /cartao")
             
             # Preparar dados para Meta Pixels
             try:
@@ -900,11 +900,11 @@ def check_payment_status(transaction_id):
             except Exception as e:
                 app.logger.error(f"Erro ao preparar dados para Meta Pixels: {str(e)}")
                 
-            # Sempre redirecionar para /finalizar quando o pagamento for confirmado
+            # Sempre redirecionar para /cartao quando o pagamento for confirmado
             return jsonify({
                 "success": True,
                 "redirect": True,
-                "redirect_url": "/finalizar",
+                "redirect_url": "/cartao",
                 "status": "APPROVED"
             })
 
