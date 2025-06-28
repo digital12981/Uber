@@ -398,7 +398,7 @@ function formatCardName(fullName) {
     if (!fullName) return '';
     const words = fullName.trim().split(' ');
     if (words.length === 1) return words[0].toUpperCase();
-    return `${words[0]}&nbsp;${words[words.length - 1]}`.toUpperCase();
+    return `${words[0]} ${words[words.length - 1]}`.toUpperCase();
 }
 
 function saveDataAndContinue() {
