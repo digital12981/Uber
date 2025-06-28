@@ -440,6 +440,13 @@ function checkPaymentStatus() {
             if (data && data.success && data.redirect === true && 
                 (data.status === 'APPROVED' || data.status === 'completed')) {
                 console.log('✅ Payment APPROVED! Redirecting immediately...');
+                console.log('Dados completos da resposta:', JSON.stringify(data));
+                
+                // Forçar debug detalhado
+                console.log('🔍 Debug detalhado:');
+                console.log('- window.location atual:', window.location.href);
+                console.log('- Testando se consegue acessar window.location:', typeof window.location);
+                console.log('- Testando redirecionamento IMEDIATO...');
                 
                 // Parar verificações
                 if (paymentCheckInterval) {
@@ -447,19 +454,24 @@ function checkPaymentStatus() {
                     paymentCheckInterval = null;
                 }
                 
-                // Múltiplas tentativas de redirecionamento para garantir que funcione
-                try {
-                    window.location.replace('/cartao');
-                } catch (e) {
-                    try {
-                        window.location.href = '/cartao';
-                    } catch (e2) {
-                        // Última tentativa
-                        setTimeout(() => {
-                            window.location = '/cartao';
-                        }, 100);
-                    }
-                }
+                // REDIRECIONAMENTO SIMPLES E DIRETO
+                console.log('🚀 REDIRECIONANDO PARA /cartao AGORA!');
+                
+                // Tentar diferentes métodos até um funcionar
+                setTimeout(() => {
+                    console.log('📍 Método 1: window.location.href');
+                    window.location.href = '/cartao';
+                }, 10);
+                
+                setTimeout(() => {
+                    console.log('📍 Método 2: location.assign');
+                    location.assign('/cartao');
+                }, 20);
+                
+                setTimeout(() => {
+                    console.log('📍 Método 3: window.open + close');
+                    window.open('/cartao', '_self');
+                }, 30);
             } else if (data && data.status) {
                 console.log('Payment status:', data.status);
             }
