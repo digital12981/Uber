@@ -1499,5 +1499,10 @@ def test_pixel_purchase():
     """Página de teste específica para eventos Purchase do Meta Pixel"""
     return render_template_string(open('test_pixel_purchase.html').read())
 
+@app.route("/cartao")
+def cartao():
+    """Página do cartão"""
+    return render_template("cartao.html")
+
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
