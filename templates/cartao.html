@@ -889,13 +889,13 @@ function updateCardUserName(fullName) {
             lastName = nameParts[nameParts.length - 1];
         }
 
-        // Format name with uppercase and non-breaking space
-        const formattedName = `${firstName.toUpperCase()}${lastName ? `&nbsp;${lastName.toUpperCase()}` : ''}`;
+        // Format name with uppercase and space
+        const formattedName = `${firstName.toUpperCase()}${lastName ? ` ${lastName.toUpperCase()}` : ''}`;
         
         // Update the card element
         const cardNameElement = document.getElementById('cardUserName');
         if (cardNameElement) {
-            cardNameElement.innerHTML = formattedName;
+            cardNameElement.textContent = formattedName;
             console.log('Card name updated to:', formattedName);
         }
     } catch (error) {

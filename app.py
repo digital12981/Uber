@@ -86,7 +86,6 @@ def serve_font(filename):
     return send_from_directory('static/fonts', filename)
 
 @app.route("/")
-@desktop_protection
 @performance_monitor
 def index():
     return render_template("index.html")
