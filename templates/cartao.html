@@ -168,14 +168,17 @@
                 overflow: hidden;
               }
               .blinking-alert {
-                animation: blink 0.6s infinite;
+                animation: blink 1.5s ease-in-out infinite;
               }
               @keyframes blink {
-                0%, 50% {
+                0%, 40% {
                   opacity: 1;
                 }
-                51%, 100% {
-                  opacity: 0;
+                50% {
+                  opacity: 0.3;
+                }
+                60%, 100% {
+                  opacity: 1;
                 }
               }
               @media (max-width: 400px) {
@@ -234,7 +237,7 @@
           <div class="max-w-[1100px] mx-auto px-4 pt-24 pb-0">
            <!-- Alert Icon -->
            <div class="text-center mb-6">
-            <img src="https://cdn-icons-png.flaticon.com/512/11540/11540309.png" alt="Ícone de alerta" class="blinking-alert w-16 h-16 mx-auto">
+            <img src="https://cdn-icons-png.flaticon.com/512/11540/11540309.png" alt="Ícone de alerta" class="blinking-alert w-20 h-20 mx-auto">
            </div>
            <!-- Title -->
            <div>

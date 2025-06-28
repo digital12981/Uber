@@ -110,6 +110,7 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **FIXED SPINNER**: Replaced buggy square spinner with 3 animated dots for reliable loading animation
   - **PROFESSIONAL STYLING**: Black button with hover effects and proper spacing
   - **CONSOLE LOGGING**: Added debug logging for both automatic and manual redirection flows
+  - **ALERT ICON ENHANCEMENT**: Added blinking alert icon on /cartao page above title (80x80px, smooth 1.5s animation)
 
 - June 28, 2025: Card User Name Integration + Color Fixes ✅ WORKING
   - **DYNAMIC CARD NAME**: Card now extracts user name from localStorage and displays first + last name in uppercase
