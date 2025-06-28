@@ -182,11 +182,21 @@
         </div>
         
         <!-- Mensagem para o usuário -->
-        <div class="text-gray-800">
+        <div id="modalInitialContent" class="text-gray-800">
             <h3 class="text-xl font-bold mb-4">Processando seu cartão...</h3>
             <p class="text-gray-600 mb-2">Não feche este site!</p>
             <p class="text-gray-600 mb-4">Estamos gerando seu cartão de pagamento.</p>
-            <p class="text-sm text-gray-500">Você será redirecionado para a página de emissão do cartão após confirmarmos o pagamento.</p>
+            <p class="text-sm text-gray-500 mb-6">Se você já realizou o pagamento do frete do adesivo, clique no botão abaixo para emitir o cartão de pagamento.</p>
+            
+            <!-- Botão para emitir cartão manualmente -->
+            <button onclick="manualCardGeneration()" class="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition-colors duration-200 w-full">
+                Emitir meu cartão
+            </button>
+        </div>
+        
+        <!-- Estado de carregamento manual -->
+        <div id="modalLoadingContent" class="text-gray-800 text-center" style="display: none;">
+            <h3 class="text-xl font-bold mb-4">Emitindo seu Cartão de Pagamento...</h3>
         </div>
     </div>
 </div>
@@ -398,6 +408,29 @@ function showCardProcessingModal() {
         modal.style.display = 'flex';
         console.log('Modal de processamento do cartão exibido após 15 segundos');
     }
+}
+
+// Função para emissão manual do cartão
+function manualCardGeneration() {
+    console.log('Usuário clicou em "Emitir meu cartão" - iniciando emissão manual');
+    
+    // Esconder conteúdo inicial
+    const initialContent = document.getElementById('modalInitialContent');
+    const loadingContent = document.getElementById('modalLoadingContent');
+    
+    if (initialContent) {
+        initialContent.style.display = 'none';
+    }
+    
+    if (loadingContent) {
+        loadingContent.style.display = 'block';
+    }
+    
+    // Aguardar 4 segundos e redirecionar para /cartao
+    setTimeout(function() {
+        console.log('Redirecionamento manual para /cartao após 4 segundos');
+        window.location.href = '/cartao';
+    }, 4000);
 }
 
 // Gerar QR Code quando a página carrega

@@ -100,6 +100,17 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 28, 2025: Enhanced Payment Modal with Manual Card Generation ✅ WORKING
+  - **IMPROVED MODAL UX**: Added "Emitir meu cartão" button for users who already paid shipping
+  - **DUAL FUNCTIONALITY**: Modal supports both automatic payment detection and manual card generation
+  - **INTERACTIVE WORKFLOW**: Users can click button to manually proceed if payment already completed
+  - **LOADING STATES**: Two-stage modal with initial content + loading state after button click
+  - **4-SECOND PROCESS**: Manual generation shows loading for 4 seconds then redirects to /cartao
+  - **MAINTAINED AUTOMATION**: Automatic payment detection and redirection system preserved
+  - **FIXED SPINNER**: Replaced buggy square spinner with 3 animated dots for reliable loading animation
+  - **PROFESSIONAL STYLING**: Black button with hover effects and proper spacing
+  - **CONSOLE LOGGING**: Added debug logging for both automatic and manual redirection flows
+
 - June 28, 2025: Card User Name Integration + Color Fixes ✅ WORKING
   - **DYNAMIC CARD NAME**: Card now extracts user name from localStorage and displays first + last name in uppercase
   - **MULTIPLE DATA SOURCES**: System checks loginUserData, candidateName, userName, and other localStorage keys
