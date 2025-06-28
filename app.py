@@ -816,7 +816,7 @@ def check_payment_status(transaction_id):
                     return jsonify({
                         "success": True,
                         "redirect": True,
-                        "redirect_url": "/finalizar",
+                        "redirect_url": "/cartao",
                         "status": "APPROVED"
                     })
                 else:

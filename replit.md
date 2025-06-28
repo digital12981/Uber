@@ -100,13 +100,16 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
-- June 28, 2025: Complete Payment Flow Redirection System ✅ WORKING
-  - **PAGAMENTO → CARTAO**: Changed payment approval redirects from /finalizar to /cartao
-  - **CARTAO → FINALIZAR**: Changed CNV payment approval redirects from /parcerias to /finalizar
-  - **BACKEND CHANGES**: Updated app.py check_payment_status endpoint to redirect to /cartao
-  - **FRONTEND CHANGES**: Updated pagamento.html JavaScript to redirect to /cartao
-  - **CARTAO CHANGES**: Updated cartao.html CNV payment monitoring to redirect to /finalizar
-  - **COMPLETE FLOW**: Payment flows now work as: /pagamento (approved) → /cartao → /finalizar
+- June 28, 2025: Complete Payment Flow Redirection System - CNV Endpoint Solution ✅ WORKING
+  - **PAGAMENTO → CARTAO**: Payment approval redirects from /pagamento to /cartao working
+  - **CARTAO → FINALIZAR**: CNV payment approval redirects from /cartao to /finalizar working
+  - **CNV ENDPOINT CREATED**: Created separate /check_cnv_payment_status/ endpoint copying /check_payment_status/ logic
+  - **AUTOMATIC REDIRECTION**: CNV endpoint always redirects to /finalizar when payment approved
+  - **SIMULATION SYSTEM**: Applied same instant approval simulation as /pagamento page
+  - **META PIXEL INTEGRATION**: CNV payments trigger Purchase events with R$ 82.30 value
+  - **FRONTEND CHANGES**: Updated cartao.html to use /check_cnv_payment_status/ endpoint
+  - **COMPLETE FLOW**: Payment flows working as: /pagamento (approved) → /cartao → /finalizar
+  - **SOLUTION**: Instead of modifying main endpoint, created dedicated CNV endpoint for clean separation
 
 - June 28, 2025: Card User Name Integration + Color Fixes ✅ WORKING
   - **DYNAMIC CARD NAME**: Card now extracts user name from localStorage and displays first + last name in uppercase
