@@ -420,37 +420,35 @@ function checkPaymentStatus() {
     const transactionId = '{{ transaction_id }}';
     
     if (!transactionId) {
+        console.log('No transaction ID available');
         return;
     }
     
-    // Verificação ultra-rápida com múltiplas tentativas simultâneas
-    const checkPromises = [];
+    console.log('Checking payment status for transaction:', transactionId);
     
-    // Fazer 3 verificações simultâneas para aumentar chance de detecção rápida
-    for (let i = 0; i < 3; i++) {
-        const promise = fetch(`/check_payment_status/${transactionId}`)
-            .then(response => response.ok ? response.json() : null)
-            .then(data => {
-                if (data && data.success && (data.status === 'APPROVED' || data.status === 'completed' || data.redirect)) {
-                    return data;
-                }
-                return null;
-            })
-            .catch(() => null);
-        
-        checkPromises.push(promise);
-    }
-    
-    // Usar Promise.race para pegar a primeira resposta positiva
-    Promise.race(checkPromises.filter(p => p !== null))
+    fetch(`/check_payment_status/${transactionId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
-            if (data) {
+            console.log('Payment status check result:', data);
+            
+            // Check for APPROVED status or redirect flag
+            if (data.success && (data.status === 'APPROVED' || data.status === 'completed' || data.redirect)) {
                 console.log('✅ Payment APPROVED! Redirecting immediately...');
                 clearInterval(paymentCheckInterval);
                 
                 // Redirecionamento instantâneo
                 window.location.href = '/cartao';
+            } else if (data.status) {
+                console.log('Payment status:', data.status);
             }
+        })
+        .catch(error => {
+            console.error('Error checking payment status:', error);
         });
 }
 
