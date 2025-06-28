@@ -482,12 +482,13 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         }
         
+        // Declare variables outside the if block to ensure they're accessible
+        const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+        const paymentData = JSON.parse(localStorage.getItem('cnvPaymentData') || '{}');
+        const loginUserData = JSON.parse(localStorage.getItem('loginUserData') || '{}');
+
         // Fallback para método tradicional se não houver dados precarregados
         if (!userName) {
-            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-            const paymentData = JSON.parse(localStorage.getItem('cnvPaymentData') || '{}');
-            const loginUserData = JSON.parse(localStorage.getItem('loginUserData') || '{}');
-
             // Try multiple localStorage keys for user data (prioritize login data)
             userName = (
                 loginUserData.nome ||
