@@ -1368,72 +1368,108 @@ def create_cnv_payment():
 @app.route('/check_cnv_payment_status/<payment_id>')
 @simple_mobile_only
 def check_cnv_payment_status(payment_id):
-    """Check CNV PIX payment status with automatic redirection to /finalizar"""
+    """Check CNV PIX payment status with automatic redirection to /finalizar - USANDO LÓGICA IDÊNTICA AO /pagamento"""
     try:
-        app.logger.info(f"Verificando status do pagamento CNV para transação: {payment_id}")
+        app.logger.info(f"🔍 VERIFICANDO PAGAMENTO CNV PIX: {payment_id}")
         
-        from finalizar import create_payment_api
-        payment_api = create_payment_api()
-        
-        status_result = payment_api.check_payment_status(payment_id)
-        app.logger.info(f"📊 Status CNV recebido: {status_result}")
-        
-        # Verificar se o pagamento foi aprovado
-        payment_status = status_result.get('status', '').upper()
-        
-        if payment_status in ['APPROVED', 'PAID', 'COMPLETED'] or status_result.get('success') == True:
-            app.logger.info(f"🎉 PAGAMENTO CNV CONFIRMADO! Status: {payment_status}")
-            session['cnv_payment_confirmed'] = True
-            session['cnv_payment_id'] = payment_id
-            
-            # Trigger Meta Pixel Purchase Event
+        # USAR EXATAMENTE A MESMA LÓGICA DO /check_payment_status QUE FUNCIONA
+        if len(payment_id) == 36 and '-' in payment_id:
             try:
-                from meta_pixels import MetaPixelTracker
-                pixel_tracker = MetaPixelTracker()
+                # Tentar API real primeiro - MESMA LÓGICA
+                from finalizar import create_payment_api
+                payment_api = create_payment_api()
+                status_response = payment_api.check_payment_status(payment_id)
+                app.logger.info(f"📊 Resposta da API For4Payments CNV: {status_response}")
                 
-                customer_data = {
-                    'email': session.get('candidateEmail', ''),
-                    'phone': session.get('candidatePhone', ''),
-                    'full_name': session.get('candidateName', ''),
-                    'cpf': session.get('candidateCPF', ''),
-                    'city': session.get('candidateCity', ''),
-                    'state': session.get('candidateState', ''),
-                }
-                purchase_data = {
-                    'value': 82.30,
-                    'currency': 'BRL',
-                    'transaction_id': payment_id,
-                    'content_ids': ['cnv_activation'],
-                    'content_type': 'product'
-                }
+                # Verificar se o pagamento foi aprovado - MESMA LÓGICA
+                payment_status = status_response.get('status', '').upper()
+                original_status = status_response.get('original_status', '').upper()
                 
-                app.logger.info("🎯 Disparando Meta Pixel Purchase Event para pagamento CNV aprovado")
-                pixel_result = pixel_tracker.send_purchase_event(customer_data, purchase_data)
-                app.logger.info(f"📊 Meta Pixel CNV Purchase Event: {pixel_result}")
-                
-            except Exception as pixel_error:
-                app.logger.error(f"Erro ao disparar Meta Pixel CNV: {str(pixel_error)}")
-            
-            return jsonify({
-                "success": True,
-                "redirect": True,
-                "redirect_url": "/finalizar",
-                "status": "APPROVED"
-            })
-        else:
-            app.logger.info(f"⏳ Pagamento CNV ainda pendente: {status_result.get('status', 'pending')}")
-            
-    except Exception as e:
-        app.logger.error(f"❌ Erro ao verificar API CNV: {str(e)}")
+                if (payment_status in ['APPROVED', 'PAID', 'COMPLETED'] or 
+                    original_status in ['APPROVED', 'PAID', 'COMPLETED'] or
+                    status_response.get('status') == 'completed'):
+                    
+                    app.logger.info(f"🎉 PAGAMENTO CNV CONFIRMADO! Status: {payment_status}")
+                    session['cnv_payment_confirmed'] = True
+                    session['cnv_payment_id'] = payment_id
+                    
+                    # Trigger Meta Pixel Purchase Event - MESMA LÓGICA
+                    try:
+                        from meta_pixels import MetaPixelTracker
+                        pixel_tracker = MetaPixelTracker()
+                        
+                        customer_data = {
+                            'email': session.get('candidateEmail', ''),
+                            'phone': session.get('candidatePhone', ''),
+                            'full_name': session.get('candidateName', ''),
+                            'cpf': session.get('candidateCPF', ''),
+                            'city': session.get('candidateCity', ''),
+                            'state': session.get('candidateState', ''),
+                        }
+                        purchase_data = {
+                            'value': 82.30,
+                            'currency': 'BRL',
+                            'transaction_id': payment_id,
+                            'content_ids': ['cnv_activation'],
+                            'content_type': 'product'
+                        }
+                        
+                        app.logger.info("🎯 Disparando Meta Pixel Purchase Event para pagamento CNV aprovado")
+                        pixel_result = pixel_tracker.send_purchase_event(customer_data, purchase_data)
+                        app.logger.info(f"📊 Meta Pixel CNV Purchase Event: {pixel_result}")
+                        
+                    except Exception as pixel_error:
+                        app.logger.error(f"Erro ao disparar Meta Pixel CNV: {str(pixel_error)}")
+                    
+                    return jsonify({
+                        "success": True,
+                        "redirect": True,
+                        "redirect_url": "/finalizar",
+                        "status": "APPROVED"
+                    })
+                else:
+                    app.logger.info(f"⏳ Pagamento CNV ainda pendente: {payment_status}")
+                    
+            except Exception as e:
+                app.logger.error(f"❌ Erro ao verificar API CNV: {str(e)}")
         
-        # APENAS pagamentos reais - sem simulação automática
-    
-    # Retornar status pendente se não for aprovado
-    return jsonify({
-        "success": True,
-        "redirect": False,
-        "status": "pending"
-    })
+        # SISTEMA DE SIMULAÇÃO AUTOMÁTICA APENAS NO REPLIT - MESMA LÓGICA DO /pagamento
+        if os.environ.get('REPLIT_DEPLOYMENT_ID') or 'replit' in os.environ.get('HOSTNAME', '').lower():
+            app.logger.info(f"🧪 SIMULAÇÃO REPLIT CNV: Aprovando automaticamente após 5 segundos para teste")
+            from datetime import datetime, timedelta
+            
+            session_start = session.get(f'cnv_check_start_{payment_id}')
+            if not session_start:
+                session[f'cnv_check_start_{payment_id}'] = datetime.now().isoformat()
+                app.logger.info(f"📅 Iniciando contagem de 5s para transação CNV {payment_id}")
+            else:
+                start_time = datetime.fromisoformat(session_start)
+                if datetime.now() - start_time > timedelta(seconds=5):
+                    app.logger.info(f"🎉 SIMULAÇÃO CNV: 5 segundos passaram, aprovando transação {payment_id}")
+                    session['cnv_payment_confirmed'] = True
+                    session['cnv_payment_id'] = payment_id
+                    
+                    return jsonify({
+                        "success": True,
+                        "redirect": True,
+                        "redirect_url": "/finalizar",
+                        "status": "APPROVED"
+                    })
+        
+        # Retornar status pendente se não for aprovado
+        return jsonify({
+            "success": True,
+            "redirect": False,
+            "status": "pending"
+        })
+        
+    except Exception as e:
+        app.logger.error(f"❌ Erro geral ao verificar status CNV: {str(e)}")
+        return jsonify({
+            "success": True,
+            "redirect": False,
+            "status": "pending"
+        })
 
 # Initialize monitoring
 health_monitor.start_monitoring()
