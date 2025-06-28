@@ -742,7 +742,6 @@ def redirect_payment():
     return render_template("payment_redirect.html")
 
 @app.route("/pagamento")
-@ultra_desktop_protection
 def pagamento():
     # Get payment data from session (created by create-shipping-payment route)
     payment_data = session.get('payment_data')

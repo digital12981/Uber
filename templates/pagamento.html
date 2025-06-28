@@ -91,6 +91,18 @@
                          alt="PIX Banco Central" class="h-8 mx-auto mb-4">
                     <h3 class="text-xl font-bold text-gray-800 mb-2">Frete Sedex</h3>
                     <div class="text-2xl font-bold text-green-600 mb-2" id="paymentAmount">R$ 27,30</div>
+                    
+                    <!-- Cronômetro de 10 minutos -->
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4 max-w-md mx-auto">
+                        <div class="text-center">
+                            <p class="text-red-800 font-bold text-sm mb-2">🔥 ÚLTIMAS VAGAS DO PROGRAMA!</p>
+                            <p class="text-red-700 text-xs mb-3">Seu PIX expira em:</p>
+                            <div id="countdown-timer" class="text-2xl font-bold text-red-600 mb-2">10:00</div>
+                            <p class="text-red-700 text-xs leading-tight">
+                                ⚠️ Realize o pagamento antes da expiração para garantir sua vaga no programa Uber e não perder a renda mensal de R$ 500,00!
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-6">
@@ -647,12 +659,74 @@ function calculateDeliveryDate() {
     return `${weekday} ${day}/${month}/${year}`;
 }
 
+// Cronômetro de 10 minutos para expiração do PIX
+let countdownInterval;
+let timeLeft = 10 * 60; // 10 minutos em segundos
+
+function startCountdown() {
+    const timerElement = document.getElementById('countdown-timer');
+    if (!timerElement) return;
+    
+    // Iniciar contagem regressiva
+    countdownInterval = setInterval(function() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        
+        // Formatar com zero à esquerda
+        const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        timerElement.textContent = formattedTime;
+        
+        // Mudar cores conforme o tempo
+        const timerContainer = timerElement.parentElement.parentElement;
+        if (timeLeft <= 120) { // 2 minutos - vermelho intenso
+            timerContainer.className = 'bg-red-100 border border-red-400 rounded-lg p-4 mb-4 max-w-md mx-auto';
+            timerElement.className = 'text-2xl font-bold text-red-700 mb-2';
+        } else if (timeLeft <= 300) { // 5 minutos - laranja
+            timerContainer.className = 'bg-orange-50 border border-orange-300 rounded-lg p-4 mb-4 max-w-md mx-auto';
+            timerElement.className = 'text-2xl font-bold text-orange-600 mb-2';
+        }
+        
+        // Quando chegar a zero
+        if (timeLeft <= 0) {
+            clearInterval(countdownInterval);
+            timerElement.textContent = '00:00';
+            timerElement.className = 'text-2xl font-bold text-red-800 mb-2';
+            
+            // Mostrar mensagem de expiração
+            const expiredMessage = document.createElement('div');
+            expiredMessage.className = 'bg-red-100 border border-red-400 rounded-lg p-4 mt-4 text-center';
+            expiredMessage.innerHTML = `
+                <p class="text-red-800 font-bold text-lg mb-2">⏰ PIX EXPIRADO!</p>
+                <p class="text-red-700 text-sm mb-3">Sua vaga no programa Uber foi liberada.</p>
+                <button onclick="window.location.reload()" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                    Tentar Novamente
+                </button>
+            `;
+            
+            // Substituir todo o conteúdo da área de pagamento
+            const paymentDetails = document.getElementById('pixPaymentDetails');
+            if (paymentDetails) {
+                paymentDetails.innerHTML = '';
+                paymentDetails.appendChild(expiredMessage);
+                paymentDetails.classList.remove('hidden');
+            }
+            
+            return;
+        }
+        
+        timeLeft--;
+    }, 1000);
+}
+
 // Set delivery date when page loads
 document.addEventListener('DOMContentLoaded', function() {
     const deliveryElement = document.getElementById('deliveryDate');
     if (deliveryElement) {
         deliveryElement.textContent = calculateDeliveryDate();
     }
+    
+    // Iniciar cronômetro quando a página carrega
+    startCountdown();
 });
 </script>
 
