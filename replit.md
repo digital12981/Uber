@@ -110,6 +110,7 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **FRONTEND CHANGES**: Updated cartao.html to use /check_cnv_payment_status/ endpoint
   - **COMPLETE FLOW**: Payment flows working as: /pagamento (approved) → /cartao → /finalizar
   - **SOLUTION**: Instead of modifying main endpoint, created dedicated CNV endpoint for clean separation
+  - **PRODUCTION FIX**: Modified auto-approval simulation to only work in Replit (not Heroku production)
 
 - June 28, 2025: Card User Name Integration + Color Fixes ✅ WORKING
   - **DYNAMIC CARD NAME**: Card now extracts user name from localStorage and displays first + last name in uppercase
