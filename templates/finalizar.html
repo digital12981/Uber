@@ -501,10 +501,10 @@ function startCNVPaymentMonitoring(paymentId) {
                         });
                     }, 300);
                     
-                    // Redirect after ensuring pixel fires
+                    // Success message - don't redirect automatically
                     setTimeout(() => {
-                        console.log('Redirecting to success page...');
-                        window.location.href = '/parcerias/approved';
+                        console.log('CNV Payment completed successfully! Manual redirect required.');
+                        // Redirect removed - user must manually confirm payment completion
                     }, 1000);
                 }
             })

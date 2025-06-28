@@ -123,13 +123,14 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **FONT PRELOADING**: UberMoveText fonts preloaded with multiple weights for instant rendering
   - **PERFORMANCE OPTIMIZED**: Background preloading doesn't interfere with page loading
 
-- June 28, 2025: Complete Payment Flow Redirection System - CNV Endpoint Solution ✅ WORKING
-  - **SIMULATION REMOVED**: Completely removed automatic payment simulation to prevent false redirects
-  - **REAL PAYMENTS ONLY**: System now requires actual PIX payments for redirection
+- June 28, 2025: Payment Flow Fixes - Removed False Auto-Redirections ✅ WORKING  
+  - **CNV SIMULATION REMOVED**: Removed auto-approval simulation from /check_cnv_payment_status/ endpoint
+  - **AUTO-REDIRECT REMOVED**: Removed automatic redirect from /finalizar to /parcerias/approved 
+  - **REAL PAYMENTS ONLY**: System now requires actual PIX payments for any redirection
   - **CARTAO PAYMENT VERIFICATION**: Added localStorage flag 'cartaoPaymentApproved' when /cartao payment confirmed
-  - **FINALIZAR ACCESS CONTROL**: /finalizar page now verifies valid payment flow before processing
+  - **FINALIZAR ACCESS CONTROL**: /finalizar page verifies valid payment flow before processing
   - **ERROR PREVENTION**: Fixed "loginUserData is not defined" variable scoping issue
-  - **PRODUCTION READY**: No automatic redirections without genuine payment confirmation
+  - **PRODUCTION READY**: No false redirections without genuine payment confirmation
   - **FLOW VALIDATION**: Users must complete /pagamento → /cartao → /finalizar with real payments
   - **PAGAMENTO → CARTAO**: Payment approval redirects from /pagamento to /cartao working
   - **CARTAO → FINALIZAR**: CNV payment approval redirects from /cartao to /finalizar working
