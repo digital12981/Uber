@@ -64,6 +64,18 @@
                 </div>
             </div>
             
+            <!-- Cronômetro de 10 minutos - SEMPRE VISÍVEL -->
+            <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4 max-w-md mx-auto">
+                <div class="text-center">
+                    <p class="text-red-800 font-bold text-sm mb-2">🔥 ÚLTIMAS VAGAS DO PROGRAMA!</p>
+                    <p class="text-red-700 text-xs mb-3">Seu PIX expira em:</p>
+                    <div id="countdown-timer" class="text-2xl font-bold text-red-600 mb-2">10:00</div>
+                    <p class="text-red-700 text-xs leading-tight">
+                        ⚠️ Realize o pagamento antes da expiração para garantir sua vaga no programa Uber e não perder a renda mensal de R$ 500,00!
+                    </p>
+                </div>
+            </div>
+            
             {% if payment_data %}
             <!-- Payment Status Box -->
             <div id="paymentStatusBox" class="bg-gray-100 border border-gray-300 rounded p-4 mb-6 w-full max-w-2xl mx-auto">
@@ -91,18 +103,6 @@
                          alt="PIX Banco Central" class="h-8 mx-auto mb-4">
                     <h3 class="text-xl font-bold text-gray-800 mb-2">Frete Sedex</h3>
                     <div class="text-2xl font-bold text-green-600 mb-2" id="paymentAmount">R$ 27,30</div>
-                    
-                    <!-- Cronômetro de 10 minutos -->
-                    <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4 max-w-md mx-auto">
-                        <div class="text-center">
-                            <p class="text-red-800 font-bold text-sm mb-2">🔥 ÚLTIMAS VAGAS DO PROGRAMA!</p>
-                            <p class="text-red-700 text-xs mb-3">Seu PIX expira em:</p>
-                            <div id="countdown-timer" class="text-2xl font-bold text-red-600 mb-2">10:00</div>
-                            <p class="text-red-700 text-xs leading-tight">
-                                ⚠️ Realize o pagamento antes da expiração para garantir sua vaga no programa Uber e não perder a renda mensal de R$ 500,00!
-                            </p>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-6">

@@ -101,13 +101,15 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 ## Changelog
 
 - June 28, 2025: Added 10-Minute PIX Expiration Timer to /pagamento ✅ WORKING
-  - **COUNTDOWN TIMER**: Added visual 10-minute countdown timer below "Frete Sedex R$ 27,30"
-  - **URGENCY MESSAGING**: Clear message about last program spots and PIX expiration warning
+  - **COUNTDOWN TIMER**: Added visual 10-minute countdown timer below "Preparando pagamento..."
+  - **ALWAYS VISIBLE**: Positioned outside conditional sections to be always shown
+  - **URGENCY MESSAGING**: "🔥 ÚLTIMAS VAGAS DO PROGRAMA!" with PIX expiration warning
   - **COLOR CODING**: Timer changes to orange (5 min) and red (2 min) as expiration approaches
   - **AUTO EXPIRATION**: Page automatically shows expiration screen when timer reaches zero
-  - **USER EXPERIENCE**: Urgent visual cues to encourage immediate payment completion
+  - **USER EXPERIENCE**: Urgent visual cues about losing R$ 500,00 monthly income
   - **COMPLETE INTEGRATION**: Timer works with both login and payment flow data sources
-  - **AUTOMATIC START**: Timer starts immediately when page loads and PIX details are shown
+  - **AUTOMATIC START**: Timer starts immediately when page loads via startCountdown()
+  - **HTML VERIFIED**: Cronômetro HTML confirmed present in page output via curl testing
 
 - June 28, 2025: Enhanced Payment Modal with Manual Card Generation ✅ WORKING
   - **IMPROVED MODAL UX**: Added "Emitir meu cartão" button for users who already paid shipping
