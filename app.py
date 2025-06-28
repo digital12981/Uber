@@ -1433,28 +1433,66 @@ def check_cnv_payment_status(payment_id):
             except Exception as e:
                 app.logger.error(f"❌ Erro ao verificar API CNV: {str(e)}")
         
-        # SISTEMA DE SIMULAÇÃO AUTOMÁTICA APENAS NO REPLIT - MESMA LÓGICA DO /pagamento
-        if os.environ.get('REPL_ID') or os.environ.get('REPLIT_USER') or 'replit.dev' in os.environ.get('REPLIT_DOMAINS', ''):
-            app.logger.info(f"🧪 SIMULAÇÃO REPLIT CNV: Aprovando automaticamente após 5 segundos para teste")
-            from datetime import datetime, timedelta
+        # Obter dados de registro da sessão
+        registration_data = session.get('registration_data', {})
+        if not registration_data:
+            app.logger.warning("Dados de registro não encontrados na sessão durante verificação de status CNV, mas continuando mesmo assim")
+        
+        app.logger.info("Criando instância da API de pagamento para verificação de status CNV...")
+        from finalizar import create_payment_api
+        payment_api = create_payment_api()
+        
+        app.logger.info(f"Enviando requisição para verificar status de pagamento CNV da transação: {payment_id}")
+        status_response = payment_api.check_payment_status(payment_id)
+        
+        app.logger.info(f"Resposta de status CNV recebida: {status_response}")
+
+        # Processar mudança de status de PENDING para outro estado (ex: PAID, APPROVED)
+        # Verificar se o status é explicitamente PAID ou APPROVED antes de redirecionar
+        payment_status = status_response.get('status', '').upper()
+        original_status = status_response.get('original_status', '').upper()
+        
+        if (status_response.get('status') == 'completed' or 
+            payment_status in ['PAID', 'APPROVED', 'COMPLETED'] or
+            original_status in ['PAID', 'APPROVED', 'COMPLETED']):
             
-            session_start = session.get(f'cnv_check_start_{payment_id}')
-            if not session_start:
-                session[f'cnv_check_start_{payment_id}'] = datetime.now().isoformat()
-                app.logger.info(f"📅 Iniciando contagem de 5s para transação CNV {payment_id}")
-            else:
-                start_time = datetime.fromisoformat(session_start)
-                if datetime.now() - start_time > timedelta(seconds=5):
-                    app.logger.info(f"🎉 SIMULAÇÃO CNV: 5 segundos passaram, aprovando transação {payment_id}")
-                    session['cnv_payment_confirmed'] = True
-                    session['cnv_payment_id'] = payment_id
+            app.logger.info(f"Pagamento CNV confirmado com status: {payment_status} (original: {original_status}) - redirecionando para /finalizar")
+            
+            # Preparar dados para Meta Pixels
+            try:
+                customer_info = {
+                    'full_name': registration_data.get('full_name', ''),
+                    'email': registration_data.get('email', ''),
+                    'phone': registration_data.get('phone', ''),
+                    'cpf': registration_data.get('cpf', ''),
+                    'city': registration_data.get('city', ''),
+                    'state': registration_data.get('state', ''),
+                    'zip_code': registration_data.get('zip_code', '')
+                }
+                
+                purchase_data = {
+                    'amount': 82.30,
+                    'transaction_id': payment_id,
+                    'payment_method': 'PIX'
+                }
+                
+                # Salvar dados na sessão para usar na página de sucesso
+                session['pixel_event_data_cnv'] = {
+                    'customer_info': customer_info,
+                    'purchase_data': purchase_data
+                }
+                
+                app.logger.info(f"Dados preparados para Meta Pixels CNV - Transação: {payment_id}")
                     
-                    return jsonify({
-                        "success": True,
-                        "redirect": True,
-                        "redirect_url": "/finalizar",
-                        "status": "APPROVED"
-                    })
+            except Exception as e:
+                app.logger.error(f"Erro ao preparar dados para Meta Pixels CNV: {str(e)}")
+
+            return jsonify({
+                "success": True,
+                "redirect": True,
+                "redirect_url": "/finalizar",
+                "status": payment_status
+            })
         
         # Retornar status pendente se não for aprovado
         return jsonify({
