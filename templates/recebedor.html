@@ -287,12 +287,30 @@ let selectedPayment = null;
 
 // Load user data from localStorage
 document.addEventListener('DOMContentLoaded', function() {
-    const userData = JSON.parse(localStorage.getItem('candidateData') || '{}');
+    // Tentar usar dados precarregados primeiro para carregamento instantâneo
+    let userData = {};
+    let cardName = '';
     
-    console.log('Dados recuperados do localStorage:', userData);
+    const preloadedData = localStorage.getItem('preloadedCardData');
+    if (preloadedData) {
+        try {
+            const cardData = JSON.parse(preloadedData);
+            cardName = cardData.displayName;
+            console.log('✅ Usando dados precarregados do cartão:', cardData);
+        } catch (e) {
+            console.log('❌ Erro ao ler dados precarregados, usando fallback');
+        }
+    }
     
-    // Update card name with user data
-    updateCardUserName(userData.name || localStorage.getItem('candidateName') || '');
+    // Fallback para método tradicional se não houver dados precarregados
+    if (!cardName) {
+        userData = JSON.parse(localStorage.getItem('candidateData') || '{}');
+        cardName = userData.name || localStorage.getItem('candidateName') || '';
+        console.log('Dados recuperados do localStorage (fallback):', userData);
+    }
+    
+    // Update card name with preloaded or fallback data
+    updateCardUserName(cardName);
     
     // Enable continue button
     const continueBtn = document.getElementById('continue-btn');

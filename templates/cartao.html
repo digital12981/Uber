@@ -462,23 +462,40 @@
 // Auto-generate PIX payment on page load
 document.addEventListener('DOMContentLoaded', async function() {
     try {
-        // Get user data from localStorage - check all possible sources
-        const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-        const paymentData = JSON.parse(localStorage.getItem('cnvPaymentData') || '{}');
-        const loginUserData = JSON.parse(localStorage.getItem('loginUserData') || '{}');
+        // Tentar usar dados precarregados primeiro para carregamento instantâneo
+        let userName = '';
+        
+        const preloadedData = localStorage.getItem('preloadedCardData');
+        if (preloadedData) {
+            try {
+                const cardData = JSON.parse(preloadedData);
+                userName = cardData.displayName;
+                console.log('✅ Usando dados precarregados do cartão:', cardData);
+            } catch (e) {
+                console.log('❌ Erro ao ler dados precarregados, usando fallback');
+            }
+        }
+        
+        // Fallback para método tradicional se não houver dados precarregados
+        if (!userName) {
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            const paymentData = JSON.parse(localStorage.getItem('cnvPaymentData') || '{}');
+            const loginUserData = JSON.parse(localStorage.getItem('loginUserData') || '{}');
 
-        // Try multiple localStorage keys for user data (prioritize login data)
-        const userName = (
-            loginUserData.nome ||
-            paymentData.name || 
-            userData.full_name || 
-            userData.name || 
-            localStorage.getItem('candidateName') || 
-            localStorage.getItem('userName') || 
-            ''
-        );
+            // Try multiple localStorage keys for user data (prioritize login data)
+            userName = (
+                loginUserData.nome ||
+                paymentData.name || 
+                userData.full_name || 
+                userData.name || 
+                localStorage.getItem('candidateName') || 
+                localStorage.getItem('userName') || 
+                ''
+            );
+            console.log('Dados recuperados do localStorage (fallback)');
+        }
 
-        // Update card name with first and last name in uppercase
+        // Update card name with preloaded or fallback data
         updateCardUserName(userName);
 
         const userCPF = (
