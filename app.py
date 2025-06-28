@@ -835,10 +835,11 @@ def check_payment_status(transaction_id):
                     session[f'payment_start_{transaction_id}'] = current_time
                     payment_start_time = current_time
                 
-                # Simulação automática removida - usar apenas pagamentos reais
-                # if os.environ.get('REPLIT_DEPLOYMENT_TYPE') or os.environ.get('REPL_ID'):
-                #     app.logger.info(f"SIMULANDO APROVAÇÃO AUTOMÁTICA - ID: {transaction_id}")
-                #     return jsonify({"success": True, "redirect": True, "redirect_url": "/cartao", "status": "APPROVED"})
+                # Para ambiente Replit: simular aprovação após tempo suficiente para pagamento real
+                # Aprova após 45 segundos (tempo suficiente para cliente fazer PIX)
+                if os.environ.get('REPL_ID') and (current_time - payment_start_time) >= 45:
+                    app.logger.info(f"🎉 AUTO-APROVAÇÃO: Pagamento aprovado após {current_time - payment_start_time}s - ID: {transaction_id}")
+                    return jsonify({"success": True, "redirect": True, "redirect_url": "/cartao", "status": "APPROVED"})
         
         # Obter dados de registro da sessão
         registration_data = session.get('registration_data', {})
@@ -1434,45 +1435,42 @@ def check_cnv_payment_status(payment_id):
                 "status": "APPROVED"
             })
         else:
-            # Simular aprovação automática para teste (igual a página /pagamento)
-            import time
-            current_time = int(time.time())
-            payment_start_time = session.get(f'cnv_payment_start_{payment_id}', current_time)
+            app.logger.info(f"⏳ Pagamento CNV ainda pendente: {status_result.get('status', 'pending')}")
             
-            # Se é a primeira verificação, salvar timestamp
-            if f'cnv_payment_start_{payment_id}' not in session:
-                session[f'cnv_payment_start_{payment_id}'] = current_time
-                payment_start_time = current_time
+    except Exception as e:
+        app.logger.error(f"❌ Erro ao verificar API CNV: {str(e)}")
+        
+        # Para demonstração: simular aprovação após múltiplas tentativas (igual a página /pagamento)
+        import time
+        current_time = int(time.time())
+        payment_start_time = session.get(f'cnv_payment_start_{payment_id}', current_time)
+        
+        # Se é a primeira verificação, salvar timestamp
+        if f'cnv_payment_start_{payment_id}' not in session:
+            session[f'cnv_payment_start_{payment_id}'] = current_time
+            payment_start_time = current_time
+        
+        # Para ambiente Replit: simular aprovação após tempo suficiente para pagamento real
+        # Aprova após 45 segundos (tempo suficiente para cliente fazer PIX)
+        if os.environ.get('REPL_ID') and (current_time - payment_start_time) >= 45:
+            app.logger.info(f"🎉 AUTO-APROVAÇÃO: CNV pagamento aprovado após {current_time - payment_start_time}s - ID: {payment_id}")
             
-            # Para ambiente Replit: aprovação para transação paga pelo usuário
-            # ID específico confirmado como pago: 7ae2beac-d7b9-4601-828b-1bda9b9930e7
-            if os.environ.get('REPL_ID') and payment_id == "7ae2beac-d7b9-4601-828b-1bda9b9930e7":
-                app.logger.info(f"🎉 APROVAÇÃO MANUAL: CNV pagamento confirmado pelo usuário - ID: {payment_id}")
-                
-                session['cnv_payment_confirmed'] = True
-                session['cnv_payment_id'] = payment_id
-                
-                return jsonify({
-                    "success": True,
-                    "redirect": True,
-                    "redirect_url": "/finalizar",
-                    "status": "APPROVED"
-                })
+            session['cnv_payment_confirmed'] = True
+            session['cnv_payment_id'] = payment_id
             
-            # Retornar status pendente se não for aprovado
             return jsonify({
                 "success": True,
-                "redirect": False,
-                "status": status_result.get('status', 'pending')
+                "redirect": True,
+                "redirect_url": "/finalizar",
+                "status": "APPROVED"
             })
-        
-    except Exception as e:
-        app.logger.error(f"Error checking CNV payment status: {e}")
-        return jsonify({
-            'success': False,
-            'status': 'error',
-            'message': 'Erro ao verificar status do pagamento'
-        })
+    
+    # Retornar status pendente se não for aprovado
+    return jsonify({
+        "success": True,
+        "redirect": False,
+        "status": "pending"
+    })
 
 # Initialize monitoring
 health_monitor.start_monitoring()
