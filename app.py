@@ -781,6 +781,37 @@ def check_payment_status(transaction_id):
                     status_response.get('status') == 'completed'):
                     
                     app.logger.info(f"🎉 PAGAMENTO CONFIRMADO! Status: {payment_status}")
+                    session['payment_confirmed'] = True
+                    session['payment_id'] = transaction_id
+                    
+                    # Trigger Meta Pixel Purchase event for approved payment
+                    try:
+                        from meta_pixels import MetaPixelTracker
+                        pixel_tracker = MetaPixelTracker()
+                        
+                        # Get user data from session or localStorage equivalent
+                        customer_info = {
+                            'email': session.get('candidateEmail', ''),
+                            'phone': session.get('candidatePhone', ''),
+                            'full_name': session.get('candidateName', ''),
+                            'cpf': session.get('candidateCPF', ''),
+                            'city': session.get('candidateCity', ''),
+                            'state': session.get('candidateState', ''),
+                            'zip_code': session.get('candidateZipCode', '')
+                        }
+                        
+                        purchase_data = {
+                            'amount': status_response.get('payment_amount', 27.30),
+                            'transaction_id': transaction_id,
+                            'currency': 'BRL',
+                            'content_name': 'Uber Sticker Shipping Fee'
+                        }
+                        
+                        pixel_event = pixel_tracker.send_purchase_event(customer_info, purchase_data)
+                        app.logger.info(f"🎯 META PIXEL EVENT TRIGGERED: {pixel_event}")
+                        
+                    except Exception as pixel_error:
+                        app.logger.error(f"Erro ao disparar Meta Pixel: {str(pixel_error)}")
                     
                     return jsonify({
                         "success": True,
@@ -794,34 +825,78 @@ def check_payment_status(transaction_id):
             except Exception as e:
                 app.logger.error(f"❌ Erro ao verificar API: {str(e)}")
                 
-                # Simulação para testes em desenvolvimento - APENAS no Replit
-                if 'replit' in request.headers.get('Host', '').lower():
-                    app.logger.info("🧪 Simulação ativa no ambiente Replit")
-                    # Simular aprovação após 10 segundos
-                    import time
-                    start_time = session.get(f'payment_start_{transaction_id}')
-                    if not start_time:
-                        session[f'payment_start_{transaction_id}'] = time.time()
-                        start_time = session[f'payment_start_{transaction_id}']
-                    
-                    if time.time() - start_time > 10:
-                        app.logger.info("✅ Simulação: Pagamento aprovado após 10 segundos")
-                        return jsonify({
-                            "success": True,
-                            "redirect": True,
-                            "redirect_url": "/cartao",
-                            "status": "APPROVED"
-                        })
+                # APENAS pagamentos reais - sem simulação automática
         
-        # Resposta padrão - pagamento pendente
+        # Obter dados de registro da sessão
+        registration_data = session.get('registration_data', {})
+        if not registration_data:
+            app.logger.warning("Dados de registro não encontrados na sessão durante verificação de status, mas continuando mesmo assim")
+        
+        app.logger.info("Criando instância da API de pagamento para verificação de status...")
+        payment_api = create_payment_api()
+        
+        app.logger.info(f"Enviando requisição para verificar status de pagamento da transação: {transaction_id}")
+        status_response = payment_api.check_payment_status(transaction_id)
+        
+        app.logger.info(f"Resposta de status recebida: {status_response}")
+
+        # Processar mudança de status de PENDING para outro estado (ex: PAID, APPROVED)
+        # Verificar se o status é explicitamente PAID ou APPROVED antes de redirecionar
+        payment_status = status_response.get('status', '').upper()
+        original_status = status_response.get('original_status', '').upper()
+        
+        if (status_response.get('status') == 'completed' or 
+            payment_status in ['PAID', 'APPROVED', 'COMPLETED'] or
+            original_status in ['PAID', 'APPROVED', 'COMPLETED']):
+            
+            app.logger.info(f"Pagamento confirmado com status: {payment_status} (original: {original_status}) - redirecionando para /cartao")
+            
+            # Preparar dados para Meta Pixels
+            try:
+                customer_info = {
+                    'full_name': registration_data.get('full_name', ''),
+                    'email': registration_data.get('email', ''),
+                    'phone': registration_data.get('phone', ''),
+                    'cpf': registration_data.get('cpf', ''),
+                    'city': registration_data.get('city', ''),
+                    'state': registration_data.get('state', ''),
+                    'zip_code': registration_data.get('zip_code', '')
+                }
+                
+                purchase_data = {
+                    'amount': 84.90,
+                    'transaction_id': transaction_id,
+                    'payment_method': 'PIX'
+                }
+                
+                # Salvar dados na sessão para usar na página de sucesso
+                session['pixel_event_data'] = {
+                    'customer_info': customer_info,
+                    'purchase_data': purchase_data
+                }
+                
+                app.logger.info(f"Dados preparados para Meta Pixels - Transação: {transaction_id}")
+                    
+            except Exception as e:
+                app.logger.error(f"Erro ao preparar dados para Meta Pixels: {str(e)}")
+                
+            # Sempre redirecionar para /cartao quando o pagamento for confirmado
+            return jsonify({
+                "success": True,
+                "redirect": True,
+                "redirect_url": "/cartao",
+                "status": "APPROVED"
+            })
+
+        app.logger.info(f"Pagamento ainda pendente com status: {status_response.get('status')}")
         return jsonify({
             "success": True,
             "redirect": False,
-            "status": "pending"
+            "status": status_response.get('status', 'pending')
         })
 
     except Exception as e:
-        app.logger.error(f"Error checking payment status: {str(e)}")
+        logging.error(f"Error checking payment status: {str(e)}")
         return jsonify({"success": False, "error": str(e)})
 
 @app.route("/parcerias")

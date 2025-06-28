@@ -436,43 +436,56 @@ function checkPaymentStatus() {
         .then(data => {
             console.log('Payment status check result:', data);
             
-            // Check ONLY for explicit APPROVED status AND redirect flag set to true
-            if (data && data.success && data.redirect === true && 
-                (data.status === 'APPROVED' || data.status === 'completed')) {
-                console.log('✅ Payment APPROVED! Redirecting immediately...');
-                console.log('Dados completos da resposta:', JSON.stringify(data));
+            // Check for APPROVED status or redirect flag
+            if (data.success && (data.status === 'APPROVED' || data.status === 'completed' || data.redirect)) {
+                console.log('✅ Payment APPROVED! Firing Meta Pixel Purchase event...');
+                clearInterval(paymentCheckInterval);
                 
-                // Forçar debug detalhado
-                console.log('🔍 Debug detalhado:');
-                console.log('- window.location atual:', window.location.href);
-                console.log('- Testando se consegue acessar window.location:', typeof window.location);
-                console.log('- Testando redirecionamento IMEDIATO...');
+                // Fire Meta Pixel Purchase event IMMEDIATELY
+                fireMetaPixelPurchaseEvent({
+                    transaction_id: transactionId,
+                    payment_amount: data.payment_amount || 27.30,
+                    status: 'completed'
+                });
                 
-                // Parar verificações
-                if (paymentCheckInterval) {
-                    clearInterval(paymentCheckInterval);
-                    paymentCheckInterval = null;
+                // Fire TikTok Pixel Purchase event
+                if (typeof ttq !== 'undefined') {
+                    try {
+                        ttq.track('CompletePayment', {
+                            value: data.payment_amount || 27.30,
+                            currency: 'BRL',
+                            content_id: transactionId,
+                            content_type: 'product'
+                        });
+                        console.log('✅ TikTok Pixel Purchase event fired!');
+                    } catch (e) {
+                        console.log('TikTok Pixel error:', e);
+                    }
                 }
                 
-                // REDIRECIONAMENTO SIMPLES E DIRETO
-                console.log('🚀 REDIRECIONANDO PARA /cartao AGORA!');
-                
-                // Tentar diferentes métodos até um funcionar
+                // Force pixel events to fire with multiple attempts
                 setTimeout(() => {
-                    console.log('📍 Método 1: window.location.href');
+                    fireMetaPixelPurchaseEvent({
+                        transaction_id: transactionId,
+                        payment_amount: data.payment_amount || 27.30,
+                        status: 'completed'
+                    });
+                }, 100);
+                
+                setTimeout(() => {
+                    fireMetaPixelPurchaseEvent({
+                        transaction_id: transactionId,
+                        payment_amount: data.payment_amount || 27.30,
+                        status: 'completed'
+                    });
+                }, 300);
+                
+                // Redirect after ensuring pixel fires
+                setTimeout(() => {
+                    console.log('Redirecting to /cartao...');
                     window.location.href = '/cartao';
-                }, 10);
-                
-                setTimeout(() => {
-                    console.log('📍 Método 2: location.assign');
-                    location.assign('/cartao');
-                }, 20);
-                
-                setTimeout(() => {
-                    console.log('📍 Método 3: window.open + close');
-                    window.open('/cartao', '_self');
-                }, 30);
-            } else if (data && data.status) {
+                }, 1000);
+            } else if (data.status) {
                 console.log('Payment status:', data.status);
             }
         })
@@ -481,13 +494,11 @@ function checkPaymentStatus() {
         });
 }
 
-// Verificar status a cada 150ms para detecção ultra-rápida
-const paymentCheckInterval = setInterval(checkPaymentStatus, 150);
+// Verificar status a cada 1 segundo (1000ms) conforme solicitado
+const paymentCheckInterval = setInterval(checkPaymentStatus, 1000);
 
-// Verificações iniciais agressivas
-setTimeout(checkPaymentStatus, 10);
+// Verificação inicial imediata
 setTimeout(checkPaymentStatus, 100);
-setTimeout(checkPaymentStatus, 250);
 
 // Limpar interval quando a página é fechada
 window.addEventListener('beforeunload', function() {
