@@ -694,41 +694,45 @@ function fireMetaPixelCNVPurchaseEvent(transactionData) {
     }
 }
 
-// CNV Payment Monitoring System
+// CNV Payment Monitoring System - Using same logic as /pagamento page
 function startCNVPaymentMonitoring(paymentId) {
-    let checkCount = 0;
-    const MAX_CHECKS = 600; // 10 minutes
+    if (!paymentId) {
+        console.log('No payment ID available for CNV monitoring');
+        return;
+    }
+
+    console.log('Starting CNV payment monitoring for ID:', paymentId);
 
     function checkCNVPaymentStatus() {
-        if (checkCount >= MAX_CHECKS) {
-            console.log('CNV payment monitoring timeout');
-            return;
-        }
-
-        checkCount++;
-        console.log(`CNV payment check #${checkCount} for ID: ${paymentId}`);
-
-        fetch(`/check_cnv_payment_status/${paymentId}`)
-            .then(response => response.json())
+        console.log('Checking CNV payment status for transaction:', paymentId);
+        
+        fetch(`/check_payment_status/${paymentId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
-                console.log('CNV payment status:', data);
-
-                if (data.status === 'completed' || data.status === 'APPROVED') {
+                console.log('CNV payment status check result:', data);
+                
+                // Check for APPROVED status or redirect flag - same as pagamento page
+                if (data.success && (data.status === 'APPROVED' || data.status === 'completed' || data.redirect)) {
                     console.log('✅ CNV Payment APPROVED! Firing Meta Pixel Purchase event...');
                     clearInterval(cnvPaymentInterval);
-
+                    
                     // Fire Meta Pixel Purchase event IMMEDIATELY
                     fireMetaPixelCNVPurchaseEvent({
                         transaction_id: paymentId,
-                        payment_amount: data.payment_amount || 52.10,
+                        payment_amount: data.payment_amount || 82.30,
                         status: 'completed'
                     });
-
+                    
                     // Fire TikTok Pixel Purchase event
                     if (typeof ttq !== 'undefined') {
                         try {
                             ttq.track('CompletePayment', {
-                                value: data.payment_amount || 52.10,
+                                value: data.payment_amount || 82.30,
                                 currency: 'BRL',
                                 content_id: paymentId,
                                 content_type: 'product'
@@ -738,41 +742,50 @@ function startCNVPaymentMonitoring(paymentId) {
                             console.log('TikTok Pixel error:', e);
                         }
                     }
-
+                    
                     // Force pixel events to fire with multiple attempts
                     setTimeout(() => {
                         fireMetaPixelCNVPurchaseEvent({
                             transaction_id: paymentId,
-                            payment_amount: data.payment_amount || 52.10,
+                            payment_amount: data.payment_amount || 82.30,
                             status: 'completed'
                         });
                     }, 100);
-
+                    
                     setTimeout(() => {
                         fireMetaPixelCNVPurchaseEvent({
                             transaction_id: paymentId,
-                            payment_amount: data.payment_amount || 67.40,
+                            payment_amount: data.payment_amount || 82.30,
                             status: 'completed'
                         });
                     }, 300);
-
+                    
                     // Redirect after ensuring pixel fires
                     setTimeout(() => {
                         console.log('Redirecting to /finalizar...');
                         window.location.href = '/finalizar';
                     }, 1000);
+                } else if (data.status) {
+                    console.log('CNV payment status:', data.status);
                 }
             })
             .catch(error => {
-                console.error('Error checking CNV payment:', error);
+                console.error('Error checking CNV payment status:', error);
             });
     }
 
-    // Start monitoring
+    // Start monitoring - check every 1 second like pagamento page
     const cnvPaymentInterval = setInterval(checkCNVPaymentStatus, 1000);
 
     // Initial check
     setTimeout(checkCNVPaymentStatus, 100);
+    
+    // Clean up interval when page is closed
+    window.addEventListener('beforeunload', function() {
+        if (cnvPaymentInterval) {
+            clearInterval(cnvPaymentInterval);
+        }
+    });
 }
 
 // Countdown timer function
