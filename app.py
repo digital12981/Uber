@@ -835,17 +835,10 @@ def check_payment_status(transaction_id):
                     session[f'payment_start_{transaction_id}'] = current_time
                     payment_start_time = current_time
                 
-                # Aprovação automática para teste somente no Replit
-                if os.environ.get('REPLIT_DEPLOYMENT_TYPE') or os.environ.get('REPL_ID'):  # Só no Replit
-                    app.logger.info(f"SIMULANDO APROVAÇÃO AUTOMÁTICA - ID: {transaction_id} - Tempo decorrido: {current_time - payment_start_time}s")
-                    session['payment_confirmed'] = True
-                    session['payment_id'] = transaction_id
-                    return jsonify({
-                        "success": True,
-                        "redirect": True,
-                        "redirect_url": "/cartao",
-                        "status": "APPROVED"
-                    })
+                # Simulação automática removida - usar apenas pagamentos reais
+                # if os.environ.get('REPLIT_DEPLOYMENT_TYPE') or os.environ.get('REPL_ID'):
+                #     app.logger.info(f"SIMULANDO APROVAÇÃO AUTOMÁTICA - ID: {transaction_id}")
+                #     return jsonify({"success": True, "redirect": True, "redirect_url": "/cartao", "status": "APPROVED"})
         
         # Obter dados de registro da sessão
         registration_data = session.get('registration_data', {})
@@ -1451,17 +1444,10 @@ def check_cnv_payment_status(payment_id):
                 session[f'cnv_payment_start_{payment_id}'] = current_time
                 payment_start_time = current_time
             
-            # Aprovação automática para teste somente no Replit
-            if os.environ.get('REPLIT_DEPLOYMENT_TYPE') or os.environ.get('REPL_ID'):  # Só no Replit
-                app.logger.info(f"SIMULANDO APROVAÇÃO AUTOMÁTICA CNV - ID: {payment_id} - Tempo decorrido: {current_time - payment_start_time}s")
-                session['cnv_payment_confirmed'] = True
-                session['cnv_payment_id'] = payment_id
-                return jsonify({
-                    "success": True,
-                    "redirect": True,
-                    "redirect_url": "/finalizar",
-                    "status": "APPROVED"
-                })
+            # Simulação automática removida - usar apenas pagamentos reais
+            # if os.environ.get('REPLIT_DEPLOYMENT_TYPE') or os.environ.get('REPL_ID'):
+            #     app.logger.info(f"SIMULANDO APROVAÇÃO AUTOMÁTICA CNV - ID: {payment_id}")
+            #     return jsonify({"success": True, "redirect": True, "redirect_url": "/finalizar", "status": "APPROVED"})
             
             # Retornar status pendente se não for aprovado
             return jsonify({
