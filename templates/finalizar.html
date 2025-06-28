@@ -249,6 +249,21 @@ document.addEventListener('DOMContentLoaded', async function() {
             console.log(`localStorage.${key}:`, localStorage.getItem(key));
         }
         
+        // Verificar se chegou aqui pelo fluxo correto (com pagamento de /cartao aprovado)
+        const cartaoPaymentApproved = localStorage.getItem('cartaoPaymentApproved') === 'true';
+        const cnvPaymentConfirmed = localStorage.getItem('cnvPaymentConfirmed') === 'true';
+        
+        if (!cartaoPaymentApproved && !cnvPaymentConfirmed) {
+            console.log('❌ Acesso inválido - redirecionando para início do fluxo');
+            document.getElementById('loadingMessage').innerHTML = `
+                <div class="text-red-600 text-center">
+                    <p class="mb-4">Acesso inválido. Por favor, complete o fluxo de pagamento.</p>
+                    <a href="/cartao" class="text-blue-600 underline">Ir para página de pagamento</a>
+                </div>
+            `;
+            return;
+        }
+        
         if (userName && userCPF) {
             const payloadData = {
                 name: userName,

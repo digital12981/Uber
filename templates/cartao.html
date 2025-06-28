@@ -790,6 +790,9 @@ function startCNVPaymentMonitoring(paymentId) {
                         });
                     }, 300);
                     
+                    // Mark that cartao payment was approved for finalizar page verification
+                    localStorage.setItem('cartaoPaymentApproved', 'true');
+                    
                     // Redirect after ensuring pixel fires
                     setTimeout(() => {
                         console.log('Redirecting to /finalizar...');
