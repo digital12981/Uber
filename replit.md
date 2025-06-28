@@ -100,6 +100,17 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 28, 2025: Card User Name Integration + Color Fixes ✅ WORKING
+  - **DYNAMIC CARD NAME**: Card now extracts user name from localStorage and displays first + last name in uppercase
+  - **MULTIPLE DATA SOURCES**: System checks loginUserData, candidateName, userName, and other localStorage keys
+  - **AUTOMATIC FORMATTING**: Names formatted with normal spaces (FIRST LAST) for proper card display
+  - **WHITE TEXT COLORS**: Changed card numbers and name color to white (#ffffff !important) for better visibility
+  - **REAL-TIME UPDATE**: JavaScript function updateCardUserName() processes names on page load
+  - **ERROR HANDLING**: Console logging for debugging name extraction and formatting issues
+  - **VERIFIED WORKING**: Successfully tested with "IZABELLA GOMES CRIPIM MACIEL" → "IZABELLA MACIEL"
+  - **HTML ENTITY CLEANUP**: Added automatic cleaning of &nbsp; corrupted data from localStorage
+  - **DUAL PAGE SUPPORT**: Fixed name formatting on both /recebedor and /cartao pages
+
 - June 28, 2025: Advanced Card Preloading System - Instant Card Display ✅ WORKING
   - **UNIVERSAL PRELOADING**: Created /static/js/preload-card.js for automatic image and font preloading
   - **EARLY INITIALIZATION**: Card assets preload starting from /veiculo and /local pages (2+ pages ahead)

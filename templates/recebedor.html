@@ -315,6 +315,12 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Dados recuperados do localStorage (fallback):', userData);
     }
     
+    // Clean up any corrupted &nbsp; data from localStorage
+    if (cardName && cardName.includes('&nbsp;')) {
+        cardName = cardName.replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+        console.log('🧹 Cleaned corrupted localStorage data:', cardName);
+    }
+    
     // Update card name with preloaded or fallback data
     updateCardUserName(cardName);
     
@@ -473,8 +479,11 @@ function updateCardUserName(fullName) {
     }
 
     try {
+        // Clean up any HTML entities like &nbsp; in the name
+        let cleanName = fullName.replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+        
         // Split name into parts and get first and last name
-        const nameParts = fullName.trim().split(' ');
+        const nameParts = cleanName.split(' ');
         let firstName = '';
         let lastName = '';
 
