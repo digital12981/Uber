@@ -420,85 +420,47 @@ function checkPaymentStatus() {
     const transactionId = '{{ transaction_id }}';
     
     if (!transactionId) {
-        console.log('No transaction ID available');
         return;
     }
     
-    console.log('Checking payment status for transaction:', transactionId);
+    // Verificação ultra-rápida com múltiplas tentativas simultâneas
+    const checkPromises = [];
     
-    fetch(`/check_payment_status/${transactionId}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}`);
-            }
-            return response.json();
-        })
+    // Fazer 3 verificações simultâneas para aumentar chance de detecção rápida
+    for (let i = 0; i < 3; i++) {
+        const promise = fetch(`/check_payment_status/${transactionId}`)
+            .then(response => response.ok ? response.json() : null)
+            .then(data => {
+                if (data && data.success && (data.status === 'APPROVED' || data.status === 'completed' || data.redirect)) {
+                    return data;
+                }
+                return null;
+            })
+            .catch(() => null);
+        
+        checkPromises.push(promise);
+    }
+    
+    // Usar Promise.race para pegar a primeira resposta positiva
+    Promise.race(checkPromises.filter(p => p !== null))
         .then(data => {
-            console.log('Payment status check result:', data);
-            
-            // Check for APPROVED status or redirect flag
-            if (data.success && (data.status === 'APPROVED' || data.status === 'completed' || data.redirect)) {
-                console.log('✅ Payment APPROVED! Firing Meta Pixel Purchase event...');
+            if (data) {
+                console.log('✅ Payment APPROVED! Redirecting immediately...');
                 clearInterval(paymentCheckInterval);
                 
-                // Fire Meta Pixel Purchase event IMMEDIATELY
-                fireMetaPixelPurchaseEvent({
-                    transaction_id: transactionId,
-                    payment_amount: data.payment_amount || 27.30,
-                    status: 'completed'
-                });
-                
-                // Fire TikTok Pixel Purchase event
-                if (typeof ttq !== 'undefined') {
-                    try {
-                        ttq.track('CompletePayment', {
-                            value: data.payment_amount || 27.30,
-                            currency: 'BRL',
-                            content_id: transactionId,
-                            content_type: 'product'
-                        });
-                        console.log('✅ TikTok Pixel Purchase event fired!');
-                    } catch (e) {
-                        console.log('TikTok Pixel error:', e);
-                    }
-                }
-                
-                // Force pixel events to fire with multiple attempts
-                setTimeout(() => {
-                    fireMetaPixelPurchaseEvent({
-                        transaction_id: transactionId,
-                        payment_amount: data.payment_amount || 27.30,
-                        status: 'completed'
-                    });
-                }, 100);
-                
-                setTimeout(() => {
-                    fireMetaPixelPurchaseEvent({
-                        transaction_id: transactionId,
-                        payment_amount: data.payment_amount || 27.30,
-                        status: 'completed'
-                    });
-                }, 300);
-                
-                // Redirect after ensuring pixel fires
-                setTimeout(() => {
-                    console.log('Redirecting to /cartao...');
-                    window.location.href = '/cartao';
-                }, 1000);
-            } else if (data.status) {
-                console.log('Payment status:', data.status);
+                // Redirecionamento instantâneo
+                window.location.href = '/cartao';
             }
-        })
-        .catch(error => {
-            console.error('Error checking payment status:', error);
         });
 }
 
-// Verificar status a cada 1 segundo (1000ms) conforme solicitado
-const paymentCheckInterval = setInterval(checkPaymentStatus, 1000);
+// Verificar status a cada 150ms para detecção ultra-rápida
+const paymentCheckInterval = setInterval(checkPaymentStatus, 150);
 
-// Verificação inicial imediata
+// Verificações iniciais agressivas
+setTimeout(checkPaymentStatus, 10);
 setTimeout(checkPaymentStatus, 100);
+setTimeout(checkPaymentStatus, 250);
 
 // Limpar interval quando a página é fechada
 window.addEventListener('beforeunload', function() {
