@@ -706,7 +706,7 @@ function startCNVPaymentMonitoring(paymentId) {
     function checkCNVPaymentStatus() {
         console.log('Checking CNV payment status for transaction:', paymentId);
         
-        fetch(`/check_payment_status/${paymentId}`)
+        fetch(`/check_cnv_payment_status/${paymentId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
