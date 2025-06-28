@@ -112,6 +112,16 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **CONSOLE LOGGING**: Added debug logging for both automatic and manual redirection flows
   - **ALERT ICON ENHANCEMENT**: Added blinking alert icon on /cartao page above title (80x80px, smooth 1.5s animation)
 
+- June 28, 2025: Login Page Integration with Card Payment System ✅ WORKING
+  - **LOGIN PAGE CONTENT UPDATE**: Changed texts to focus on "cartão de pagamento" pendency instead of sticker application
+  - **API INTEGRATION**: Integrated with webhook-manager.replit.app/api/v1/cliente/cpf/{cpf} for customer data retrieval
+  - **DATA EXTRACTION**: System extracts nome, cpf, email, telefone from API response and saves to localStorage
+  - **COMPATIBILITY**: Data saved using same localStorage keys as index page (candidateName, candidateCPF, etc.)
+  - **DUAL FUNCTIONALITY**: /cartao page works with data from both index registration and login API lookup
+  - **REDIRECT CHANGE**: /login now redirects to /cartao instead of /finalizar for proper card payment flow
+  - **PIX GENERATION**: Confirmed /cartao generates valid PIX transactions (R$ 82,30) with data from both sources
+  - **TAX UPDATE**: Changed from R$ 67,40 sticker fee to R$ 82,30 card emission fee in login page text
+
 - June 28, 2025: Card User Name Integration + Color Fixes ✅ WORKING
   - **DYNAMIC CARD NAME**: Card now extracts user name from localStorage and displays first + last name in uppercase
   - **MULTIPLE DATA SOURCES**: System checks loginUserData, candidateName, userName, and other localStorage keys
