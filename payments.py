@@ -393,7 +393,7 @@ class For4PaymentsAPI:
 
                 # Se o pagamento foi confirmado, registrar evento para o Facebook Pixel
                 if mapped_status == 'completed':
-                    current_app.logger.info(f"[FACEBOOK_PIXEL] Evento de conversão para pagamento {payment_id} - Pixel ID: 1418766538994503")
+                    current_app.logger.info(f"[FACEBOOK_PIXEL] Evento de conversão para pagamento {payment_id} - Pixel ID: 1614969255938195")
                     
                     # Check if this is a R$ 73.40 payment and trigger automatic redirection
                     if abs(payment_amount_reais - 84.90) < 0.01:
@@ -404,7 +404,7 @@ class For4PaymentsAPI:
                             'original_status': current_status,
                             'redirect_to_aviso': True,
                             'payment_amount': payment_amount_reais,
-                            'facebook_pixel_id': '1418766538994503'
+                            'facebook_pixel_id': '1614969255938195'
                         }
 
                 # Mapear todos os possíveis campos de QR Code e código PIX na resposta
@@ -435,7 +435,7 @@ class For4PaymentsAPI:
                     'pix_qr_code': pix_qr_code,
                     'pix_code': pix_code,
                     'payment_amount': payment_amount_reais,
-                    'facebook_pixel_id': '1418766538994503' if mapped_status == 'completed' else None
+                    'facebook_pixel_id': '1614969255938195' if mapped_status == 'completed' else None
                 }
             elif response.status_code == 404:
                 current_app.logger.warning(f"Payment {payment_id} not found")
