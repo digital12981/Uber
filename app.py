@@ -1308,6 +1308,28 @@ def create_cnv_payment():
         app.logger.info(f"Request method: {request.method}")
         app.logger.info(f"Request content type: {request.content_type}")
         
+        # Check which page is making the request to determine payment amount
+        referrer = request.headers.get('Referer', '').lower()
+        page_from = user_data.get('page_from', '').lower()
+        
+        app.logger.info(f"Request referrer: {referrer}")
+        app.logger.info(f"Page from parameter: {page_from}")
+        
+        # Determine payment amount and description based on page
+        if '/cartao' in referrer or page_from == 'cartao':
+            amount = 82.30
+            description = 'Cartão Uber - Anuidade + Taxa de Emissão + Seguro'
+            app.logger.info("Payment requested from /cartao page - R$ 82.30")
+        elif '/finalizar' in referrer or page_from == 'finalizar':
+            amount = 67.40
+            description = 'CNV Digital - Taxa de Ativação'
+            app.logger.info("Payment requested from /finalizar page - R$ 67.40")
+        else:
+            # Default to finalizar values if unable to determine
+            amount = 67.40
+            description = 'CNV Digital - Taxa de Ativação'
+            app.logger.info("Unable to determine source page, defaulting to /finalizar - R$ 67.40")
+        
         # Extract name from different possible fields
         nome = user_data.get('name') or user_data.get('nome') or ''
         
@@ -1324,14 +1346,14 @@ def create_cnv_payment():
         from finalizar import create_payment_api
         payment_api = create_payment_api()
         
-        # Prepare payment data for CNV expedition fee - API expects 'nome' field
+        # Prepare payment data - API expects 'nome' field
         payment_data = {
             'nome': nome,  # API expects 'nome' not 'name'
             'cpf': user_data.get('cpf', ''),
             'email': user_data.get('email', ''),
             'phone': user_data.get('phone', ''),
-            'amount': 67.40,
-            'description': 'Pão de Queijo e Presunto'
+            'amount': amount,
+            'description': description
         }
         
         app.logger.info(f"Prepared payment data: {payment_data}")
