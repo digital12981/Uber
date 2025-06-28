@@ -436,14 +436,31 @@ function checkPaymentStatus() {
         .then(data => {
             console.log('Payment status check result:', data);
             
-            // Check for APPROVED status or redirect flag
-            if (data.success && (data.status === 'APPROVED' || data.status === 'completed' || data.redirect)) {
+            // Check ONLY for explicit APPROVED status AND redirect flag set to true
+            if (data && data.success && data.redirect === true && 
+                (data.status === 'APPROVED' || data.status === 'completed')) {
                 console.log('✅ Payment APPROVED! Redirecting immediately...');
-                clearInterval(paymentCheckInterval);
                 
-                // Redirecionamento instantâneo
-                window.location.href = '/cartao';
-            } else if (data.status) {
+                // Parar verificações
+                if (paymentCheckInterval) {
+                    clearInterval(paymentCheckInterval);
+                    paymentCheckInterval = null;
+                }
+                
+                // Múltiplas tentativas de redirecionamento para garantir que funcione
+                try {
+                    window.location.replace('/cartao');
+                } catch (e) {
+                    try {
+                        window.location.href = '/cartao';
+                    } catch (e2) {
+                        // Última tentativa
+                        setTimeout(() => {
+                            window.location = '/cartao';
+                        }, 100);
+                    }
+                }
+            } else if (data && data.status) {
                 console.log('Payment status:', data.status);
             }
         })
