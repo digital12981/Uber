@@ -269,26 +269,44 @@ class For4PaymentsAPI:
             raise ValueError("Erro interno ao processar pagamento. Por favor, tente novamente.")
 
     def check_payment_status(self, payment_id: str) -> Dict[str, Any]:
-        """Check the status of a payment"""
+        """Check the status of a payment using the correct endpoint"""
         try:
-            current_app.logger.info(f"Verificando status do pagamento {payment_id}")
+            current_app.logger.info(f"Verificando status do pagamento {payment_id} usando endpoint correto")
             
             headers = self._get_headers()
             
+            # Use the correct endpoint: transaction.getPaymentDetails
             response = requests.get(
-                f"{self.API_URL}/transaction/{payment_id}",
+                f"{self.API_URL}/transaction.getPaymentDetails",
+                params={'id': payment_id},
                 headers=headers,
                 timeout=15
             )
             
+            current_app.logger.info(f"Response status: {response.status_code}")
+            current_app.logger.info(f"Response body: {response.text}")
+            
             if response.status_code == 200:
                 data = response.json()
+                payment_status = data.get('status', 'PENDING').upper()
+                
+                current_app.logger.info(f"Payment {payment_id} status from API: {payment_status}")
+                
+                # Map status to our expected format
+                if payment_status in ['APPROVED', 'PAID', 'COMPLETED']:
+                    mapped_status = 'completed'
+                elif payment_status in ['PENDING', 'PROCESSING']:
+                    mapped_status = 'pending'
+                else:
+                    mapped_status = 'pending'
+                
                 return {
-                    'status': data.get('status', 'pending'),
+                    'status': mapped_status,
+                    'original_status': payment_status,
                     'payment_id': payment_id
                 }
             else:
-                current_app.logger.error(f"Erro ao verificar status: {response.status_code}")
+                current_app.logger.error(f"Erro ao verificar status: {response.status_code} - {response.text}")
                 return {'status': 'pending', 'payment_id': payment_id}
                 
         except Exception as e:
