@@ -100,6 +100,15 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 28, 2025: Card User Name Integration + Color Fixes ✅ WORKING
+  - **DYNAMIC CARD NAME**: Card now extracts user name from localStorage and displays first + last name in uppercase
+  - **MULTIPLE DATA SOURCES**: System checks loginUserData, candidateName, userName, and other localStorage keys
+  - **AUTOMATIC FORMATTING**: Names formatted with non-breaking spaces (FIRST&nbsp;LAST) for proper card display
+  - **WHITE TEXT COLORS**: Changed card numbers and name color to white (#ffffff !important) for better visibility
+  - **REAL-TIME UPDATE**: JavaScript function updateCardUserName() processes names on page load
+  - **ERROR HANDLING**: Console logging for debugging name extraction and formatting issues
+  - **VERIFIED WORKING**: Successfully tested with "IZABELLA GOMES CRIPIM MACIEL" → "IZABELLA MACIEL"
+
 - June 27, 2025: Enhanced Meta Pixel System - Dynamic Secret Configuration ✅ WORKING
   - **DYNAMIC PIXEL LOADING**: System now uses only pixels configured in secrets (META_PIXEL_1_ID through META_PIXEL_6_ID)
   - **REMOVED HARDCODED FALLBACK**: Eliminated hardcoded pixel 1418766538994503 fallback for production flexibility
