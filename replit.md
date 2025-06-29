@@ -100,6 +100,16 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 29, 2025: Conditional Camera Offer Display System ✅ WORKING
+  - **CONDITIONAL LOGIC**: Camera offer now only displays for users who selected "SIM" as app driver
+  - **LOCALSTORAGE INTEGRATION**: System checks 'isAppDriver' value from driver selection on index page
+  - **HIDDEN BY DEFAULT**: Camera offer section hidden with display: none until conditions met
+  - **JAVASCRIPT VERIFICATION**: Real-time check shows/hides camera offer based on driver status
+  - **SAFE IMPLEMENTATION**: Protected against errors if camera checkbox doesn't exist
+  - **COMPLETE FLOW**: Driver selection → localStorage → address page → conditional camera display
+  - **USER EXPERIENCE**: Non-drivers see only base shipping fee, drivers see camera upgrade option
+  - **INTEGRATION MAINTAINED**: All existing camera functionality preserved for eligible users
+
 - June 28, 2025: Added 10-Minute PIX Expiration Timer to /pagamento ✅ WORKING
   - **COUNTDOWN TIMER**: Added visual 10-minute countdown timer below "Preparando pagamento..."
   - **ALWAYS VISIBLE**: Positioned outside conditional sections to be always shown
