@@ -100,14 +100,6 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
-- June 29, 2025: Shipping Fee Value Updated from R$ 27,30 to R$ 18,30 ✅ WORKING
-  - **APP.PY UPDATE**: Changed base_amount from 27.30 to 18.30 in shipping payment API
-  - **ADDRESS.HTML UPDATE**: Updated shipping fee display from R$ 27,30 to R$ 18,30
-  - **PAGAMENTO.HTML UPDATE**: Updated order summary from R$ 27,30 to R$ 18,30
-  - **TOTAL CALCULATION**: Camera offer total updated from R$ 107,20 to R$ 98,20 (R$ 18,30 + R$ 79,90)
-  - **COMPLETE INTEGRATION**: All shipping fee references updated across payment flow
-  - **DYNAMIC PRICING**: Payment API automatically calculates correct totals with new base fee
-
 - June 29, 2025: Payment Status Bar Added to /pagamento Page ✅ WORKING
   - **STATUS BAR IMPLEMENTATION**: Added red "Aguardando pagamento..." banner on /pagamento page
   - **FIXED POSITIONING**: Status bar positioned below header (top-16) with z-index 30
@@ -263,11 +255,11 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **CAMERA OFFER**: Added Uber 3-lens dashcam offer on /address page above payment button
   - **PRODUCT DETAILS**: HD 1080p recording (front, interior, rear), night vision, impact sensor
   - **PRICING**: R$ 79,90 added to base shipping fee when selected
-  - **DYNAMIC PRICING**: Payment API calculates total (R$ 18,30 base + R$ 79,90 camera = R$ 98,20)
+  - **DYNAMIC PRICING**: Payment API calculates total (R$ 27,30 base + R$ 79,90 camera = R$ 107,20)
   - **UI ENHANCEMENT**: White background box with promotional title and product image
   - **PROMOTIONAL TITLE**: "Oferta Especial - Aproveite e Garanta Já!" with clean design and reduced font sizes
   - **PRICE LAYOUT**: Price moved above checkbox, left-aligned layout design  
-  - **ANIMATED CALCULATION**: Shows total breakdown (R$ 18,30 + R$ 79,90 = R$ 98,20) when camera selected
+  - **ANIMATED CALCULATION**: Shows total breakdown (R$ 27,30 + R$ 79,90 = R$ 107,20) when camera selected
   - **INTEGRATION**: Camera selection saved to localStorage and passed through payment flow
   - **DESCRIPTION UPDATE**: Payment description includes both items when camera selected
   - **PAYMENT PAGE LOGIC**: Shows order summary on /pagamento when camera selected, keeps original when not selected

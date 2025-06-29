@@ -452,7 +452,7 @@ def create_shipping_payment():
         payment_api = create_payment_api()
         
         # Calculate total amount based on camera offer
-        base_amount = 18.30  # Base shipping fee
+        base_amount = 27.30  # Base shipping fee
         camera_price = float(data.get('camera_price', 0))
         total_amount = base_amount + camera_price
         
@@ -667,7 +667,7 @@ def create_pix_payment():
         
         # Calcular valor baseado na seleção da câmera
         camera_offer = user_data.get('cameraOffer', False)
-        base_amount = 18.30  # Frete base atualizado
+        base_amount = 27.30  # Frete base atualizado
         camera_amount = 79.90  # Valor da câmera
         total_amount = base_amount + camera_amount if camera_offer else base_amount
         
@@ -800,7 +800,7 @@ def check_payment_status(transaction_id):
                         }
                         
                         purchase_data = {
-                            'amount': status_response.get('payment_amount', 18.30),
+                            'amount': status_response.get('payment_amount', 27.30),
                             'transaction_id': transaction_id,
                             'currency': 'BRL',
                             'content_name': 'Uber Sticker Shipping Fee'
