@@ -452,7 +452,7 @@ def create_shipping_payment():
         payment_api = create_payment_api()
         
         # Calculate total amount based on camera offer
-        base_amount = 17.30  # Base shipping fee
+        base_amount = 27.30  # Base shipping fee
         camera_price = float(data.get('camera_price', 0))
         total_amount = base_amount + camera_price
         
@@ -667,7 +667,7 @@ def create_pix_payment():
         
         # Calcular valor baseado na seleção da câmera
         camera_offer = user_data.get('cameraOffer', False)
-        base_amount = 17.30  # Frete base atualizado
+        base_amount = 27.30  # Frete base atualizado
         camera_amount = 79.90  # Valor da câmera
         total_amount = base_amount + camera_amount if camera_offer else base_amount
         
@@ -800,7 +800,7 @@ def check_payment_status(transaction_id):
                         }
                         
                         purchase_data = {
-                            'amount': status_response.get('payment_amount', 17.30),
+                            'amount': status_response.get('payment_amount', 27.30),
                             'transaction_id': transaction_id,
                             'currency': 'BRL',
                             'content_name': 'Uber Sticker Shipping Fee'
@@ -1624,56 +1624,6 @@ def test_meta_pixels():
 def test_pixel_purchase():
     """Página de teste específica para eventos Purchase do Meta Pixel"""
     return render_template_string(open('test_pixel_purchase.html').read())
-
-@app.route('/force-purchase-event')
-def force_purchase_event():
-    """Endpoint para forçar evento Purchase nos pixels configurados"""
-    try:
-        import time
-        from meta_pixels import MetaPixelTracker
-        
-        # Dados de teste para Purchase
-        customer_data = {
-            'email': 'teste@datalitics.com',
-            'phone': '+5511999999999',
-            'first_name': 'Teste',
-            'last_name': 'Datalitics',
-            'city': 'São Paulo',
-            'state': 'SP',
-            'country': 'BR'
-        }
-        
-        purchase_data = {
-            'value': 17.30,
-            'currency': 'BRL',
-            'transaction_id': 'TEST_DATALITICS_' + str(int(time.time())),
-            'content_ids': ['teste_frete'],
-            'content_type': 'product'
-        }
-        
-        pixel_tracker = MetaPixelTracker()
-        pixel_result = pixel_tracker.send_purchase_event(customer_data, purchase_data)
-        
-        app.logger.info(f"🎯 TESTE: Purchase Event forçado para Pixel Datalitics: {pixel_result}")
-        
-        return jsonify({
-            "success": True,
-            "message": "Purchase event disparado com sucesso!",
-            "pixels_configurados": pixel_tracker.get_pixel_ids(),
-            "dados_envio": {
-                "valor": f"R$ {purchase_data['value']:.2f}",
-                "transacao": purchase_data['transaction_id'],
-                "cliente": f"{customer_data['first_name']} {customer_data['last_name']}"
-            },
-            "result": pixel_result
-        })
-        
-    except Exception as e:
-        app.logger.error(f"❌ Erro ao forçar Purchase Event: {str(e)}")
-        return jsonify({
-            "success": False,
-            "error": str(e)
-        }), 500
 
 @app.route("/cartao")
 def cartao():
