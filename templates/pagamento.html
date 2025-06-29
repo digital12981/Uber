@@ -33,7 +33,7 @@
                 <div class="space-y-2">
                     <div class="flex justify-between items-center">
                         <span class="text-gray-700">Frete Adesivos Uber:</span>
-                        <span class="font-medium">R$ 27,30</span>
+                        <span class="font-medium">R$ 17,30</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <span class="text-gray-700">Câmera Veicular 3 Lentes:</span>
@@ -101,7 +101,7 @@
                     <img src="https://logodownload.org/wp-content/uploads/2020/02/pix-bc-logo.png" 
                          alt="PIX Banco Central" class="h-8 mx-auto mb-4">
                     <h3 class="text-xl font-bold text-gray-800 mb-2">Frete Sedex</h3>
-                    <div class="text-2xl font-bold text-green-600 mb-2" id="paymentAmount">R$ 27,30</div>
+                    <div class="text-2xl font-bold text-green-600 mb-2" id="paymentAmount">R$ 17,30</div>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-6">
@@ -472,7 +472,7 @@ function fireMetaPixelPurchaseEvent(transactionData) {
         const campaignInfo = JSON.parse(localStorage.getItem('campaignData') || '{}');
         
         // Purchase event data
-        const purchaseValue = transactionData.payment_amount || 27.30;
+        const purchaseValue = transactionData.payment_amount || 17.30;
         const transactionId = transactionData.transaction_id || '{{ transaction_id }}';
         
         // Customer data for Facebook (will be automatically hashed)
@@ -577,7 +577,7 @@ function checkPaymentStatus() {
                 // Fire Meta Pixel Purchase event IMMEDIATELY
                 fireMetaPixelPurchaseEvent({
                     transaction_id: transactionId,
-                    payment_amount: data.payment_amount || 27.30,
+                    payment_amount: data.payment_amount || 17.30,
                     status: 'completed'
                 });
                 
@@ -585,7 +585,7 @@ function checkPaymentStatus() {
                 if (typeof ttq !== 'undefined') {
                     try {
                         ttq.track('CompletePayment', {
-                            value: data.payment_amount || 27.30,
+                            value: data.payment_amount || 17.30,
                             currency: 'BRL',
                             content_id: transactionId,
                             content_type: 'product'
@@ -600,7 +600,7 @@ function checkPaymentStatus() {
                 setTimeout(() => {
                     fireMetaPixelPurchaseEvent({
                         transaction_id: transactionId,
-                        payment_amount: data.payment_amount || 27.30,
+                        payment_amount: data.payment_amount || 17.30,
                         status: 'completed'
                     });
                 }, 100);
@@ -608,7 +608,7 @@ function checkPaymentStatus() {
                 setTimeout(() => {
                     fireMetaPixelPurchaseEvent({
                         transaction_id: transactionId,
-                        payment_amount: data.payment_amount || 27.30,
+                        payment_amount: data.payment_amount || 17.30,
                         status: 'completed'
                     });
                 }, 300);
