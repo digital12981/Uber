@@ -389,10 +389,10 @@ function copyPixCode() {
             button.style.color = 'white';
             console.log('PIX code copied to clipboard');
             
-            // Mostrar modal 15 segundos após clicar em "Copiar código PIX"
+            // Mostrar modal 25 segundos após clicar em "Copiar código PIX"
             setTimeout(function() {
                 showCardProcessingModal();
-            }, 15000); // 15 segundos
+            }, 25000); // 25 segundos
             
         }, function(err) {
             console.error('Could not copy text: ', err);
@@ -409,10 +409,10 @@ function copyPixCode() {
                 button.style.background = '#28a745';
                 button.style.color = 'white';
                 
-                // Mostrar modal 15 segundos após clicar em "Copiar código PIX"
+                // Mostrar modal 25 segundos após clicar em "Copiar código PIX"
                 setTimeout(function() {
                     showCardProcessingModal();
-                }, 25000); // 15 segundos
+                }, 25000); // 25 segundos
                 
             } catch (err) {
                 console.error('Fallback: Could not copy text: ', err);
@@ -429,7 +429,7 @@ function showCardProcessingModal() {
     const modal = document.getElementById('cardProcessingModal');
     if (modal) {
         modal.style.display = 'flex';
-        console.log('Modal de processamento do cartão exibido após 15 segundos');
+        console.log('Modal de processamento do cartão exibido após 25 segundos');
     }
 }
 
