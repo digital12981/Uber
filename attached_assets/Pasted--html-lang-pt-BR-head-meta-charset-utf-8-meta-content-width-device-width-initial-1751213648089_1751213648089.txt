@@ -1,0 +1,69 @@
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Status Bar - Uber</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <style>
+        @font-face {
+          font-family: 'UberMoveText';
+          src: url('/static/fonts/UberMoveText-Light.woff') format('woff'), url('/static/fonts/UberMoveText-Light.ttf') format('truetype');
+          font-weight: 300;
+          font-display: swap;
+        }
+        @font-face {
+          font-family: 'UberMoveText';
+          src: url('/static/fonts/UberMoveText-Regular.woff') format('woff'), url('/static/fonts/UberMoveText-Regular.ttf') format('truetype');
+          font-weight: 400;
+          font-display: swap;
+        }
+        @font-face {
+          font-family: 'UberMoveText';
+          src: url('/static/fonts/UberMoveText-Medium.woff') format('woff'), url('/static/fonts/UberMoveText-Medium.ttf') format('truetype');
+          font-weight: 500;
+          font-display: swap;
+        }
+        @font-face {
+          font-family: 'UberMoveText';
+          src: url('/static/fonts/UberMoveText-Bold.woff') format('woff'), url('/static/fonts/UberMoveText-Bold.ttf') format('truetype');
+          font-weight: 700;
+          font-display: swap;
+        }
+        @font-face {
+          font-family: 'UberMove';
+          src: url('/static/fonts/UberMove-Medium.woff') format('woff'), url('/static/fonts/UberMove-Medium.ttf') format('truetype');
+          font-weight: 500;
+          font-display: swap;
+        }
+        * {
+          font-family: "UberMoveText", "UberMove", Arial, sans-serif !important;
+        }
+        /* Dots animation */
+        .dot {
+          animation: dotFlashing 1s infinite linear alternate;
+        }
+        .dot:nth-child(2) {
+          animation-delay: 0.2s;
+        }
+        .dot:nth-child(3) {
+          animation-delay: 0.4s;
+        }
+        @keyframes dotFlashing {
+          0% { opacity: 0.2; }
+          50%, 100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-white text-black min-w-[0]">
+    <!-- Status Bar -->
+    <div class="w-full flex flex-col items-center justify-center h-[50px] bg-[#FE1F1F] px-4 text-white text-xs font-bold uppercase mb-[10px]" style="min-height: 50px; margin-bottom:10px;">
+        <span class="whitespace-nowrap tracking-wider mb-1">Aguardando pagamento...</span>
+        <div class="flex items-center">
+          <span class="dot w-2 h-2 bg-white rounded-full inline-block mr-1"></span>
+          <span class="dot w-2 h-2 bg-white rounded-full inline-block mr-1"></span>
+          <span class="dot w-2 h-2 bg-white rounded-full inline-block"></span>
+        </div>
+    </div>
+</body>
+</html>
