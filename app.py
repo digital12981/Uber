@@ -452,7 +452,7 @@ def create_shipping_payment():
         payment_api = create_payment_api()
         
         # Calculate total amount based on camera offer
-        base_amount = 27.30  # Base shipping fee
+        base_amount = 18.30  # Base shipping fee
         camera_price = float(data.get('camera_price', 0))
         total_amount = base_amount + camera_price
         

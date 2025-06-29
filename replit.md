@@ -255,11 +255,11 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
   - **CAMERA OFFER**: Added Uber 3-lens dashcam offer on /address page above payment button
   - **PRODUCT DETAILS**: HD 1080p recording (front, interior, rear), night vision, impact sensor
   - **PRICING**: R$ 79,90 added to base shipping fee when selected
-  - **DYNAMIC PRICING**: Payment API calculates total (R$ 27,30 base + R$ 79,90 camera = R$ 107,20)
+  - **DYNAMIC PRICING**: Payment API calculates total (R$ 18,30 base + R$ 79,90 camera = R$ 98,20)
   - **UI ENHANCEMENT**: White background box with promotional title and product image
   - **PROMOTIONAL TITLE**: "Oferta Especial - Aproveite e Garanta Já!" with clean design and reduced font sizes
   - **PRICE LAYOUT**: Price moved above checkbox, left-aligned layout design  
-  - **ANIMATED CALCULATION**: Shows total breakdown (R$ 27,30 + R$ 79,90 = R$ 107,20) when camera selected
+  - **ANIMATED CALCULATION**: Shows total breakdown (R$ 18,30 + R$ 79,90 = R$ 98,20) when camera selected
   - **INTEGRATION**: Camera selection saved to localStorage and passed through payment flow
   - **DESCRIPTION UPDATE**: Payment description includes both items when camera selected
   - **PAYMENT PAGE LOGIC**: Shows order summary on /pagamento when camera selected, keeps original when not selected
