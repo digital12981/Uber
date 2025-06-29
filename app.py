@@ -87,12 +87,13 @@ def serve_font(filename):
     return send_from_directory('static/fonts', filename)
 
 @app.route("/")
+@desktop_protection
 @performance_monitor
 def index():
     return render_template("index.html")
 
 @app.route("/vagas")
-@ultimate_mobile_only
+@desktop_protection
 @performance_monitor
 def vagas():
     """Vagas page with domain redirection from ads domain to main domain"""
@@ -742,7 +743,7 @@ def redirect_payment():
     return render_template("payment_redirect.html")
 
 @app.route("/pagamento")
-@ultimate_mobile_only
+@desktop_protection
 def pagamento():
     # Get payment data from session (created by create-shipping-payment route)
     payment_data = session.get('payment_data')
@@ -1273,7 +1274,7 @@ def aviso():
                          pixel_event_data=pixel_event_data)
 
 @app.route('/finalizar')
-@ultimate_mobile_only
+@desktop_protection
 def finalizar():
     """CNV Payment page with real PIX transaction"""
     return render_template('finalizar.html')
@@ -1627,7 +1628,7 @@ def test_pixel_purchase():
     return render_template_string(open('test_pixel_purchase.html').read())
 
 @app.route("/cartao")
-@ultimate_mobile_only
+@desktop_protection
 def cartao():
     """Página do cartão"""
     with open('templates/cartao.html', 'r', encoding='utf-8') as f:
