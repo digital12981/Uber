@@ -10,6 +10,7 @@ import hashlib
 import hmac
 import json
 import random
+import os
 
 
 class UltimateProtection:
@@ -255,6 +256,19 @@ def ultimate_mobile_only(f):
     """
     @wraps(f)
     def decorated_function(*args, **kwargs):
+        # Verifica se está no ambiente Replit (desenvolvimento)
+        is_replit = (
+            'replit' in request.host.lower() or 
+            '.repl.co' in request.host.lower() or
+            os.environ.get('REPL_ID') is not None or
+            os.environ.get('REPLIT_DOMAINS') is not None
+        )
+        
+        # No Replit, permite acesso para desenvolvimento
+        if is_replit:
+            print(f"🔧 REPLIT ENVIRONMENT - Ultimate protection disabled for development")
+            return f(*args, **kwargs)
+        
         protection = UltimateProtection()
         
         user_agent = request.headers.get('User-Agent', '')

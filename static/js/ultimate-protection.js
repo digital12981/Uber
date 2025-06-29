@@ -6,6 +6,20 @@
 (function() {
     'use strict';
     
+    // Verifica ambiente Replit PRIMEIRO
+    function isReplitEnvironment() {
+        return window.location.hostname.includes('replit.') || 
+               window.location.hostname.includes('.repl.co') ||
+               window.location.hostname.includes('replit.app') ||
+               window.location.hostname.includes('replit.dev');
+    }
+    
+    // Se está no Replit, desativa proteção completamente
+    if (isReplitEnvironment()) {
+        console.log('🔧 Ultimate protection disabled in Replit environment');
+        return;
+    }
+    
     let protectionActive = true;
     let detectionAttempts = 0;
     const maxDetectionAttempts = 5;
@@ -295,6 +309,12 @@
         return true;
     }
     
+    // Verifica ambiente Replit primeiro
+    if (isReplitEnvironment()) {
+        console.log('🔧 Ultimate protection disabled in Replit environment');
+        return;
+    }
+    
     // Executa verificação imediata
     if (!runAllChecks()) {
         return;
@@ -368,14 +388,19 @@
     // Verifica se está em modo Replit (ambiente de desenvolvimento)
     function isReplitEnvironment() {
         return window.location.hostname.includes('replit.') || 
-               window.location.hostname.includes('.repl.co');
+               window.location.hostname.includes('.repl.co') ||
+               window.location.hostname.includes('replit.app') ||
+               window.location.hostname.includes('replit.dev');
     }
     
-    // Se não está no Replit, aplica proteção máxima
-    if (!isReplitEnvironment()) {
-        console.log('🛡️ Ultimate protection active - Desktop/Cloning blocked');
-    } else {
-        console.log('🔧 Ultimate protection in development mode');
+    // Se está no Replit, desativa proteção para desenvolvimento
+    if (isReplitEnvironment()) {
+        console.log('🔧 Ultimate protection disabled in Replit environment');
+        protectionActive = false;
+        clearInterval(monitoringInterval);
+        return;
     }
+    
+    console.log('🛡️ Ultimate protection active - Desktop/Cloning blocked');
     
 })();
