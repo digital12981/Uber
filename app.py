@@ -667,7 +667,7 @@ def create_pix_payment():
         
         # Calcular valor baseado na seleção da câmera
         camera_offer = user_data.get('cameraOffer', False)
-        base_amount = 27.30  # Frete base atualizado
+        base_amount = 18.30  # Frete base atualizado
         camera_amount = 79.90  # Valor da câmera
         total_amount = base_amount + camera_amount if camera_offer else base_amount
         

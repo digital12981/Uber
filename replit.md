@@ -100,6 +100,14 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 29, 2025: Shipping Fee Value Updated from R$ 27,30 to R$ 18,30 ✅ WORKING
+  - **APP.PY UPDATE**: Changed base_amount from 27.30 to 18.30 in shipping payment API
+  - **ADDRESS.HTML UPDATE**: Updated shipping fee display from R$ 27,30 to R$ 18,30
+  - **PAGAMENTO.HTML UPDATE**: Updated order summary from R$ 27,30 to R$ 18,30
+  - **TOTAL CALCULATION**: Camera offer total updated from R$ 107,20 to R$ 98,20 (R$ 18,30 + R$ 79,90)
+  - **COMPLETE INTEGRATION**: All shipping fee references updated across payment flow
+  - **DYNAMIC PRICING**: Payment API automatically calculates correct totals with new base fee
+
 - June 29, 2025: Payment Status Bar Added to /pagamento Page ✅ WORKING
   - **STATUS BAR IMPLEMENTATION**: Added red "Aguardando pagamento..." banner on /pagamento page
   - **FIXED POSITIONING**: Status bar positioned below header (top-16) with z-index 30
