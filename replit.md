@@ -100,20 +100,6 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
-- June 29, 2025: Enhanced Ultimate Protection System Against Cloning ✅ WORKING
-  - **ELECTRON DETECTION**: Advanced detection of Electron-based desktop apps that clone mobile sites
-  - **CLONING TOOL BLOCKING**: Comprehensive blocking of SaveWeb2Zip, HTTrack, WebCopier, and 20+ other cloning tools
-  - **BOT PROTECTION**: Enhanced detection of Python, cURL, Wget, Scrapy, Selenium, and automation frameworks
-  - **FINGERPRINT ANALYSIS**: Advanced browser fingerprinting to detect spoofed mobile browsers
-  - **MOBILE SPOOFING DETECTION**: Detects desktop browsers pretending to be mobile devices
-  - **ULTIMATE MOBILE ONLY**: Applied to critical routes /, /vagas, /pagamento, /finalizar, /cartao
-  - **JAVASCRIPT PROTECTION**: Client-side protection against developer tools, right-click, keyboard shortcuts
-  - **ENVIRONMENT DETECTION**: Automatic Electron detection via process.type and window.require
-  - **DECOY RESPONSES**: Random HTTP error codes (404, 503, 403) to confuse cloners
-  - **REPLIT EXCEPTION**: Protection disabled in development environment, active in production
-  - **MULTI-LAYER VERIFICATION**: 6 different verification layers for maximum security
-  - **COMPREHENSIVE LOGGING**: Detailed logging of all blocked attempts with user agent information
-
 - June 28, 2025: Added 10-Minute PIX Expiration Timer to /pagamento ✅ WORKING
   - **COUNTDOWN TIMER**: Added visual 10-minute countdown timer below "Preparando pagamento..."
   - **ALWAYS VISIBLE**: Positioned outside conditional sections to be always shown

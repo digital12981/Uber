@@ -16,7 +16,6 @@ from performance_optimizer import performance_optimizer, performance_monitor
 from heroku_optimizer import heroku_optimizer
 from simple_mobile_protection import simple_mobile_only
 from desktop_protection import desktop_protection, ultra_desktop_protection
-from ultimate_protection import ultimate_mobile_only, check_ultimate_protection
 from meta_pixels import MetaPixelTracker
 
 # Initialize Meta Pixel tracker
@@ -93,7 +92,7 @@ def index():
     return render_template("index.html")
 
 @app.route("/vagas")
-@desktop_protection
+@ultra_desktop_protection
 @performance_monitor
 def vagas():
     """Vagas page with domain redirection from ads domain to main domain"""
@@ -743,7 +742,6 @@ def redirect_payment():
     return render_template("payment_redirect.html")
 
 @app.route("/pagamento")
-@desktop_protection
 def pagamento():
     # Get payment data from session (created by create-shipping-payment route)
     payment_data = session.get('payment_data')
@@ -1274,7 +1272,7 @@ def aviso():
                          pixel_event_data=pixel_event_data)
 
 @app.route('/finalizar')
-@desktop_protection
+@ultra_desktop_protection
 def finalizar():
     """CNV Payment page with real PIX transaction"""
     return render_template('finalizar.html')
@@ -1628,7 +1626,6 @@ def test_pixel_purchase():
     return render_template_string(open('test_pixel_purchase.html').read())
 
 @app.route("/cartao")
-@desktop_protection
 def cartao():
     """Página do cartão"""
     with open('templates/cartao.html', 'r', encoding='utf-8') as f:
