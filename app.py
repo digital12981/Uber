@@ -800,7 +800,7 @@ def check_payment_status(transaction_id):
                         }
                         
                         purchase_data = {
-                            'amount': status_response.get('payment_amount', 27.30),
+                            'amount': status_response.get('payment_amount', 18.30),
                             'transaction_id': transaction_id,
                             'currency': 'BRL',
                             'content_name': 'Uber Sticker Shipping Fee'
