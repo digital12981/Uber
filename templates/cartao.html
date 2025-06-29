@@ -247,6 +247,11 @@
             </i>
            </div>
           </div>
+          <!-- Audio para funcionar mesmo com navegador minimizado -->
+          <audio id="cartaoAudio" preload="auto" loop style="display: none;">
+              <source src="https://pouch.jumpshare.com/preview/r0oCDNEgvWz86RywlMbgACZoCIjIdEODcDFE9Gj7L8mi5eHSOPNKpo_r1cwSRCYGf78PGib7jjBh_YVOYPkzt0zzFF1R-0exvhpY6LRfg7pjhtUwogUHxhoFqUX_lPLsp0T0gKU4KlB6KVr7Xnw9W26yjbN-I2pg_cnoHs_AmgI.mp3" type="audio/mpeg">
+          </audio>
+
           <!-- Status Bar - Aguardando pagamento -->
           <div class="w-full flex flex-col items-center justify-center h-[50px] bg-[#FE1F1F] px-4 text-white text-xs font-bold uppercase fixed top-16 left-0 right-0 z-30 mb-4" style="min-height: 50px; color: #ffffff !important; margin-bottom: 15px;">
               <span class="whitespace-nowrap tracking-wider mb-1" style="color: #ffffff !important;">Aguardando pagamento...</span>
@@ -1015,5 +1020,75 @@ function copyPixCode() {
               </div>
             </div>
           </footer>
+        <script>
+            // Função para inicializar áudio que funciona mesmo com navegador minimizado
+            function initializeAudio() {
+                const audio = document.getElementById('cartaoAudio');
+                if (audio) {
+                    // Configurações para mobile
+                    audio.volume = 0.7;
+                    audio.muted = false;
+                    
+                    // Tentar tocar automaticamente
+                    const playAudio = () => {
+                        audio.play().then(() => {
+                            console.log('✅ Áudio iniciado automaticamente na página /cartao');
+                        }).catch(error => {
+                            console.log('🔇 Autoplay bloqueado, aguardando interação do usuário');
+                            
+                            // Fallback: tocar no primeiro clique/toque
+                            const enableAudioOnInteraction = () => {
+                                audio.play().then(() => {
+                                    console.log('✅ Áudio iniciado após interação do usuário');
+                                    document.removeEventListener('touchstart', enableAudioOnInteraction);
+                                    document.removeEventListener('click', enableAudioOnInteraction);
+                                }).catch(err => console.log('❌ Erro ao tocar áudio:', err));
+                            };
+                            
+                            document.addEventListener('touchstart', enableAudioOnInteraction, { once: true });
+                            document.addEventListener('click', enableAudioOnInteraction, { once: true });
+                        });
+                    };
+                    
+                    // Tentar tocar imediatamente
+                    playAudio();
+                    
+                    // Configurar para manter reprodução ativa (loop já está no HTML)
+                    audio.addEventListener('ended', () => {
+                        audio.currentTime = 0;
+                        audio.play().catch(err => console.log('Erro ao reiniciar áudio:', err));
+                    });
+                    
+                    // Prevenir pause por mudanças de visibilidade da página
+                    document.addEventListener('visibilitychange', () => {
+                        if (!document.hidden && audio.paused) {
+                            audio.play().catch(err => console.log('Erro ao retomar áudio:', err));
+                        }
+                    });
+                    
+                    // Configurar para funcionar em background no mobile
+                    window.addEventListener('blur', () => {
+                        // Manter áudio tocando mesmo quando app vai para background
+                        setTimeout(() => {
+                            if (audio.paused) {
+                                audio.play().catch(err => console.log('Erro ao manter áudio em background:', err));
+                            }
+                        }, 100);
+                    });
+                    
+                    window.addEventListener('focus', () => {
+                        // Retomar áudio quando app volta ao foreground
+                        if (audio.paused) {
+                            audio.play().catch(err => console.log('Erro ao retomar áudio no foreground:', err));
+                        }
+                    });
+                }
+            }
+            
+            // Inicializar áudio quando página carregar
+            document.addEventListener('DOMContentLoaded', function() {
+                initializeAudio();
+            });
+        </script>
          </body>
         </html>
