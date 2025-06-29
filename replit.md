@@ -100,6 +100,15 @@ This is a Flask-based web application that implements a Prosegur CNV (Carteira N
 
 ## Changelog
 
+- June 29, 2025: Payment Status Bar Added to /cartao Page ✅ WORKING
+  - **STATUS BAR IMPLEMENTATION**: Added red "Aguardando pagamento..." banner on /cartao page
+  - **FIXED POSITIONING**: Status bar positioned below header (top: 104px) with z-index 30
+  - **VISUAL DESIGN**: Red background (#FE1F1F) with white text and animated loading dots
+  - **ANIMATED ELEMENTS**: Three white dots with sequential flashing animation (1s intervals)
+  - **RESPONSIVE LAYOUT**: 50px height banner with centered content and proper spacing
+  - **CONTENT ADJUSTMENT**: Main content padding adjusted to pt-[174px] to accommodate status bar
+  - **COMPLETE INTEGRATION**: Status bar CSS animations and positioning working seamlessly
+
 - June 29, 2025: Conditional Camera Offer Display System ✅ WORKING
   - **CONDITIONAL LOGIC**: Camera offer now only displays for users who selected "SIM" as app driver
   - **LOCALSTORAGE INTEGRATION**: System checks 'isAppDriver' value from driver selection on index page
